@@ -72,9 +72,11 @@ test("keeps production safeguards and animation systems in source", async () => 
   assert.match(styles, /min-height:\s*44px/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.match(home, /dynamic\(\(\) => import\("\.\/motion\/hero-scene"\)/);
-  assert.equal((home.match(/<section/g) ?? []).length + (serviceSections.match(/<section/g) ?? []).length, 12);
+  assert.equal((home.match(/<section/g) ?? []).length + (serviceSections.match(/<section/g) ?? []).length, 13);
   assert.doesNotMatch(serviceSections, /ScrollTrigger|pin:\s*true/);
   assert.match(home, /Your next stage of growth/);
+  assert.match(home, /Trusted words should be.*earned/);
+  assert.match(home, /does not publish invented/);
   assert.match(home, /OUTCOME FRAMEWORK/);
   assert.doesNotMatch(home, /PlaceholderCounter/);
   assert.match(home, /WorkflowScene/);
@@ -98,6 +100,7 @@ test("keeps production safeguards and animation systems in source", async () => 
   assert.match(siteShell, /document\.activeElement === last/);
   assert.match(siteShell, /mega-panel-bg/);
   assert.match(siteShell, /pointerdown/);
+  assert.doesNotMatch(siteShell, /footer-lead/);
   assert.match(magnetic, /srx-label-face is-next/);
   assert.match(projectForm, /name="email"/);
   assert.match(projectForm, /required/);
