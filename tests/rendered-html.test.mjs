@@ -75,6 +75,8 @@ test("keeps production safeguards and animation systems in source", async () => 
   assert.equal((home.match(/<section/g) ?? []).length + (serviceSections.match(/<section/g) ?? []).length, 12);
   assert.doesNotMatch(serviceSections, /ScrollTrigger|pin:\s*true/);
   assert.match(home, /Your next stage of growth/);
+  assert.match(home, /OUTCOME FRAMEWORK/);
+  assert.doesNotMatch(home, /PlaceholderCounter/);
   assert.match(home, /WorkflowScene/);
   assert.match(home, /ScrollTrigger/);
   assert.match(home, /pointermove/);
