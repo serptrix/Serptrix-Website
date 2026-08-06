@@ -1,14 +1,18 @@
 "use client";
 
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
-import * as THREE from "three";
+import { useEffect, useRef, useState } from "react";
+import { MagneticButton } from "./motion/magnetic-button";
+import { Parallax } from "./motion/parallax";
+import { ScrollReveal } from "./motion/scroll-reveal";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const HeroScene = dynamic(() => import("./motion/hero-scene"), { ssr: false, loading: () => <div className="srx-canvas-loading" aria-hidden="true" /> });
 
 const services = [
   {
@@ -36,123 +40,6 @@ const services = [
     className: "is-navy",
   },
 ];
-
-function useWebGLSupport() {
-  const [supported, setSupported] = useState(true);
-  useEffect(() => {
-    try {
-      const canvas = document.createElement("canvas");
-      setSupported(Boolean(canvas.getContext("webgl2") || canvas.getContext("webgl")));
-    } catch {
-      setSupported(false);
-    }
-  }, []);
-  return supported;
-}
-
-function Reveal({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
-  const reduced = useReducedMotion();
-  return (
-    <motion.div
-      className={className}
-      initial={reduced ? false : { y: 38, opacity: 0, clipPath: "inset(0 0 100% 0)" }}
-      whileInView={{ y: 0, opacity: 1, clipPath: "inset(0 0 0% 0)" }}
-      viewport={{ once: true, margin: "-8%" }}
-      transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-function BrandObject({ scrollProgress }: { scrollProgress: { get: () => number } }) {
-  const group = useRef<THREE.Group>(null);
-  const core = useRef<THREE.Mesh>(null);
-  const { pointer, camera } = useThree();
-  const particles = useMemo(() => {
-    const positions = new Float32Array(260 * 3);
-    for (let i = 0; i < 260; i++) {
-      const radius = 2.2 + Math.random() * 2.8;
-      const angle = Math.random() * Math.PI * 2;
-      positions[i * 3] = Math.cos(angle) * radius;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 4.8;
-      positions[i * 3 + 2] = Math.sin(angle) * radius;
-    }
-    return positions;
-  }, []);
-
-  useFrame((state, delta) => {
-    if (!group.current || !core.current) return;
-    const scroll = scrollProgress.get();
-    group.current.rotation.y += delta * 0.13;
-    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, pointer.y * 0.24 + scroll * 0.5, 0.045);
-    group.current.rotation.z = THREE.MathUtils.lerp(group.current.rotation.z, -pointer.x * 0.18, 0.045);
-    core.current.rotation.x += delta * 0.18;
-    core.current.rotation.y -= delta * 0.12;
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, 7.2 - scroll * 1.4, 0.035);
-    camera.position.x = THREE.MathUtils.lerp(camera.position.x, pointer.x * 0.35, 0.04);
-  });
-
-  return (
-    <group ref={group}>
-      <mesh ref={core}>
-        <icosahedronGeometry args={[1.35, 2]} />
-        <meshStandardMaterial color="#09105F" roughness={0.22} metalness={0.58} flatShading />
-      </mesh>
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[2.05, 0.025, 12, 160]} />
-        <meshBasicMaterial color="#FBBC03" />
-      </mesh>
-      <mesh rotation={[0.4, 0.2, 0.85]}>
-        <torusGeometry args={[2.65, 0.012, 10, 160]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.6} />
-      </mesh>
-      <points>
-        <bufferGeometry>
-          <bufferAttribute attach="attributes-position" args={[particles, 3]} />
-        </bufferGeometry>
-        <pointsMaterial color="#FBBC03" size={0.035} sizeAttenuation transparent opacity={0.68} />
-      </points>
-      <pointLight color="#FBBC03" position={[2.5, 2, 3]} intensity={35} distance={9} />
-    </group>
-  );
-}
-
-function HeroScene({ scrollProgress }: { scrollProgress: { get: () => number } }) {
-  const supported = useWebGLSupport();
-  if (!supported) {
-    return <div className="srx-webgl-fallback" aria-label="Serptrix connected growth ecosystem"><i /><i /><i /><b>S</b></div>;
-  }
-  return (
-    <Canvas dpr={[1, 1.65]} camera={{ position: [0, 0, 7.2], fov: 46 }} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }} fallback={<div className="srx-webgl-fallback"><b>S</b></div>}>
-      <ambientLight intensity={1.4} />
-      <directionalLight position={[-3, 4, 5]} intensity={3.2} color="#ffffff" />
-      <Suspense fallback={null}><BrandObject scrollProgress={scrollProgress} /></Suspense>
-    </Canvas>
-  );
-}
-
-function MagneticLink({ href, children, className = "" }: { href: string; children: React.ReactNode; className?: string }) {
-  const ref = useRef<HTMLAnchorElement>(null);
-  const x = useSpring(0, { stiffness: 240, damping: 18 });
-  const y = useSpring(0, { stiffness: 240, damping: 18 });
-  return (
-    <motion.div style={{ x, y }} className="srx-magnetic-wrap">
-      <Link
-        ref={ref}
-        className={className}
-        href={href}
-        onPointerMove={(event) => {
-          const box = ref.current?.getBoundingClientRect();
-          if (!box) return;
-          x.set((event.clientX - box.left - box.width / 2) * 0.16);
-          y.set((event.clientY - box.top - box.height / 2) * 0.16);
-        }}
-        onPointerLeave={() => { x.set(0); y.set(0); }}
-      >{children}</Link>
-    </motion.div>
-  );
-}
 
 function CountUp({ value, suffix }: { value: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -245,18 +132,18 @@ export default function HomeExperience() {
         <motion.div className="srx-hero-grid" style={{ x: reduced ? 0 : layerX, y: reduced ? 0 : layerY }} aria-hidden="true" />
         <div className="srx-shell srx-hero-layout">
           <motion.div className="srx-hero-copy" style={{ y: reduced ? 0 : heroCopyY, opacity: reduced ? 1 : heroOpacity }}>
-            <Reveal><p className="srx-kicker"><i /> Independent digital growth studio <span>2026</span></p></Reveal>
+            <ScrollReveal type="fade-down"><p className="srx-kicker"><i /> Independent digital growth studio <span>2026</span></p></ScrollReveal>
             <h1 aria-label="We engineer digital momentum">
-              <Reveal><span>We engineer</span></Reveal>
-              <Reveal delay={0.08}><span>digital <em>momentum.</em></span></Reveal>
+              <ScrollReveal as="span" type="characters" text="We engineer" stagger={0.025} />
+              <ScrollReveal as="span" type="words" delay={0.08} text="digital momentum." />
             </h1>
-            <Reveal delay={0.18} className="srx-hero-bottom">
+            <ScrollReveal type="mask" delay={0.18} className="srx-hero-bottom">
               <p>Serptrix connects marketing, product engineering and applied AI into one growth system—built to create demand, remove friction and scale what works.</p>
               <div className="srx-actions">
-                <MagneticLink href="/contact" className="srx-button srx-button-gold">Start a project <span>↗</span></MagneticLink>
+                <MagneticButton href="/contact" className="srx-button srx-button-gold">Start a project</MagneticButton>
                 <Link href="/case-studies" className="srx-line-link">See our work <span>→</span></Link>
               </div>
-            </Reveal>
+            </ScrollReveal>
           </motion.div>
           <motion.div className="srx-hero-scene" style={{ opacity: heroOpacity }}>
             <HeroScene scrollProgress={scrollYProgress} />
@@ -269,16 +156,16 @@ export default function HomeExperience() {
       </section>
 
       <section className="srx-manifesto">
-        <div className="srx-manifesto-word" data-parallax aria-hidden="true">CONNECTED</div>
+        <Parallax type="reverse" strength={48} advanced className="srx-manifesto-word">CONNECTED</Parallax>
         <div className="srx-shell srx-manifesto-layout">
-          <Reveal><p className="srx-section-tag">01 / The proposition</p></Reveal>
-          <Reveal delay={0.08}><h2>Three disciplines.<br />One commercial <em>agenda.</em></h2></Reveal>
-          <Reveal delay={0.14}><p className="srx-manifesto-copy">Growth stalls between disconnected partners, platforms and priorities. We bring the system together—strategy through execution—with one senior team accountable for the outcome.</p></Reveal>
+          <ScrollReveal type="fade-right"><p className="srx-section-tag">01 / The proposition</p></ScrollReveal>
+          <ScrollReveal type="lines" delay={0.08} text={"Three disciplines.\nOne commercial agenda."} as="h2" />
+          <ScrollReveal type="blur" delay={0.14}><p className="srx-manifesto-copy">Growth stalls between disconnected partners, platforms and priorities. We bring the system together—strategy through execution—with one senior team accountable for the outcome.</p></ScrollReveal>
         </div>
         <div className="srx-ticker" aria-label="Serptrix capabilities"><div>{["STRATEGY", "SEARCH", "EXPERIENCE", "ENGINEERING", "AUTOMATION", "INTELLIGENCE", "STRATEGY", "SEARCH", "EXPERIENCE"].map((item, index) => <span key={`${item}-${index}`}>{item}<i>✦</i></span>)}</div></div>
       </section>
 
-      <section className="srx-services-pin" aria-label="Service divisions">
+      <section className="srx-services-pin" aria-label="Service divisions" data-cursor="drag" data-cursor-label="SCROLL">
         <div ref={servicesTrack} className="srx-services-track">
           <article className="srx-service-intro">
             <p className="srx-section-tag srx-light">02 / The ecosystem</p>
@@ -295,15 +182,15 @@ export default function HomeExperience() {
           ))}
           <article className="srx-service-outro">
             <p>Not sure where the constraint lives?</p><h2>Start with the<br /><em>business problem.</em></h2>
-            <MagneticLink href="/contact" className="srx-button srx-button-gold">Map the opportunity <span>↗</span></MagneticLink>
+            <MagneticButton href="/contact" className="srx-button srx-button-gold">Map the opportunity</MagneticButton>
           </article>
         </div>
       </section>
 
       <section className="srx-ai">
-        <div className="srx-ai-rings" data-parallax aria-hidden="true"><i /><i /><i /></div>
+        <Parallax type="layered" layer={1.35} strength={34} advanced className="srx-ai-rings"><i /><i /><i /></Parallax>
         <div className="srx-shell">
-          <div className="srx-ai-head"><Reveal><p className="srx-section-tag srx-light">03 / Applied intelligence</p></Reveal><Reveal delay={0.08}><h2>AI that works<br />where work <em>happens.</em></h2></Reveal></div>
+          <div className="srx-ai-head"><ScrollReveal type="fade-left"><p className="srx-section-tag srx-light">03 / Applied intelligence</p></ScrollReveal><ScrollReveal type="scale" delay={0.08}><h2>AI that works<br />where work <em>happens.</em></h2></ScrollReveal></div>
           <div className="srx-ai-stage" aria-label="AI workflow from business signal to measurable action">
             <div className="srx-ai-line" />
             <div className="srx-ai-orb">S</div>
@@ -326,7 +213,7 @@ export default function HomeExperience() {
 
       <section className="srx-process">
         <div className="srx-shell">
-          <Reveal className="srx-process-head"><p className="srx-section-tag">05 / How we move</p><h2>Clarity, then<br /><em>momentum.</em></h2><p>We resolve risk in the right order, then keep the work moving in tight, visible cycles.</p></Reveal>
+          <ScrollReveal type="stagger" className="srx-process-head"><p className="srx-section-tag">05 / How we move</p><h2>Clarity, then<br /><em>momentum.</em></h2><p>We resolve risk in the right order, then keep the work moving in tight, visible cycles.</p></ScrollReveal>
           <div className="srx-process-grid">{[
             ["01", "Diagnose", "Find the constraint beneath the symptoms."],
             ["02", "Design", "Shape the strategy, system and evidence plan."],
@@ -337,11 +224,11 @@ export default function HomeExperience() {
       </section>
 
       <section className="srx-final">
-        <div className="srx-final-grid" data-parallax aria-hidden="true" />
+        <Parallax type="scale" strength={28} className="srx-final-grid"><span /></Parallax>
         <div className="srx-shell srx-final-inner">
-          <Reveal><p className="srx-section-tag srx-light">06 / Your next move</p></Reveal>
-          <Reveal delay={0.08}><h2>Make digital your<br /><em>unfair advantage.</em></h2></Reveal>
-          <Reveal delay={0.16} className="srx-final-row"><p>Bring us the growth problem worth solving. We’ll bring the connected thinking and technical depth to move it forward.</p><MagneticLink href="/contact" className="srx-button srx-button-gold">Book a strategy call <span>↗</span></MagneticLink></Reveal>
+          <ScrollReveal type="fade-down"><p className="srx-section-tag srx-light">06 / Your next move</p></ScrollReveal>
+          <ScrollReveal type="mask" delay={0.08}><h2>Make digital your<br /><em>unfair advantage.</em></h2></ScrollReveal>
+          <ScrollReveal type="fade-left" delay={0.16} className="srx-final-row"><p>Bring us the growth problem worth solving. We’ll bring the connected thinking and technical depth to move it forward.</p><MagneticButton href="/contact" className="srx-button srx-button-gold">Book a strategy call</MagneticButton></ScrollReveal>
         </div>
         <div className="srx-final-marquee" aria-hidden="true"><span>SERPTRIX — GROWTH, ENGINEERED — SERPTRIX — GROWTH, ENGINEERED —</span></div>
       </section>
