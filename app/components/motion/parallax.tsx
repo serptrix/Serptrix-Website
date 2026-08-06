@@ -1,13 +1,11 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CSSProperties, ReactNode, useEffect, useRef } from "react";
+import { createScopedGSAP, gsap } from "./gsap-runtime";
 import { motionTokens } from "./tokens";
 import { useMotionCapabilities } from "./use-motion-capabilities";
 
-gsap.registerPlugin(ScrollTrigger);
 export type ParallaxType = "vertical" | "horizontal" | "layered" | "reverse" | "scale" | "rotation" | "opacity" | "blur";
 
 export function Parallax({ children, type = "vertical", strength = motionTokens.parallax.base, layer = 1, advanced = false, className = "" }: { children: ReactNode; type?: ParallaxType; strength?: number; layer?: number; advanced?: boolean; className?: string }) {
@@ -24,8 +22,7 @@ export function Parallax({ children, type = "vertical", strength = motionTokens.
 
   useEffect(() => {
     if (!advanced || reducedMotion || mobile || !ref.current) return;
-    const ctx = gsap.context(() => { gsap.fromTo(ref.current, { y: -amount }, { y: amount, ease: "none", scrollTrigger: { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: .7 } }); }, ref);
-    return () => ctx.revert();
+    return createScopedGSAP(ref, () => { gsap.fromTo(ref.current, { y: -amount }, { y: amount, ease: "none", scrollTrigger: { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: .7 } }); });
   }, [advanced, amount, mobile, reducedMotion]);
 
   const style: CSSProperties | Record<string, unknown> = reducedMotion || advanced ? {} : type === "horizontal" ? { x } : type === "scale" ? { scale } : type === "rotation" ? { rotate } : type === "opacity" ? { opacity } : type === "blur" ? { filter: blur } : { y };

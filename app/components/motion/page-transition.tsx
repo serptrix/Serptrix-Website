@@ -4,13 +4,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { motionTokens } from "./tokens";
-import { useMotionCapabilities } from "./use-motion-capabilities";
+import { useReducedMotionPreference } from "./use-reduced-motion";
 
 const routeTitles: Record<string, string> = { "/": "SERPTRIX", "/services": "CAPABILITIES", "/case-studies": "WORK", "/about": "ABOUT", "/blog": "INSIGHTS", "/contact": "START A PROJECT" };
 
 export function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const { reducedMotion } = useMotionCapabilities();
+  const reducedMotion = useReducedMotionPreference();
   const title = routeTitles[pathname] ?? pathname.split("/").filter(Boolean).at(-1)?.replaceAll("-", " ").toUpperCase() ?? "SERPTRIX";
   if (reducedMotion) return <div key={pathname}>{children}</div>;
 

@@ -35,7 +35,7 @@ test("renders service, case-study, and blog routes", async () => {
 });
 
 test("keeps production safeguards and animation systems in source", async () => {
-  const [content, layout, styles, packageJson, home, motionShell, smoothScroll, heroScene, tokens, siteShell, magnetic] = await Promise.all([
+  const [content, layout, styles, packageJson, home, motionShell, smoothScroll, heroScene, workflowScene, particleField, tokens, siteShell, magnetic, gsapRuntime, reducedMotionHook] = await Promise.all([
     readFile(new URL("../content/site-data.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
@@ -44,9 +44,13 @@ test("keeps production safeguards and animation systems in source", async () => 
     readFile(new URL("../app/components/motion-shell.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/motion/smooth-scroll-provider.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/motion/hero-scene.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/motion/workflow-scene.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/motion/particle-field.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/motion/tokens.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/components/site-shell.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/motion/magnetic-button.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/motion/gsap-runtime.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/motion/use-reduced-motion.ts", import.meta.url), "utf8"),
   ]);
   assert.match(content, /validateCaseStudy/);
   assert.match(content, /\[XX\]/);
@@ -64,6 +68,14 @@ test("keeps production safeguards and animation systems in source", async () => 
   assert.match(smoothScroll, /new Lenis/);
   assert.match(smoothScroll, /gsap\.ticker\.add/);
   assert.match(heroScene, /@react-three\/fiber/);
+  assert.match(heroScene, /@react-three\/drei/);
+  assert.match(heroScene, /frameloop=\{visible\s*\?\s*"always"\s*:\s*"never"\}/);
+  assert.match(workflowScene, /frameloop=\{visible\s*\?\s*"always"\s*:\s*"never"\}/);
+  assert.match(particleField, /IntersectionObserver/);
+  assert.match(packageJson, /@react-three\/drei/);
+  assert.match(gsapRuntime, /gsap\.registerPlugin\(ScrollTrigger\)/);
+  assert.match(gsapRuntime, /context\.revert/);
+  assert.match(reducedMotionHook, /reducedMotion/);
   assert.match(tokens, /premium/);
   assert.match(siteShell, /event\.key === "Escape"/);
   assert.match(siteShell, /document\.activeElement === last/);
