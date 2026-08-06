@@ -52,6 +52,9 @@ test("keeps production safeguards and animation systems in source", async () => 
   assert.match(styles, /prefers-reduced-motion:\s*reduce/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.match(home, /dynamic\(\(\) => import\("\.\/motion\/hero-scene"\)/);
+  assert.equal((home.match(/<section/g) ?? []).length, 12);
+  assert.match(home, /Your next stage of growth/);
+  assert.match(home, /WorkflowScene/);
   assert.match(home, /ScrollTrigger/);
   assert.match(home, /pointermove/);
   assert.match(motionShell, /SmoothScrollProvider/);
