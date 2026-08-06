@@ -22,7 +22,7 @@ export function MagneticButton({ href, children, className = "", cursorLabel }: 
       x.set(dx * .14); y.set(dy * .14); innerX.set(dx * .08); innerY.set(dy * .08);
     }} onPointerLeave={reset} onBlur={reset}>
       <span className="srx-magnetic-sweep" aria-hidden="true" />
-      <motion.span className="srx-magnetic-label" style={{ x: innerX, y: innerY }}>{children}</motion.span>
+      <motion.span className="srx-magnetic-label" style={{ x: innerX, y: innerY }}><span className="srx-label-face is-current">{children}</span><span className="srx-label-face is-next" aria-hidden="true">{children}</span></motion.span>
       <motion.span className="srx-magnetic-arrow" aria-hidden="true" whileHover={{ x: 4 }}>↗</motion.span>
     </Link>
   </motion.div>;

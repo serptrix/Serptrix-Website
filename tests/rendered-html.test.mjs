@@ -35,7 +35,7 @@ test("renders service, case-study, and blog routes", async () => {
 });
 
 test("keeps production safeguards and animation systems in source", async () => {
-  const [content, layout, styles, packageJson, home, motionShell, smoothScroll, heroScene, tokens] = await Promise.all([
+  const [content, layout, styles, packageJson, home, motionShell, smoothScroll, heroScene, tokens, siteShell, magnetic] = await Promise.all([
     readFile(new URL("../content/site-data.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
@@ -45,6 +45,8 @@ test("keeps production safeguards and animation systems in source", async () => 
     readFile(new URL("../app/components/motion/smooth-scroll-provider.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/motion/hero-scene.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/motion/tokens.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/site-shell.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/motion/magnetic-button.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(content, /validateCaseStudy/);
   assert.match(content, /\[XX\]/);
@@ -63,4 +65,8 @@ test("keeps production safeguards and animation systems in source", async () => 
   assert.match(smoothScroll, /gsap\.ticker\.add/);
   assert.match(heroScene, /@react-three\/fiber/);
   assert.match(tokens, /premium/);
+  assert.match(siteShell, /event\.key === "Escape"/);
+  assert.match(siteShell, /document\.activeElement === last/);
+  assert.match(siteShell, /mega-panel-bg/);
+  assert.match(magnetic, /srx-label-face is-next/);
 });
