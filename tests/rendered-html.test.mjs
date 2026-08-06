@@ -35,7 +35,7 @@ test("renders service, case-study, and blog routes", async () => {
 });
 
 test("keeps production safeguards and animation systems in source", async () => {
-  const [content, layout, styles, packageJson, home, motionShell, smoothScroll, heroScene, workflowScene, particleField, tokens, siteShell, magnetic, gsapRuntime, reducedMotionHook] = await Promise.all([
+  const [content, layout, styles, packageJson, home, motionShell, smoothScroll, heroScene, workflowScene, particleField, tokens, siteShell, magnetic, gsapRuntime, reducedMotionHook, projectForm, workRoute, insightsRoute] = await Promise.all([
     readFile(new URL("../content/site-data.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
@@ -51,11 +51,19 @@ test("keeps production safeguards and animation systems in source", async () => 
     readFile(new URL("../app/components/motion/magnetic-button.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/motion/gsap-runtime.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/components/motion/use-reduced-motion.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/project-form.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/work/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/insights/page.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(content, /validateCaseStudy/);
   assert.match(content, /\[XX\]/);
   assert.match(layout, /ConsentManager/);
+  assert.match(layout, /Sora/);
+  assert.match(layout, /Inter/);
+  assert.match(layout, /display:\s*"swap"/);
   assert.match(styles, /prefers-reduced-motion:\s*reduce/);
+  assert.match(styles, /--text-display:\s*clamp\(2\.5rem,\s*5vw,\s*4\.5rem\)/);
+  assert.match(styles, /min-height:\s*44px/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.match(home, /dynamic\(\(\) => import\("\.\/motion\/hero-scene"\)/);
   assert.equal((home.match(/<section/g) ?? []).length, 12);
@@ -80,5 +88,10 @@ test("keeps production safeguards and animation systems in source", async () => 
   assert.match(siteShell, /event\.key === "Escape"/);
   assert.match(siteShell, /document\.activeElement === last/);
   assert.match(siteShell, /mega-panel-bg/);
+  assert.match(siteShell, /pointerdown/);
   assert.match(magnetic, /srx-label-face is-next/);
+  assert.match(projectForm, /name="email"/);
+  assert.match(projectForm, /required/);
+  assert.match(workRoute, /redirect\("\/case-studies"\)/);
+  assert.match(insightsRoute, /redirect\("\/blog"\)/);
 });

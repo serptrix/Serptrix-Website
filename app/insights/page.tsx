@@ -1,1 +1,2 @@
-export{metadata,default}from"../blog/page";
+import { redirect } from "next/navigation";
+export default function InsightsRedirect(){redirect("/blog")}

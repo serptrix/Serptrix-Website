@@ -19,6 +19,7 @@ export function Header() {
   const path = usePathname(); const reduced = useReducedMotion(); const capabilities = useMotionCapabilities(); const [mobile, setMobile] = useState(false); const [mega, setMega] = useState(false); const [scrolled, setScrolled] = useState(false); const navRef = useRef<HTMLElement>(null); const toggleRef = useRef<HTMLButtonElement>(null);
   useEffect(() => { const onScroll = () => setScrolled(window.scrollY > 28); onScroll(); window.addEventListener("scroll", onScroll, { passive: true }); return () => window.removeEventListener("scroll", onScroll); }, []);
   useEffect(() => { const frame = requestAnimationFrame(() => { setMobile(false); setMega(false); }); return () => cancelAnimationFrame(frame); }, [path]);
+  useEffect(() => { const outside = (event: PointerEvent) => { if (mega && !navRef.current?.contains(event.target as Node)) setMega(false); }; document.addEventListener("pointerdown", outside); return () => document.removeEventListener("pointerdown", outside); }, [mega]);
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") { if (mega) setMega(false); if (mobile) { setMobile(false); toggleRef.current?.focus(); } }

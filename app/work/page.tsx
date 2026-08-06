@@ -1,1 +1,2 @@
-export{metadata,default}from"../case-studies/page";
+import { redirect } from "next/navigation";
+export default function WorkRedirect(){redirect("/case-studies")}

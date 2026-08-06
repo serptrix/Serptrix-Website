@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { DM_Sans, Manrope } from "next/font/google";
+import { Inter, Sora } from "next/font/google";
 import { ConsentManager } from "./components/consent-manager";
 import { MotionShell } from "./components/motion-shell";
 import { Footer, Header } from "./components/site-shell";
 import { StructuredData } from "./components/structured-data";
 import "./globals.css";
 
-const display = Manrope({ variable: "--font-display", subsets: ["latin"] });
-const body = DM_Sans({ variable: "--font-body", subsets: ["latin"] });
+const display = Sora({ variable: "--font-heading", subsets: ["latin"], weight: ["400", "500", "600", "700"], display: "swap" });
+const body = Inter({ variable: "--font-copy", subsets: ["latin"], weight: ["400", "500", "600", "700"], display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://serptrix.com"),
