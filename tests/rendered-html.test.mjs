@@ -14,11 +14,11 @@ test("server-renders the finished Serptrix homepage", async () => {
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   const html = await response.text();
-  assert.match(html, /<title>Serptrix — Growth, engineered as one system<\/title>/i);
-  assert.match(html, /Marketing, technology/);
-  assert.match(html, /Book a Strategy Call/);
+  assert.match(html, /<title>Serptrix — Digital Growth, Engineered<\/title>/i);
+  assert.match(html, /We engineer/);
+  assert.match(html, /Book a strategy call/i);
   assert.match(html, /application\/ld\+json/);
-  assert.match(html, /href="\/services\/ai-development"/);
+  assert.match(html, /href="\/services\/ai-technology"/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });
 
@@ -34,16 +34,23 @@ test("renders service, case-study, and blog routes", async () => {
   assert.match(await article.text(), /BlogPosting/);
 });
 
-test("keeps production safeguards in source", async () => {
-  const [content, layout, styles, packageJson] = await Promise.all([
+test("keeps production safeguards and animation systems in source", async () => {
+  const [content, layout, styles, packageJson, home, motionShell] = await Promise.all([
     readFile(new URL("../content/site-data.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/home-experience.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/motion-shell.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(content, /validateCaseStudy/);
   assert.match(content, /\[XX\]/);
   assert.match(layout, /ConsentManager/);
   assert.match(styles, /prefers-reduced-motion:\s*reduce/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
+  assert.match(home, /@react-three\/fiber/);
+  assert.match(home, /ScrollTrigger/);
+  assert.match(home, /pointermove/);
+  assert.match(motionShell, /new Lenis/);
+  assert.match(motionShell, /gsap\.ticker\.add/);
 });

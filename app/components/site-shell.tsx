@@ -1,32 +1,38 @@
 "use client";
+
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const serviceGroups = [
-  { title: "Digital Marketing", href: "/services/digital-marketing", items: [["SEO Optimization", "Earn durable, qualified search visibility.","seo-optimization"], ["Social Media Marketing", "Turn attention into relevance and trust.","social-media-marketing"], ["Performance Marketing", "Acquire customers against commercial targets.","performance-marketing"]] },
-  { title: "Development", href: "/services/development", items: [["Website Development", "Make every digital interaction faster and clearer.","website-development"], ["SaaS Development", "Build useful products on scalable foundations.","saas-development"], ["Ecommerce Development", "Remove friction from discovery to retention.","ecommerce-development"]] },
-  { title: "AI & Technology", href: "/services/ai-technology", items: [["AI Development", "Apply intelligence to valuable business problems.","ai-development"], ["AI Automation", "Give teams back time and operating capacity.","ai-automation"], ["Digital Strategy", "Connect technology choices to growth priorities.","digital-strategy"]] },
+  { title: "Digital Marketing", href: "/services/digital-marketing", items: [["SEO Optimization", "Earn durable, qualified search visibility.", "seo-optimization"], ["Social Media Marketing", "Turn attention into relevance and trust.", "social-media-marketing"], ["Performance Marketing", "Acquire customers against commercial targets.", "performance-marketing"]] },
+  { title: "Development", href: "/services/development", items: [["Website Development", "Make every digital interaction faster and clearer.", "website-development"], ["SaaS Development", "Build useful products on scalable foundations.", "saas-development"], ["Ecommerce Development", "Remove friction from discovery to retention.", "ecommerce-development"]] },
+  { title: "AI & Technology", href: "/services/ai-technology", items: [["AI Development", "Apply intelligence to valuable business problems.", "ai-development"], ["AI Automation", "Give teams back time and operating capacity.", "ai-automation"], ["Digital Strategy", "Connect technology choices to growth priorities.", "digital-strategy"]] },
 ];
 
 export function Header() {
-  const path = usePathname(); const [mobile, setMobile] = useState(false); const [mega, setMega] = useState(false); const [scrolled, setScrolled] = useState(false);
+  const path = usePathname();
+  const reduced = useReducedMotion();
+  const [mobile, setMobile] = useState(false);
+  const [mega, setMega] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   useEffect(() => { const onScroll = () => setScrolled(window.scrollY > 16); onScroll(); window.addEventListener("scroll", onScroll, { passive: true }); return () => window.removeEventListener("scroll", onScroll); }, []);
+  useEffect(() => { setMobile(false); setMega(false); }, [path]);
+
   return <>
-    <div className="announcement"><div className="shell"><b>NEW</b><span>Now building practical AI systems for modern businesses.</span><Link href="/services/ai-development">Explore AI Development <i>↗</i></Link></div></div>
-    <header className={`site-header ${scrolled ? "scrolled" : ""}`}><div className="shell nav-wrap">
+    <div className="announcement"><div className="shell"><b>NEW</b><span>Now building practical AI systems for modern businesses.</span><Link href="/services/ai-technology">Explore AI Development <i>↗</i></Link></div></div>
+    <motion.header className={`site-header ${scrolled ? "scrolled" : ""}`} initial={reduced ? false : { y: -16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .55 }}><div className="shell nav-wrap">
       <Link className="logo" href="/" aria-label="Serptrix home"><span className="logo-mark">S</span><span>SERPTRIX</span></Link>
       <button className="menu-toggle" aria-label="Toggle navigation" aria-expanded={mobile} onClick={() => setMobile(!mobile)}><span /><span /></button>
-      <nav className={mobile ? "open" : ""} aria-label="Primary navigation">
+      <motion.nav className={mobile ? "open" : ""} aria-label="Primary navigation" animate={mobile ? { opacity: 1, y: 0 } : { opacity: 1 }}>
         <div className="mega-trigger" onMouseEnter={() => setMega(true)} onMouseLeave={() => setMega(false)}>
           <button aria-expanded={mega} aria-controls="services-menu" onClick={() => setMega(!mega)} onFocus={() => setMega(true)}>Services <span>⌄</span></button>
-          <div id="services-menu" className={`mega-menu ${mega ? "shown" : ""}`} onKeyDown={e => { if (e.key === "Escape") setMega(false); }}>
-            <div className="shell mega-inner"><div className="mega-intro"><p>CAPABILITIES</p><h2>Three disciplines.<br /><em>One growth agenda.</em></h2><Link href="/services">Explore all services <span>→</span></Link></div>{serviceGroups.map(group => <div className="mega-group" key={group.title}><Link href={group.href}>{group.title} <span>↗</span></Link>{group.items.map(item => <Link href={`/services/${item[2]}`} key={item[0]}><strong>{item[0]}{item[0] === "AI Development" && <b>NEW</b>}</strong><small>{item[1]}</small></Link>)}</div>)}</div>
-          </div>
+          <AnimatePresence>{mega && <motion.div id="services-menu" className="mega-menu shown" initial={reduced ? false : { opacity: 0, y: -14, clipPath: "inset(0 0 100% 0)" }} animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)" }} exit={{ opacity: 0, y: -8 }} transition={{ duration: .28 }} onKeyDown={(event) => { if (event.key === "Escape") setMega(false); }}><div className="shell mega-inner"><div className="mega-intro"><p>CAPABILITIES</p><h2>Three disciplines.<br /><em>One growth agenda.</em></h2><Link href="/services">Explore all services <span>→</span></Link></div>{serviceGroups.map((group) => <div className="mega-group" key={group.title}><Link href={group.href}>{group.title} <span>↗</span></Link>{group.items.map((item) => <Link href={`/services/${item[2]}`} key={item[0]}><strong>{item[0]}{item[0] === "AI Development" && <b>NEW</b>}</strong><small>{item[1]}</small></Link>)}</div>)}</div></motion.div>}</AnimatePresence>
         </div>
-        <Link className={path.startsWith("/case-studies") ? "active" : ""} href="/case-studies">Work</Link><Link className={path === "/about" ? "active" : ""} href="/about">About</Link><Link className={path.startsWith("/blog") ? "active" : ""} href="/blog">Insights</Link><Link className={path === "/contact" ? "active" : ""} href="/contact">Contact</Link><Link className="nav-cta" href="/contact">Book a Strategy Call <span>↗</span></Link>
-      </nav>
-    </div></header>
+        <Link className={path.startsWith("/case-studies") ? "active" : ""} href="/case-studies">Work</Link><Link className={path === "/about" ? "active" : ""} href="/about">About</Link><Link className={path.startsWith("/blog") ? "active" : ""} href="/blog">Insights</Link><Link className={path === "/contact" ? "active" : ""} href="/contact">Contact</Link><motion.div whileHover={reduced ? undefined : { y: -2 }} whileTap={reduced ? undefined : { scale: .98 }}><Link className="nav-cta" href="/contact">Book a Strategy Call <span>↗</span></Link></motion.div>
+      </motion.nav>
+    </div></motion.header>
   </>;
 }
 
