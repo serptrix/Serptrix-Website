@@ -10,18 +10,13 @@ import { MagneticButton } from "./motion/magnetic-button";
 import { Parallax } from "./motion/parallax";
 import { ScrollReveal } from "./motion/scroll-reveal";
 import { useMotionCapabilities } from "./motion/use-motion-capabilities";
+import { ServiceSections } from "./service-sections";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const HeroScene = dynamic(() => import("./motion/hero-scene"), { ssr: false, loading: () => <div className="srx-canvas-loading" aria-hidden="true" /> });
 const WorkflowScene = dynamic(() => import("./motion/workflow-scene"), { ssr: false, loading: () => <div className="srx-ai3d-fallback" aria-hidden="true" /> });
 const ParticleField = dynamic(() => import("./motion/particle-field"), { ssr: false });
-
-const divisions = [
-  { name: "Digital Marketing", label: "Demand", copy: "Attract attention, build demand and create measurable acquisition.", items: ["SEO Optimization", "Social Media Marketing", "Performance Marketing"] },
-  { name: "Development", label: "Experience", copy: "Turn strategy into fast, scalable and conversion-focused digital products.", items: ["Website Development", "SaaS Development", "Ecommerce Development"] },
-  { name: "AI & Technology", label: "Intelligence", copy: "Connect systems, automate workflows and create smarter business operations.", items: ["AI Development", "AI Automation", "Digital Strategy"] },
-];
 
 const aiServices = [
   { name: "AI Development", badge: "New", copy: "Build practical AI tools, assistants and internal systems around business workflows and customer needs.", nodes: ["Business Input", "Data + Context", "AI Processing", "Automated Action", "Business Result"] },
@@ -63,20 +58,9 @@ function PlaceholderCounter({ suffix = "%" }: { suffix?: string }) {
   return <span ref={ref}>{value}{suffix}</span>;
 }
 
-function MarketingField() {
-  const field = useRef<HTMLDivElement>(null); const glowX = useMotionValue(50); const glowY = useMotionValue(50); const x = useSpring(glowX, { stiffness: 80, damping: 25 }); const y = useSpring(glowY, { stiffness: 80, damping: 25 });
-  return <div ref={field} className="s3-data-field" onPointerMove={(event) => { const box = field.current?.getBoundingClientRect(); if (!box) return; glowX.set(((event.clientX - box.left) / box.width) * 100); glowY.set(((event.clientY - box.top) / box.height) * 100); }}>
-    <motion.i className="s3-data-glow" style={{ left: useTransform(x, (v) => `${v}%`), top: useTransform(y, (v) => `${v}%`) }} />
-    <div className="s3-search-bar"><span>⌕</span><b>qualified growth opportunities</b><i>LIVE</i></div>
-    <svg className="s3-growth-graph" viewBox="0 0 700 260" role="img" aria-label="Abstract search visibility trend"><path className="s3-graph-base" d="M10 235 C120 220,145 190,225 202 S350 145,420 158 S530 88,690 35"/><path className="s3-graph-live" d="M10 235 C120 220,145 190,225 202 S350 145,420 158 S530 88,690 35"/></svg>
-    <div className="s3-rank-stack">{["High-intent visibility", "Relevant brand attention", "Efficient acquisition"].map((item, i) => <motion.div key={item} initial={{ x: 35, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ delay: i * .12 }}><span>0{i + 1}</span><b>{item}</b><i style={{ width: `${88 - i * 17}%` }} /></motion.div>)}</div>
-    <div className="s3-nodes" aria-hidden="true"><i/><i/><i/><i/><span/><span/><span/></div>
-  </div>;
-}
-
 export default function HomeExperience() {
-  const root = useRef<HTMLElement>(null); const hero = useRef<HTMLElement>(null); const eco = useRef<HTMLElement>(null); const ecoProgress = useRef<HTMLDivElement>(null); const devTrack = useRef<HTMLDivElement>(null); const process = useRef<HTMLElement>(null); const manualDivisionUntil = useRef(0);
-  const reduced = useReducedMotion(); const capabilities = useMotionCapabilities(); const [activeDivision, setActiveDivision] = useState(0); const [aiTab, setAiTab] = useState(0); const [activeCase, setActiveCase] = useState(0); const [activePrinciple, setActivePrinciple] = useState(0); const [activeProcess, setActiveProcess] = useState(0); const [activeMetric, setActiveMetric] = useState(0);
+  const root = useRef<HTMLElement>(null); const hero = useRef<HTMLElement>(null); const process = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion(); const capabilities = useMotionCapabilities(); const [aiTab, setAiTab] = useState(0); const [activeCase, setActiveCase] = useState(0); const [activePrinciple, setActivePrinciple] = useState(0); const [activeProcess, setActiveProcess] = useState(0); const [activeMetric, setActiveMetric] = useState(0);
   const mouseX = useMotionValue(0); const mouseY = useMotionValue(0); const smoothX = useSpring(mouseX, { stiffness: 65, damping: 22 }); const smoothY = useSpring(mouseY, { stiffness: 65, damping: 22 });
   const layerOneX = useTransform(smoothX, [-.5,.5], [-14,14]); const layerOneY = useTransform(smoothY, [-.5,.5], [-9,9]); const layerTwoX = useTransform(smoothX, [-.5,.5], [-30,30]); const layerTwoY = useTransform(smoothY, [-.5,.5], [-20,20]); const layerThreeX = useTransform(smoothX, [-.5,.5], [-48,48]); const manifestoX = useTransform(smoothX, [-.5,.5], [-9,9]);
   const { scrollYProgress } = useScroll({ target: hero, offset: ["start start", "end start"] }); const heroY = useTransform(scrollYProgress, [0,1], [0,170]); const heroScale = useTransform(scrollYProgress, [0,1], [1,.92]); const heroOpacity = useTransform(scrollYProgress, [0,.82], [1,0]);
@@ -84,13 +68,6 @@ export default function HomeExperience() {
   useEffect(() => { if (reduced || capabilities.touch) return; let frame = 0; let px = 0; let py = 0; const update = () => { mouseX.set(px / window.innerWidth - .5); mouseY.set(py / window.innerHeight - .5); frame = 0; }; const pointer = (event: PointerEvent) => { px = event.clientX; py = event.clientY; if (!frame) frame = requestAnimationFrame(update); }; window.addEventListener("pointermove", pointer, { passive: true }); return () => { window.removeEventListener("pointermove", pointer); cancelAnimationFrame(frame); }; }, [capabilities.touch, mouseX, mouseY, reduced]);
 
   useEffect(() => { if (!root.current || reduced) return; const ctx = gsap.context(() => { const mm = gsap.matchMedia();
-    mm.add("(min-width: 901px)", () => {
-      const ecosystem = eco.current; const ecosystemStage = ecosystem?.querySelector<HTMLElement>(".s3-eco-layout");
-      if (ecosystem && ecosystemStage) ScrollTrigger.create({ trigger: ecosystem, start: "top top", end: () => `+=${Math.max(window.innerHeight * 1.8, ecosystemStage.offsetHeight * 2)}`, pin: ecosystemStage, pinSpacing: true, scrub: .7, invalidateOnRefresh: true, onUpdate: (self) => { const next = Math.min(2, Math.floor(self.progress * 3)); if (Date.now() > manualDivisionUntil.current) setActiveDivision(next); if (ecoProgress.current) ecoProgress.current.style.transform = `scaleX(${self.progress})`; } });
-      const track = devTrack.current; if (track) { const travel = () => Math.max(0, track.scrollWidth - document.documentElement.clientWidth); const horizontal = gsap.to(track, { x: () => -travel(), ease: "none", scrollTrigger: { trigger: ".s5-development", start: "top top", end: () => `+=${travel() + window.innerHeight * .35}`, pin: true, pinSpacing: true, scrub: .8, invalidateOnRefresh: true, onUpdate: (self) => { document.querySelector<HTMLElement>(".s5-progress i")?.style.setProperty("transform", `scaleX(${self.progress})`); } } }); gsap.utils.toArray<HTMLElement>(".s5-dev-panel").forEach((panel) => gsap.fromTo(panel, { scale: .965 }, { scale: 1, scrollTrigger: { trigger: panel, containerAnimation: horizontal, start: "left 92%", end: "center center", scrub: true } })); }
-    });
-    gsap.fromTo(".s3-graph-live", { strokeDashoffset: 1200 }, { strokeDashoffset: 0, ease: "none", scrollTrigger: { trigger: ".s4-marketing", start: "top 75%", end: "bottom 35%", scrub: true } });
-    gsap.fromTo(".s4-data-grid", { yPercent: -8 }, { yPercent: 8, ease: "none", scrollTrigger: { trigger: ".s4-marketing", start: "top bottom", end: "bottom top", scrub: true } });
     gsap.fromTo(".s6-node", { scale: .94, y: 16 }, { scale: 1, y: 0, stagger: .12, immediateRender: false, scrollTrigger: { trigger: ".s6-workflow", start: "top 85%", end: "bottom 45%", scrub: .7 } });
     gsap.fromTo(".s7-impact", { backgroundColor: "#ffffff" }, { backgroundColor: "#fff7d8", scrollTrigger: { trigger: ".s7-impact", start: "top 75%", end: "bottom 30%", scrub: true } });
     gsap.utils.toArray<HTMLElement>(".s7-metrics article").forEach((metric,i) => { ScrollTrigger.create({ trigger: metric, start: "top 55%", end: "bottom 45%", onEnter: () => setActiveMetric(i), onEnterBack: () => setActiveMetric(i) }); const label=metric.querySelector("p"); if(label) gsap.fromTo(label,{y:i%2?-15:15},{y:i%2?15:-15,ease:"none",scrollTrigger:{trigger:metric,start:"top bottom",end:"bottom top",scrub:true}}); });
@@ -105,7 +82,7 @@ export default function HomeExperience() {
     return () => { mm.revert(); observer.disconnect(); window.removeEventListener("load", refresh); };
   }, root); return () => ctx.revert(); }, [reduced]);
 
-  const currentDivision = divisions[activeDivision]; const currentAi = aiServices[aiTab];
+  const currentAi = aiServices[aiTab];
   return <main ref={root} className="srx-home s3-home">
     {/* 01 — Immersive WebGL Hero */}
     <section ref={hero} className="s3-section s1-hero" data-section="01">
@@ -129,32 +106,8 @@ export default function HomeExperience() {
       <motion.div className="s2-marquee is-bottom" data-cursor="drag" data-cursor-label="DRAG" drag={reduced?false:"x"} dragConstraints={{left:-420,right:0}} dragElastic={.08}><div>{["STRATEGY","SEARCH","EXPERIENCE","ENGINEERING","AUTOMATION","INTELLIGENCE","STRATEGY","SEARCH"].map((x,i)=><span className={i%2===0?"is-large":""} key={`${x}-${i}`}>{x}<i>◆</i></span>)}</div></motion.div>
     </section>
 
-    {/* 03 — Interactive Service Ecosystem */}
-    <section ref={eco} className={`s3-section s3-ecosystem eco-${activeDivision}`} data-section="03">
-      <div className="s3-eco-progress"><div ref={ecoProgress}/></div><div className="srx-shell s3-eco-layout">
-        <header className="s3-eco-intro"><p className="srx-section-tag srx-light">03 / The Serptrix Ecosystem</p><h2>Three capabilities. <em>One connected growth system.</em></h2><p>Most agencies treat marketing, technology and operations as separate problems. Serptrix connects them—so visibility, customer experience, software, automation and strategy work together instead of competing for attention.</p></header>
-        <div className="s3-eco-nav" role="tablist" aria-label="Serptrix ecosystem areas">{divisions.map((d,i)=>{const select=()=>{manualDivisionUntil.current=Date.now()+5000;setActiveDivision(i)};return <button role="tab" aria-selected={activeDivision===i} aria-controls="ecosystem-detail" key={d.name} className={activeDivision===i?"active":""} onFocus={select} onClick={select}><span>0{i+1}</span>{d.name}</button>})}</div>
-        <motion.div className="s3-eco-visual" style={{x:layerOneX,y:layerOneY}} aria-hidden="true"><i className="eco-ring r1"/><i className="eco-ring r2"/><i className="eco-ring r3"/><div className="eco-core">S</div>{divisions.map((d,i)=><div key={d.name} className={`eco-satellite sat-${i} ${activeDivision===i?"active":""}`}><b>0{i+1}</b><span>{d.label}</span></div>)}<div className="eco-connection"/></motion.div>
-        <AnimateDivision key={activeDivision} division={currentDivision}/>
-        <div className="s3-mobile-chapters">{divisions.map((division,i)=><article key={division.name}><span>0{i+1}</span><h3>{division.name}</h3><p>{division.copy}</p><ul>{division.items.map(item=><li key={item}>{item}</li>)}</ul></article>)}</div>
-      </div>
-    </section>
-
-    {/* 04 — SEO and Performance Marketing Data Experience */}
-    <section className="s3-section s4-marketing" data-section="04"><div className="s4-data-grid" aria-hidden="true"/><div className="srx-shell s4-layout"><div className="s4-copy"><ScrollReveal type="fade-right"><p className="srx-section-tag srx-light">04 / Digital Marketing</p></ScrollReveal><ScrollReveal type="mask"><h2>Turn visibility into <em>measurable demand.</em></h2></ScrollReveal><p>We combine organic search, social attention and performance campaigns to help businesses attract the right audience, convert interest and improve customer acquisition efficiency.</p><div className="s4-services">{[
-      ["SEO Optimization","Improve technical health, search visibility, topical authority and qualified organic traffic."],
-      ["Social Media Marketing","Build attention, credibility and engagement through consistent platform-specific strategy and content."],
-      ["Performance Marketing","Design and optimize paid campaigns around leads, revenue, customer acquisition cost and return on investment."]
-    ].map((service,i)=><article key={service[0]}><span>0{i+1}</span><div><b>{service[0]}</b><small>{service[1]}</small></div></article>)}</div><Link className="srx-line-link" href="/services/digital-marketing">Explore Digital Marketing <span>→</span></Link></div><MarketingField/></div><div className="srx-shell s4-metrics"><article><PlaceholderCounter/><p>qualified traffic growth</p><small>Illustrative metric</small></article><article><PlaceholderCounter/><p>conversion improvement</p><small>Illustrative metric</small></article><aside>REPLACE WITH VERIFIED PROJECT DATA</aside></div></section>
-
-    {/* 05 — Horizontal Development Journey */}
-    <section className="s3-section s5-development" data-section="05"><div ref={devTrack} className="s5-track" aria-label="Development service journey">
-      <article className="s5-intro"><p className="srx-section-tag">05 / Development</p><h2>Digital products engineered to <em>perform and scale.</em></h2><p>From conversion-focused websites to SaaS products and ecommerce platforms, Serptrix builds digital experiences around speed, usability, scalability and business growth.</p></article>
-      <article className="s5-dev-panel website"><PanelHeading number="01" title="Website Development" copy="Fast, responsive and conversion-focused websites built around clear business goals."/><motion.div className="s5-device-stage" whileHover={reduced?undefined:{rotateY:-3,rotateX:2}}><div className="device desktop"><i/><b>Conversion-focused content</b><span/></div><div className="device tablet"><i/><b>98</b><span/></div><div className="device mobile"><i/><b>↗</b><span/></div></motion.div></article>
-      <article className="s5-dev-panel saas"><PanelHeading number="02" title="SaaS Development" copy="Scalable platforms, portals, dashboards and digital products designed for long-term growth."/><div className="s5-dashboard"><aside><b>S</b><i/><i/><i/></aside><div className="dash-main"><span/><div><i/><i/><i/></div><b/><b/></div></div></article>
-      <article className="s5-dev-panel commerce"><PanelHeading number="03" title="Ecommerce Development" copy="High-performing stores engineered around customer experience, conversion, retention and operational efficiency."/><div className="s5-commerce-flow">{["Discover","Product detail","Cart + checkout","Return"].map((x,i)=><div key={x}><span>0{i+1}</span><i/><b>{x}</b></div>)}</div></article>
-      <article className="s5-outro"><h2>Build the system behind the <em>growth.</em></h2><MagneticButton href="/services/development" className="srx-button srx-button-gold">Explore Development Services</MagneticButton></article>
-    </div><div className="s5-progress"><i/></div></section>
+    {/* 03–05 — Reliable natural-flow service experiences */}
+    <ServiceSections/>
 
     {/* 06 — AI Automation Workflow */}
     <section className="s3-section s6-ai" data-section="06"><WorkflowScene active={aiTab}/><div className="srx-shell s6-content"><div className="s6-head"><p className="srx-section-tag srx-light">06 / AI &amp; Technology</p><div><ScrollReveal type="scale"><h2>Practical AI and automation built around <em>real workflows.</em></h2></ScrollReveal><p>Serptrix helps businesses apply AI, automation and digital strategy where they create practical value—reducing repetitive work, improving decisions and connecting disconnected systems.</p></div></div><div className="s6-tabs" role="tablist" aria-label="AI and technology services">{aiServices.map((s,i)=><button id={`ai-tab-${i}`} role="tab" aria-selected={aiTab===i} aria-controls="ai-workflow-panel" tabIndex={aiTab===i?0:-1} key={s.name} onClick={()=>setAiTab(i)} onKeyDown={(event)=>{if(event.key!=="ArrowRight"&&event.key!=="ArrowLeft")return;event.preventDefault();const next=(i+(event.key==="ArrowRight"?1:2))%3;setAiTab(next);document.getElementById(`ai-tab-${next}`)?.focus();}}>{s.name}{s.badge&&<i>{s.badge}</i>}</button>)}</div><motion.div id="ai-workflow-panel" role="tabpanel" aria-labelledby={`ai-tab-${aiTab}`} key={aiTab} className="s6-workflow" style={{x:layerOneX}} initial={{y:18,scale:.97}} animate={{y:0,scale:1}}><div className="s6-workflow-line"/>{currentAi.nodes.map((node,i)=><div key={node} className={`s6-node n${i}`}><span>0{i+1}</span><b>{node}</b><i/></div>)}</motion.div><div className="s6-ai-detail"><motion.p key={currentAi.copy} initial={{y:8}} animate={{y:0}}>{currentAi.copy}</motion.p><Link className="srx-line-link" href="/services/ai-technology">Discover AI &amp; Technology <span>→</span></Link></div></div></section>
@@ -178,6 +131,3 @@ export default function HomeExperience() {
     <section className="s3-section s12-final" data-section="12"><ParticleField/><motion.div style={{x:layerTwoX,y:layerOneY}}><Parallax type="scale" strength={32} className="s12-orbit"><i/><i/><i/></Parallax></motion.div><div className="srx-shell s12-inner"><p className="srx-section-tag srx-light">12 / Your next growth system</p><ScrollReveal type="scale"><h2>Your next stage of growth<br/>needs a <em>better system.</em></h2></ScrollReveal><div className="s12-row"><p>Tell us what you are building, improving, or scaling. We will help connect the right marketing, development, AI, and technology strategy.</p><ScrollReveal type="stagger" className="s12-actions"><MagneticButton href="/contact" className="srx-button srx-button-gold">Book a Strategy Call</MagneticButton><Link className="srx-line-link" href="/contact">Start a Project <span>→</span></Link></ScrollReveal></div></div><div className="s12-footer-peek">SERPTRIX</div></section>
   </main>;
 }
-
-function AnimateDivision({ division }: { division: typeof divisions[number] }) { return <motion.div id="ecosystem-detail" role="tabpanel" className="s3-eco-copy" initial={{y:24}} animate={{y:0}}><p>{division.label} system</p><h3>{division.name}</h3><p><strong>Business outcome:</strong> {division.copy}</p><ul>{division.items.map(x=><li key={x}>{x}<span>↗</span></li>)}</ul><Link className="srx-line-link" href="/services">Explore all capabilities <span>→</span></Link></motion.div>; }
-function PanelHeading({number,title,copy}:{number:string;title:string;copy:string}) { return <div className="s5-panel-head"><span>{number}</span><p>DEVELOPMENT SYSTEM</p><h2>{title}</h2><small>{copy}</small></div>; }

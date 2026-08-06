@@ -40,7 +40,7 @@ test("renders service, case-study, and blog routes", async () => {
 });
 
 test("keeps production safeguards and animation systems in source", async () => {
-  const [content, layout, styles, packageJson, home, motionShell, smoothScroll, heroScene, workflowScene, particleField, tokens, siteShell, magnetic, gsapRuntime, reducedMotionHook, projectForm, workRoute, insightsRoute] = await Promise.all([
+  const [content, layout, styles, packageJson, home, motionShell, smoothScroll, heroScene, workflowScene, particleField, tokens, siteShell, magnetic, gsapRuntime, reducedMotionHook, projectForm, workRoute, insightsRoute, serviceSections] = await Promise.all([
     readFile(new URL("../content/site-data.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
@@ -59,6 +59,7 @@ test("keeps production safeguards and animation systems in source", async () => 
     readFile(new URL("../app/components/project-form.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/work/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/insights/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/service-sections.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(content, /validateCaseStudy/);
   assert.match(content, /\[XX\]/);
@@ -71,7 +72,8 @@ test("keeps production safeguards and animation systems in source", async () => 
   assert.match(styles, /min-height:\s*44px/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.match(home, /dynamic\(\(\) => import\("\.\/motion\/hero-scene"\)/);
-  assert.equal((home.match(/<section/g) ?? []).length, 12);
+  assert.equal((home.match(/<section/g) ?? []).length + (serviceSections.match(/<section/g) ?? []).length, 12);
+  assert.doesNotMatch(serviceSections, /ScrollTrigger|pin:\s*true/);
   assert.match(home, /Your next stage of growth/);
   assert.match(home, /WorkflowScene/);
   assert.match(home, /ScrollTrigger/);
