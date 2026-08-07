@@ -240,3 +240,13 @@ button,.btn,.srx-button,.nav-cta,a[role="button"]{border-radius:50px}
 .s12-final{min-height:400px}
 .srx-shell{width:100%;padding:0 6%}
 .s1-copy h1{max-width:600px}
+
+/* Full-width glass header that contracts into a floating navigation capsule. */
+.site-header{width:100%;max-width:none;margin-inline:auto;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.55);border-left:0;border-right:0;box-shadow:0 8px 32px rgba(5,9,54,.06);backdrop-filter:blur(24px) saturate(155%);-webkit-backdrop-filter:blur(24px) saturate(155%);transition:width .52s cubic-bezier(.22,1,.36,1),max-width .52s cubic-bezier(.22,1,.36,1),height .42s cubic-bezier(.22,1,.36,1),top .42s cubic-bezier(.22,1,.36,1),border-radius .52s cubic-bezier(.22,1,.36,1),background .35s,box-shadow .35s,border-color .35s}
+.site-header>.nav-wrap{width:100%;max-width:none;margin:0;padding-left:6%;padding-right:6%}
+.site-header.is-home.is-transparent{background:rgba(5,8,45,.2);border-color:rgba(255,255,255,.16);backdrop-filter:blur(20px) saturate(135%);-webkit-backdrop-filter:blur(20px) saturate(135%);box-shadow:0 12px 40px rgba(0,0,0,.08)}
+.site-header.scrolled{width:min(88%,1320px);max-width:1320px;height:72px;top:12px;border:1px solid rgba(255,255,255,.72);border-radius:50px;background:rgba(255,255,255,.78);box-shadow:0 18px 55px rgba(5,9,54,.16)}
+.site-header.is-home.scrolled{top:12px;left:0;right:0}
+.site-header.scrolled .mega-menu{top:92px}
+@media(max-width:900px){.site-header>.nav-wrap{padding-left:6%;padding-right:6%}.site-header.scrolled,.site-header.is-home.scrolled{width:calc(100% - 24px);height:64px;top:8px;border-radius:32px}.site-header.scrolled .mega-menu{top:auto}}
+@media(prefers-reduced-motion:reduce){.site-header{transition:none!important}}

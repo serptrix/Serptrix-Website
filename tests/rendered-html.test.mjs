@@ -74,6 +74,9 @@ test("keeps production safeguards and animation systems in source", async () => 
   assert.match(styles, /\.s12-final\{min-height:400px\}/);
   assert.match(styles, /\.srx-shell\{width:100%;padding:0 6%\}/);
   assert.match(styles, /\.s1-copy h1\{max-width:600px\}/);
+  assert.match(styles, /\.site-header>\.nav-wrap\{width:100%;max-width:none;margin:0;padding-left:6%;padding-right:6%\}/);
+  assert.match(styles, /\.site-header\.scrolled\{width:min\(88%,1320px\)/);
+  assert.match(styles, /backdrop-filter:blur\(24px\) saturate\(155%\)/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.match(home, /dynamic\(\(\) => import\("\.\/motion\/hero-scene"\)/);
   assert.equal((home.match(/<section/g) ?? []).length + (serviceSections.match(/<section/g) ?? []).length, 13);
