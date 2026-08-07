@@ -70,6 +70,7 @@ test("keeps production safeguards and animation systems in source", async () => 
   assert.match(styles, /prefers-reduced-motion:\s*reduce/);
   assert.match(styles, /--text-display:\s*clamp\(2\.5rem,\s*5vw,\s*4\.5rem\)/);
   assert.match(styles, /min-height:\s*44px/);
+  assert.match(styles, /button,\.btn,\.srx-button,\.nav-cta,a\[role="button"\]\{border-radius:50px\}/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.match(home, /dynamic\(\(\) => import\("\.\/motion\/hero-scene"\)/);
   assert.equal((home.match(/<section/g) ?? []).length + (serviceSections.match(/<section/g) ?? []).length, 13);
