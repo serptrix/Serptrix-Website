@@ -77,6 +77,8 @@ test("keeps production safeguards and animation systems in source", async () => 
   assert.match(styles, /\.site-header>\.nav-wrap\{width:100%;max-width:none;margin:0;padding-left:6%;padding-right:6%\}/);
   assert.match(styles, /\.site-header\.scrolled\{width:min\(88%,1320px\)/);
   assert.match(styles, /backdrop-filter:blur\(24px\) saturate\(155%\)/);
+  assert.match(styles, /\.nav-cta \.nav-cta-face\{color:#fff/);
+  assert.match(styles, /\.site-header\.is-transparent \.nav-cta \.nav-cta-face[^}]+color:#05082d/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.match(home, /dynamic\(\(\) => import\("\.\/motion\/hero-scene"\)/);
   assert.equal((home.match(/<section/g) ?? []).length + (serviceSections.match(/<section/g) ?? []).length, 13);

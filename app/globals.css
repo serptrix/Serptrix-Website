@@ -250,3 +250,6 @@ button,.btn,.srx-button,.nav-cta,a[role="button"]{border-radius:50px}
 .site-header.scrolled .mega-menu{top:92px}
 @media(max-width:900px){.site-header>.nav-wrap{padding-left:6%;padding-right:6%}.site-header.scrolled,.site-header.is-home.scrolled{width:calc(100% - 24px);height:64px;top:8px;border-radius:32px}.site-header.scrolled .mega-menu{top:auto}}
 @media(prefers-reduced-motion:reduce){.site-header{transition:none!important}}
+.nav-cta .nav-cta-face{color:#fff;transition:color .3s cubic-bezier(.22,1,.36,1)}
+.nav-cta>span:last-child{color:var(--gold);transition:color .3s cubic-bezier(.22,1,.36,1)}
+.site-header.is-transparent .nav-cta .nav-cta-face,.site-header.is-transparent .nav-cta>span:last-child,.nav-cta:hover .nav-cta-face,.nav-cta:hover>span:last-child{color:#05082d}
