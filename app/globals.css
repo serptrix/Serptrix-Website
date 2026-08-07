@@ -238,3 +238,4 @@ nav a,nav button,.btn,.srx-button,.srx-line-link,button,input,select,textarea{fo
 /* Unified pill geometry for native controls and link-based CTAs. */
 button,.btn,.srx-button,.nav-cta,a[role="button"]{border-radius:50px}
 .s12-final{min-height:400px}
+.srx-shell{width:100%;padding:0 6%}
