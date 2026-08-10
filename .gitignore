@@ -37,7 +37,12 @@ devserver.log
 
 # typescript
 next-env.d.ts
+*.tsbuildinfo
 /dist/
 /.wrangler/
 /outputs/
 /work/
+
+# local archives / dumps
+*.tar.gz
+*.tgz
