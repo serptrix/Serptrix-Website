@@ -64,9 +64,10 @@ test("keeps production safeguards and animation systems in source", async () => 
   assert.match(content, /validateCaseStudy/);
   assert.match(content, /\[XX\]/);
   assert.match(layout, /ConsentManager/);
-  assert.match(layout, /Sora/);
-  assert.match(layout, /Inter/);
+  assert.match(layout, /Manrope/);
+  assert.match(layout, /DM_Sans/);
   assert.match(layout, /display:\s*"swap"/);
+  assert.match(layout, /favicon\.svg/);
   assert.match(styles, /prefers-reduced-motion:\s*reduce/);
   assert.match(styles, /--text-display:\s*clamp\(2\.5rem,\s*5vw,\s*4\.5rem\)/);
   assert.match(styles, /min-height:\s*44px/);

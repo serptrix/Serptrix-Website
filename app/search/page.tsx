@@ -1,3 +1,110 @@
-import Link from"next/link";import{articles,caseStudies,services}from"@/content/site-data";
-type Props={searchParams:Promise<{q?:string}>};export const metadata={title:"Search",robots:{index:false,follow:true}};
-export default async function Search({searchParams}:Props){const{q=""}=await searchParams;const term=q.trim().toLowerCase();const all=[...services.map(x=>({type:"Service",title:x.name,copy:x.summary,href:`/services/${x.slug}`})),...articles.map(x=>({type:"Insight",title:x.title,copy:x.excerpt,href:`/blog/${x.slug}`})),...caseStudies.map(x=>({type:"Case Study",title:x.project,copy:x.challenge,href:`/case-studies/${x.slug}`}))];const results=term?all.filter(x=>`${x.title} ${x.copy} ${x.type}`.toLowerCase().includes(term)):[];return <><section className="search-hero shell"><p className="eyebrow"><span/> SITE SEARCH</p><h1>Find the useful<br/><em>signal.</em></h1><form action="/search"><label className="sr-only" htmlFor="site-search">Search services, insights, and case studies</label><input id="site-search" name="q" defaultValue={q} type="search" placeholder="Search services, insights, and case studies"/><button type="submit">Search <span>↗</span></button></form></section><section className="search-results shell" aria-live="polite"><p>{term?`${results.length} result${results.length===1?"":"s"} for “${q}”`:"Enter a topic, service, or business challenge."}</p>{results.map(x=><article key={x.href}><span>{x.type}</span><div><h2>{x.title}</h2><p>{x.copy}</p></div><Link href={x.href} aria-label={`Open ${x.title}`}>↗</Link></article>)}{term&&results.length===0&&<div className="empty-state"><h2>No matching signal found.</h2><p>Try a broader term or explore the complete services hub.</p><Link className="btn btn-primary" href="/services">Explore services <span>→</span></Link></div>}</section></>}
+import Link from "next/link";
+import { articles, caseStudies, services } from "@/content/site-data";
+
+type Props = { searchParams: Promise<{ q?: string }> };
+
+export const metadata = {
+  title: "Search",
+  robots: { index: false, follow: true },
+};
+
+const suggestions = ["AI", "SEO", "Website", "Ecommerce", "Strategy"];
+
+export default async function Search({ searchParams }: Props) {
+  const { q = "" } = await searchParams;
+  const term = q.trim().toLowerCase();
+  const all = [
+    ...services.map((item) => ({
+      type: "Service",
+      title: item.name,
+      copy: item.summary,
+      href: `/services/${item.slug}`,
+    })),
+    ...articles.map((item) => ({
+      type: "Insight",
+      title: item.title,
+      copy: item.excerpt,
+      href: `/blog/${item.slug}`,
+    })),
+    ...caseStudies.map((item) => ({
+      type: "Case Study",
+      title: item.project,
+      copy: item.challenge,
+      href: `/case-studies/${item.slug}`,
+    })),
+  ];
+  const results = term
+    ? all.filter((item) => `${item.title} ${item.copy} ${item.type}`.toLowerCase().includes(term))
+    : [];
+
+  return (
+    <>
+      <section className="search-hero shell">
+        <p className="eyebrow">
+          <span /> SITE SEARCH
+        </p>
+        <h1>
+          Find the useful
+          <br />
+          <em>signal.</em>
+        </h1>
+        <form action="/search" role="search">
+          <label className="sr-only" htmlFor="site-search">
+            Search services, insights, and case studies
+          </label>
+          <input
+            id="site-search"
+            name="q"
+            defaultValue={q}
+            type="search"
+            placeholder="Search services, insights, and case studies"
+            autoComplete="off"
+          />
+          <button type="submit">
+            Search <span>↗</span>
+          </button>
+        </form>
+        <div className="search-suggestions" aria-label="Suggested searches">
+          {suggestions.map((suggestion) => (
+            <Link key={suggestion} href={`/search?q=${encodeURIComponent(suggestion)}`}>
+              {suggestion}
+            </Link>
+          ))}
+        </div>
+      </section>
+      <section className="search-results shell" aria-live="polite">
+        <p>
+          {term
+            ? `${results.length} result${results.length === 1 ? "" : "s"} for “${q}”`
+            : "Enter a topic, service, or business challenge."}
+        </p>
+        {results.map((item) => (
+          <article key={item.href}>
+            <span>{item.type}</span>
+            <div>
+              <h2>{item.title}</h2>
+              <p>{item.copy}</p>
+            </div>
+            <Link href={item.href} aria-label={`Open ${item.title}`}>
+              ↗
+            </Link>
+          </article>
+        ))}
+        {term && results.length === 0 && (
+          <div className="empty-state">
+            <h2>No matching signal found.</h2>
+            <p>Try a broader term or explore the complete services hub.</p>
+            <div className="empty-actions">
+              <Link className="btn btn-primary" href="/services">
+                Explore services <span>→</span>
+              </Link>
+              <Link className="btn btn-quiet" href="/contact">
+                Ask Serptrix <span>↗</span>
+              </Link>
+            </div>
+          </div>
+        )}
+      </section>
+    </>
+  );
+}

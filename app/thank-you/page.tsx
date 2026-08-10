@@ -1,2 +1,10 @@
-import Link from"next/link";export const metadata={title:"Thank You",robots:{index:false,follow:false}};
-export default function Thanks(){return <section className="thank-you shell"><p className="eyebrow"><span/> INQUIRY PREPARED</p><h1>Thank you for the<br/><em>useful context.</em></h1><p>Your inquiry has been prepared in this browser. Because a CRM destination has not yet been selected, please email <a href="mailto:hello@serptrix.com">hello@serptrix.com</a> to complete the handoff.</p><div className="actions"><a className="btn btn-primary" href="mailto:hello@serptrix.com">Complete by email <span>↗</span></a><Link className="text-link" href="/">Return home <span>→</span></Link></div></section>}
+import { ThankYouExperience } from "../components/thank-you-experience";
+
+export const metadata = {
+  title: "Thank You",
+  robots: { index: false, follow: false },
+};
+
+export default function Thanks() {
+  return <ThankYouExperience />;
+}

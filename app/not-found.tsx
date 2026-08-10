@@ -1,2 +1,28 @@
 import Link from "next/link";
-export default function NotFound(){return <section className="error-page shell"><p className="eyebrow"><span /> ERROR 404</p><h1>This signal went<br/><em>off course.</em></h1><p>The page may have moved, or the address may be incomplete.</p><Link className="btn btn-primary" href="/">Return home <span>→</span></Link></section>}
+
+export default function NotFound() {
+  return (
+    <section className="error-page shell">
+      <p className="eyebrow">
+        <span /> ERROR 404
+      </p>
+      <h1>
+        This signal went
+        <br />
+        <em>off course.</em>
+      </h1>
+      <p>The page may have moved, or the address may be incomplete.</p>
+      <div className="error-actions">
+        <Link className="btn btn-primary" href="/">
+          Return home <span>→</span>
+        </Link>
+        <Link className="text-link" href="/search">
+          Search the site <span>↗</span>
+        </Link>
+        <Link className="text-link" href="/contact">
+          Contact Serptrix <span>↗</span>
+        </Link>
+      </div>
+    </section>
+  );
+}

@@ -37,7 +37,7 @@ export function Header() {
   const transparent = path === "/" && !scrolled;
 
   return <>
-    <div className="announcement"><div className="shell"><b>NEW</b><span>Now building practical AI systems for modern businesses.</span><Link href="/services/ai-technology">Explore AI Development <i>↗</i></Link></div></div>
+    <div className="announcement"><div className="shell"><b>NEW</b><span>Now building practical AI systems for modern businesses.</span><Link href="/services/ai-development">Explore AI Development <i>↗</i></Link></div></div>
     <motion.header className={`site-header ${scrolled ? "scrolled" : ""} ${transparent ? "is-transparent" : ""} ${path === "/" ? "is-home" : ""}`} initial={reduced ? false : { y: -18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: .55 }}><div className="shell nav-wrap">
       <Link className="logo" href="/" aria-label="Serptrix home"><motion.span className="logo-mark" animate={{ rotate: scrolled ? 0 : -6, scale: scrolled ? .9 : 1, clipPath: scrolled ? "polygon(0 0,100% 0,100% 72%,72% 100%,0 100%)" : "polygon(8% 0,100% 8%,92% 100%,0 92%)" }} transition={{ type: "spring", stiffness: 210, damping: 22 }}>S</motion.span><motion.span animate={{ letterSpacing: scrolled ? ".1em" : ".16em" }}>SERPTRIX</motion.span></Link>
       <button ref={toggleRef} className={`menu-toggle ${mobile ? "is-open" : ""}`} aria-label={mobile ? "Close navigation" : "Open navigation"} aria-expanded={mobile} onClick={() => setMobile(!mobile)}><motion.span animate={mobile ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}/><motion.span animate={mobile ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}/></button>
@@ -49,7 +49,7 @@ export function Header() {
             <motion.div className="shell mega-inner" variants={stagger} initial="hidden" animate="show"><motion.div className="mega-intro" variants={item}><p>CAPABILITIES</p><h2>Three disciplines.<br/><em>One growth agenda.</em></h2><Link href="/services">Explore all services <span>→</span></Link></motion.div>{serviceGroups.map((group) => <motion.div className="mega-group" variants={item} key={group.title}><Link href={group.href}>{group.title} <span>↗</span></Link>{group.items.map((entry) => <motion.div variants={item} key={entry[0]}><Link href={`/services/${entry[2]}`}><strong>{entry[0]}{entry[0] === "AI Development" && <b>NEW</b>}</strong><small>{entry[1]}</small></Link></motion.div>)}</motion.div>)}</motion.div>
           </motion.div>}</AnimatePresence>
         </motion.div>
-        <NavLink href="/case-studies" active={path.startsWith("/case-studies")}>Work</NavLink><NavLink href="/about" active={path === "/about"}>About</NavLink><NavLink href="/blog" active={path.startsWith("/blog")}>Insights</NavLink><NavLink href="/contact" active={path === "/contact"}>Contact</NavLink>
+        <NavLink href="/case-studies" active={path.startsWith("/case-studies")}>Work</NavLink><NavLink href="/about" active={path === "/about"}>About</NavLink><NavLink href="/blog" active={path.startsWith("/blog")}>Insights</NavLink><NavLink href="/search" active={path.startsWith("/search")}>Search</NavLink><NavLink href="/contact" active={path === "/contact"}>Contact</NavLink>
         <motion.div variants={item} whileHover={reduced ? undefined : { y: -2 }} whileTap={reduced ? undefined : { scale: .97 }}><Link className="nav-cta" href="/contact"><span className="nav-cta-face">Book a Strategy Call</span><span aria-hidden="true">↗</span></Link></motion.div>
       </motion.nav>
     </div></motion.header>
@@ -58,6 +58,65 @@ export function Header() {
 
 function NavLink({ href, active, children }: { href: string; active: boolean; children: React.ReactNode }) { return <motion.div variants={item} className="nav-link-wrap"><Link className={active ? "active" : ""} href={href}>{children}<i className="nav-underline"/>{active && <motion.span className="nav-active-dot" layoutId="nav-active" transition={{type:"spring",stiffness:280,damping:26}}/>}</Link></motion.div>; }
 
-export function Footer() { return <footer><div className="shell footer-grid"><div className="footer-brand"><Link className="logo logo-light" href="/"><span className="logo-mark">S</span><span>SERPTRIX</span></Link><p>Serptrix connects marketing, development, AI, and strategy into growth systems for ambitious companies.</p><span>Working globally across time zones.</span></div><div><b>SERVICES</b><Link href="/services/digital-marketing">Digital Marketing</Link><Link href="/services/development">Development</Link><Link href="/services/ai-technology">AI & Technology</Link><Link href="/services">All Services</Link></div><div><b>COMPANY</b><Link href="/case-studies">Case Studies</Link><Link href="/about">About</Link><Link href="/blog">Insights</Link><Link href="/contact">Contact</Link></div><div><b>CONTACT</b><a href="mailto:hello@serptrix.com">hello@serptrix.com</a><span className="social-placeholder">LinkedIn · X · Instagram</span></div></div><div className="shell newsletter"><div><b>SERPTRIX SIGNAL</b><p>One useful idea on growth, technology, or AI. No noise.</p></div><form action="mailto:hello@serptrix.com" method="post"><label className="sr-only" htmlFor="newsletter-email">Work email</label><input id="newsletter-email" type="email" name="email" required placeholder="Work email address"/><button type="submit">Join the signal <span>↗</span></button></form></div><div className="shell footer-bottom"><span>© 2026 Serptrix. All rights reserved.</span><div><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><Link href="/cookies">Cookies</Link><span>Strategy / Marketing / Development / AI</span></div></div></footer>; }
+export function Footer() {
+  return (
+    <footer>
+      <div className="shell footer-grid">
+        <div className="footer-brand">
+          <Link className="logo logo-light" href="/">
+            <span className="logo-mark">S</span>
+            <span>SERPTRIX</span>
+          </Link>
+          <p>Serptrix connects marketing, development, AI, and strategy into growth systems for ambitious companies.</p>
+          <span>Working globally across time zones.</span>
+        </div>
+        <div>
+          <b>SERVICES</b>
+          <Link href="/services/digital-marketing">Digital Marketing</Link>
+          <Link href="/services/development">Development</Link>
+          <Link href="/services/ai-technology">AI & Technology</Link>
+          <Link href="/services">All Services</Link>
+        </div>
+        <div>
+          <b>COMPANY</b>
+          <Link href="/case-studies">Case Studies</Link>
+          <Link href="/about">About</Link>
+          <Link href="/blog">Insights</Link>
+          <Link href="/search">Search</Link>
+          <Link href="/contact">Contact</Link>
+        </div>
+        <div>
+          <b>CONTACT</b>
+          <a href="mailto:hello@serptrix.com">hello@serptrix.com</a>
+          <span className="social-placeholder">Social channels arriving soon</span>
+        </div>
+      </div>
+      <div className="shell newsletter">
+        <div>
+          <b>SERPTRIX SIGNAL</b>
+          <p>One useful idea on growth, technology, or AI. No noise.</p>
+        </div>
+        <form action="mailto:hello@serptrix.com?subject=Serptrix%20Signal%20subscribe" method="post" encType="text/plain">
+          <label className="sr-only" htmlFor="newsletter-email">
+            Work email
+          </label>
+          <input id="newsletter-email" type="email" name="email" required placeholder="Work email address" autoComplete="email" />
+          <button type="submit">
+            Join the signal <span>↗</span>
+          </button>
+        </form>
+      </div>
+      <div className="shell footer-bottom">
+        <span>© 2026 Serptrix. All rights reserved.</span>
+        <div>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
+          <Link href="/cookies">Cookies</Link>
+          <span>Strategy / Marketing / Development / AI</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
 
 export function InteriorHero({ eyebrow, title, accent, copy }: { eyebrow: string; title: string; accent: string; copy: string }) { return <section className="interior-hero shell"><p className="eyebrow"><span/> {eyebrow}</p><h1>{title}<br/><em>{accent}</em></h1><p>{copy}</p></section>; }

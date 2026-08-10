@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { articles as cmsArticles } from "@/content/site-data";
 import { MagneticButton } from "./motion/magnetic-button";
 import { Parallax } from "./motion/parallax";
 import { ScrollReveal } from "./motion/scroll-reveal";
@@ -45,12 +46,23 @@ const principles = [
 
 const impactStatements = ["Increase discoverability around qualified commercial intent.", "Remove friction from the decisions that move buyers forward.", "Return operating capacity through useful connected automation.", "Improve acquisition economics with accountable channel systems."];
 
-const articles = [
-  { cat: "Strategy", title: "Why your growth stack needs an operating system—not another tool", time: "7 min", date: "August 4, 2026", slug: "growth-stack-operating-system" },
-  { cat: "AI & Operations", title: "The practical AI roadmap starts with workflow friction", time: "6 min", date: "July 28, 2026", slug: "practical-ai-roadmap" },
-  { cat: "Conversion", title: "What high-performing B2B websites make easy", time: "8 min", date: "July 16, 2026", slug: "high-performing-b2b-websites" },
-  { cat: "Performance", title: "Better acquisition begins with a better measurement question", time: "5 min", date: "July 8, 2026", slug: "better-acquisition-measurement" },
-];
+const articleCategoryLabel: Record<string, string> = {
+  "Digital Strategy": "Strategy",
+  AI: "AI & Operations",
+  "Conversion Optimization": "Conversion",
+};
+
+const articles = cmsArticles.map((article) => ({
+  cat: articleCategoryLabel[article.category] ?? article.category,
+  title: article.title,
+  time: article.readingTime,
+  date: new Date(`${article.date}T00:00:00`).toLocaleDateString("en", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }),
+  slug: article.slug,
+}));
 
 export default function HomeExperience() {
   const root = useRef<HTMLElement>(null); const hero = useRef<HTMLElement>(null); const process = useRef<HTMLElement>(null);

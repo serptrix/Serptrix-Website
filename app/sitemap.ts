@@ -1,2 +1,47 @@
-import type{MetadataRoute}from"next";import{articles,caseStudies,services,categories}from"@/content/site-data";
-const base="https://serptrix.com";export default function sitemap():MetadataRoute.Sitemap{const staticPages=["","/services","/about","/case-studies","/blog","/contact","/privacy","/terms","/cookies"].map(url=>({url:`${base}${url}`,lastModified:new Date("2026-08-06"),changeFrequency:url==="/blog"?"weekly"as const:"monthly"as const,priority:url===""?1:url==="/services" ? .9 : .7}));const division=["digital-marketing","development","ai-technology"].map(x=>({url:`${base}/services/${x}`,lastModified:new Date("2026-08-06"),changeFrequency:"monthly"as const,priority:.85}));const servicePages=services.map(x=>({url:`${base}/services/${x.slug}`,lastModified:new Date("2026-08-06"),changeFrequency:"monthly"as const,priority:.8}));const posts=articles.map(x=>({url:`${base}/blog/${x.slug}`,lastModified:new Date(x.updated),changeFrequency:"monthly"as const,priority:.65}));const cases=caseStudies.map(x=>({url:`${base}/case-studies/${x.slug}`,lastModified:new Date("2026-08-06"),changeFrequency:"monthly"as const,priority:.55}));const cats=categories.map(x=>({url:`${base}/blog/category/${x.toLowerCase().replaceAll(" ","-")}`,lastModified:new Date("2026-08-06"),changeFrequency:"weekly"as const,priority:.5}));return[...staticPages,...division,...servicePages,...posts,...cases,...cats]}
+import type { MetadataRoute } from "next";
+import { articles, caseStudies, services } from "@/content/site-data";
+
+const base = "https://serptrix.com";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const staticPages = ["", "/services", "/about", "/case-studies", "/blog", "/contact", "/privacy", "/terms", "/cookies"].map(
+    (url) => ({
+      url: `${base}${url}`,
+      lastModified: new Date("2026-08-06"),
+      changeFrequency: (url === "/blog" ? "weekly" : "monthly") as "weekly" | "monthly",
+      priority: url === "" ? 1 : url === "/services" ? 0.9 : 0.7,
+    }),
+  );
+  const division = ["digital-marketing", "development", "ai-technology"].map((slug) => ({
+    url: `${base}/services/${slug}`,
+    lastModified: new Date("2026-08-06"),
+    changeFrequency: "monthly" as const,
+    priority: 0.85,
+  }));
+  const servicePages = services.map((service) => ({
+    url: `${base}/services/${service.slug}`,
+    lastModified: new Date("2026-08-06"),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+  const posts = articles.map((article) => ({
+    url: `${base}/blog/${article.slug}`,
+    lastModified: new Date(article.updated),
+    changeFrequency: "monthly" as const,
+    priority: 0.65,
+  }));
+  const cases = caseStudies.map((study) => ({
+    url: `${base}/case-studies/${study.slug}`,
+    lastModified: new Date("2026-08-06"),
+    changeFrequency: "monthly" as const,
+    priority: 0.55,
+  }));
+  const activeCategories = [...new Set(articles.map((article) => article.category))];
+  const cats = activeCategories.map((category) => ({
+    url: `${base}/blog/category/${category.toLowerCase().replaceAll(" ", "-")}`,
+    lastModified: new Date("2026-08-06"),
+    changeFrequency: "weekly" as const,
+    priority: 0.5,
+  }));
+  return [...staticPages, ...division, ...servicePages, ...posts, ...cases, ...cats];
+}

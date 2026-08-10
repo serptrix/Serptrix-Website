@@ -1,2 +1,93 @@
-"use client";import Link from"next/link";import{useMemo,useState}from"react";import type{Article}from"@/content/site-data";
-export function ArticleLibrary({items}:{items:Article[]}){const[q,setQ]=useState("");const[cat,setCat]=useState("All");const cats=["All",...new Set(items.map(x=>x.category))];const shown=useMemo(()=>items.filter(x=>(cat==="All"||x.category===cat)&&(`${x.title} ${x.excerpt}`.toLowerCase().includes(q.toLowerCase()))),[q,cat,items]);return <><div className="article-tools"><label><span>Search insights</span><input value={q} onChange={e=>setQ(e.target.value)} type="search" placeholder="Search by topic or question"/></label><div role="group" aria-label="Filter articles">{cats.map(x=><button key={x} aria-pressed={cat===x} onClick={()=>setCat(x)}>{x}</button>)}</div></div><div className="article-library" aria-live="polite">{shown.map((x,i)=><article key={x.slug}><div className={`article-visual av-${i}`}><span>{x.category}</span></div><p>{x.category} · {x.readingTime}</p><h2>{x.title}</h2><p>{x.excerpt}</p><div><time dateTime={x.date}>{format(x.date)}</time><span>{x.author}</span></div><Link href={`/blog/${x.slug}`}>Read article <b>↗</b></Link></article>)}</div>{shown.length===0&&<div className="empty-state"><h2>No articles match that search.</h2><p>Clear the query or choose another topic.</p></div>}<nav className="pagination" aria-label="Blog pagination"><button disabled aria-label="Previous page">←</button><button aria-current="page">1</button><button disabled aria-label="Next page">→</button></nav></>};function format(x:string){return new Date(`${x}T00:00:00`).toLocaleDateString("en",{month:"long",day:"numeric",year:"numeric"})}
+"use client";
+
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import type { Article } from "@/content/site-data";
+
+export function ArticleLibrary({ items }: { items: Article[] }) {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("All");
+  const categories = ["All", ...new Set(items.map((item) => item.category))];
+  const shown = useMemo(
+    () =>
+      items.filter(
+        (item) =>
+          (category === "All" || item.category === category) &&
+          `${item.title} ${item.excerpt}`.toLowerCase().includes(query.toLowerCase()),
+      ),
+    [query, category, items],
+  );
+
+  return (
+    <>
+      <div className="article-tools">
+        <label>
+          <span>Search insights</span>
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            type="search"
+            placeholder="Search by topic or question"
+          />
+        </label>
+        <div role="group" aria-label="Filter articles">
+          {categories.map((item) => (
+            <button key={item} aria-pressed={category === item} onClick={() => setCategory(item)}>
+              {item}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="article-library" aria-live="polite">
+        {shown.map((article, index) => (
+          <article key={article.slug}>
+            <div className={`article-visual av-${index}`}>
+              <span>{article.category}</span>
+            </div>
+            <p>
+              {article.category} · {article.readingTime}
+            </p>
+            <h2>{article.title}</h2>
+            <p>{article.excerpt}</p>
+            <div>
+              <time dateTime={article.date}>{format(article.date)}</time>
+              <span>{article.author}</span>
+            </div>
+            <Link href={`/blog/${article.slug}`}>
+              Read article <b>↗</b>
+            </Link>
+          </article>
+        ))}
+      </div>
+      {shown.length === 0 && (
+        <div className="empty-state">
+          <h2>No articles match that search.</h2>
+          <p>Clear the query or choose another topic.</p>
+          <div className="empty-actions">
+            <button
+              type="button"
+              className="btn btn-quiet"
+              onClick={() => {
+                setQuery("");
+                setCategory("All");
+              }}
+            >
+              Reset filters
+            </button>
+            <Link className="btn btn-primary" href="/contact">
+              Ask Serptrix <span>↗</span>
+            </Link>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+function format(value: string) {
+  return new Date(`${value}T00:00:00`).toLocaleDateString("en", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}

@@ -10,9 +10,9 @@ type Props = { children?: ReactNode; text?: string; type?: RevealType; className
 const motionTags = { div: motion.div, span: motion.span, p: motion.p, h1: motion.h1, h2: motion.h2, h3: motion.h3 };
 
 export function ScrollReveal({ children, text, type = "fade-up", className = "", delay = 0, duration = motionTokens.duration.reveal, distance = motionTokens.distance.base, amount = .24, once = true, stagger = motionTokens.stagger.base, immediate = false, as = "div" }: Props) {
-  const { reducedMotion } = useMotionCapabilities();
+  const { ready, reducedMotion } = useMotionCapabilities();
   const MotionTag = motionTags[as];
-  if (reducedMotion) return <MotionTag className={className}>{text ?? children}</MotionTag>;
+  if (ready && reducedMotion) return <MotionTag className={className}>{text ?? children}</MotionTag>;
 
   const hidden: Record<RevealType, Variant> = {
     "fade-up": { opacity: 0, y: distance }, "fade-down": { opacity: 0, y: -distance }, "fade-left": { opacity: 0, x: distance }, "fade-right": { opacity: 0, x: -distance },
