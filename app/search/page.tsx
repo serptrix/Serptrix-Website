@@ -40,9 +40,7 @@ export default async function Search({ searchParams }: Props) {
   return (
     <>
       <section className="search-hero shell">
-        <p className="eyebrow">
-          <span /> SITE SEARCH
-        </p>
+        <p className="eyebrow">Search</p>
         <h1>
           Find the useful
           <br />

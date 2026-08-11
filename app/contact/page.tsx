@@ -10,9 +10,7 @@ export default function Contact() {
   return (
     <>
       <section className="contact-hero shell">
-        <p className="eyebrow">
-          <span /> START A CONVERSATION
-        </p>
+        <p className="eyebrow">Start a conversation</p>
         <h1>
           Bring us the constraint.
           <br />

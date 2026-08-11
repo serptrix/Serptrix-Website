@@ -142,7 +142,6 @@ export function Header() {
     <>
       <div className="announcement">
         <div className="shell">
-          <b>NEW</b>
           <span>Now building practical AI systems for modern businesses.</span>
           <Link href="/services/ai-development">
             Explore AI Development <i>↗</i>
@@ -157,18 +156,8 @@ export function Header() {
       >
         <div className="shell nav-wrap">
           <Link className="logo" href="/" aria-label="Serptrix home">
-            <motion.span
-              className="logo-mark"
-              animate={{
-                rotate: scrolled ? 0 : -6,
-                scale: scrolled ? 0.9 : 1,
-                clipPath: scrolled ? "polygon(0 0,100% 0,100% 72%,72% 100%,0 100%)" : "polygon(8% 0,100% 8%,92% 100%,0 92%)",
-              }}
-              transition={{ type: "spring", stiffness: 210, damping: 22 }}
-            >
-              S
-            </motion.span>
-            <motion.span animate={{ letterSpacing: scrolled ? ".1em" : ".16em" }}>SERPTRIX</motion.span>
+            <span className="logo-mark">S</span>
+            <span>SERPTRIX</span>
           </Link>
           <button
             ref={toggleRef}
@@ -234,10 +223,7 @@ export function Header() {
                           {group.items.map((entry) => (
                             <motion.div variants={item} key={entry[0]}>
                               <Link href={`/services/${entry[2]}`}>
-                                <strong>
-                                  {entry[0]}
-                                  {entry[0] === "AI Development" && <b>NEW</b>}
-                                </strong>
+                                <strong>{entry[0]}</strong>
                                 <small>{entry[1]}</small>
                               </Link>
                             </motion.div>
@@ -292,9 +278,7 @@ function NavLink({ href, active, children }: { href: string; active: boolean; ch
 export function InteriorHero({ eyebrow, title, accent, copy }: { eyebrow: string; title: string; accent: string; copy: string }) {
   return (
     <section className="interior-hero shell">
-      <p className="eyebrow">
-        <span /> {eyebrow}
-      </p>
+      <p className="eyebrow">{eyebrow}</p>
       <h1>
         {title}
         <br />
