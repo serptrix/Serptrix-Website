@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
 import { ConsentManager } from "./components/consent-manager";
 import { MotionShell } from "./components/motion-shell";
@@ -21,6 +21,13 @@ const body = DM_Sans({
   display: "swap",
   preload: true,
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#09105F",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://serptrix.com"),

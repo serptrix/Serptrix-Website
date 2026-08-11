@@ -21,7 +21,7 @@ export function useMotionCapabilities() {
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const pointerQuery = window.matchMedia("(pointer: coarse)");
-    const mobileQuery = window.matchMedia("(max-width: 767px)");
+    const mobileQuery = window.matchMedia("(max-width: 900px)");
 
     const detect = () => {
       let webgl = false;
@@ -35,8 +35,8 @@ export function useMotionCapabilities() {
         canvasFailed = true;
       }
       const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
-      const touch = pointerQuery.matches || navigator.maxTouchPoints > 0;
-      const mobile = mobileQuery.matches || /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent);
+      const mobile = mobileQuery.matches;
+      const touch = pointerQuery.matches || (navigator.maxTouchPoints > 0 && mobile);
       const lowPower = (nav.hardwareConcurrency ?? 8) <= 4 || (nav.deviceMemory ?? 8) <= 4 || nav.connection?.saveData === true;
       setCapabilities({ ready: true, webgl, reducedMotion: motionQuery.matches, touch, mobile, devicePixelRatio: Math.min(window.devicePixelRatio || 1, lowPower || mobile ? 1.25 : 1.75), lowPower, canvasFailed });
     };
