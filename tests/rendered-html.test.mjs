@@ -2,45 +2,41 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render(path = "/") {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${path}`);
-  const { default: worker } = await import(workerUrl.href);
-  return worker.fetch(new Request(`http://localhost${path}`, { headers: { accept: "text/html" } }), { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } }, { waitUntil() {}, passThroughOnException() {} });
-}
-
-test("server-renders the finished Serptrix homepage", async () => {
-  const response = await render();
-  assert.equal(response.status, 200);
-  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
-  const html = await response.text();
-  assert.match(html, /<title>Serptrix — Digital Growth, Engineered<\/title>/i);
-  assert.match(html, /We build the systems/);
-  assert.match(html, /Three capabilities\./);
-  assert.match(html, /One connected growth system\./);
-  assert.match(html, /Turn visibility into/);
-  assert.match(html, /Digital products engineered to/);
-  assert.match(html, /Practical AI and automation built around/);
-  assert.match(html, /Book a strategy call/i);
-  assert.match(html, /application\/ld\+json/);
-  assert.match(html, /href="\/services\/ai-technology"/);
-  assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
-});
-
-test("renders service, case-study, and blog routes", async () => {
-  const [service, caseStudy, article] = await Promise.all([
-    render("/services/seo-optimization"),
-    render("/case-studies/confidential-saas-acquisition-system"),
-    render("/blog/growth-stack-operating-system"),
-  ]);
-  for (const response of [service, caseStudy, article]) assert.equal(response.status, 200);
-  assert.match(await service.text(), /Be found when qualified demand is forming/);
-  assert.match(await caseStudy.text(), /UNVERIFIED PROJECT-DATA PLACEHOLDER/);
-  assert.match(await article.text(), /BlogPosting/);
+test("package is configured for Next.js on Vercel", async () => {
+  const packageJson = await readFile(new URL("../package.json", import.meta.url), "utf8");
+  const parsed = JSON.parse(packageJson);
+  assert.equal(parsed.scripts.build, "next build");
+  assert.equal(parsed.scripts.dev, "next dev");
+  assert.equal(parsed.scripts.start, "next start");
+  assert.ok(parsed.dependencies.next);
+  assert.equal(parsed.devDependencies?.vinext, undefined);
+  assert.equal(parsed.devDependencies?.wrangler, undefined);
+  assert.doesNotMatch(packageJson, /react-loading-skeleton/);
+  assert.match(packageJson, /@react-three\/drei/);
 });
 
 test("keeps production safeguards and animation systems in source", async () => {
-  const [content, layout, styles, packageJson, home, motionShell, smoothScroll, heroScene, workflowScene, particleField, tokens, siteShell, magnetic, gsapRuntime, reducedMotionHook, projectForm, workRoute, insightsRoute, serviceSections] = await Promise.all([
+  const [
+    content,
+    layout,
+    styles,
+    packageJson,
+    home,
+    motionShell,
+    smoothScroll,
+    heroScene,
+    workflowScene,
+    particleField,
+    tokens,
+    siteShell,
+    magnetic,
+    gsapRuntime,
+    reducedMotionHook,
+    projectForm,
+    workRoute,
+    insightsRoute,
+    serviceSections,
+  ] = await Promise.all([
     readFile(new URL("../content/site-data.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),

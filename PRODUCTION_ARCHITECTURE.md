@@ -31,7 +31,7 @@ Named employees, client identities, testimonials, dates, technologies, project d
 
 ## Phase 6 — Development and integrations
 
-The application uses Next-compatible App Router patterns through Vinext, typed React templates, server-rendered content, CSS-native motion, dynamic route data, structured metadata, XML sitemap, robots controls, and route-based output. No duplicate animation runtime was added.
+The application uses Next.js App Router patterns, typed React templates, server-rendered content, CSS-native motion, dynamic route data, structured metadata, XML sitemap, robots controls, and route-based output.
 
 The consent layer stores only the visitor’s choice. Analytics events are prepared through the `serptrix:conversion` event and only enter `dataLayer` after analytics consent. GA4, GTM, Meta Pixel, LinkedIn Insight Tag, Search Console verification, CRM delivery, scheduling, newsletter delivery, and a real headless CMS require approved account identifiers and secrets before activation.
 
