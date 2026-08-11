@@ -20,7 +20,9 @@ export default function Blog() {
   return (
     <>
       <section className="blog-hero shell">
-        <p className="eyebrow">Insights</p>
+        <p className="eyebrow">
+          <span /> SERPTRIX SIGNAL
+        </p>
         <h1>
           Useful thinking for
           <br />

@@ -28,12 +28,12 @@ export function ServiceSections() {
   return <>
     <section className="s3-section core-services" data-section="03">
       <div className="srx-shell core-services-head">
-        <p className="srx-section-tag">Capabilities</p>
+        <p className="srx-section-tag">03 / Services</p>
         <h2>Three capabilities. <em>One connected growth system.</em></h2>
         <p>Marketing, technology and operations should not compete for attention. Serptrix connects them into one commercial system—so every capability supports the next.</p>
       </div>
       <div className="srx-shell core-services-stage">
-        <div className={`core-signal signal-${active}`} aria-hidden="true"><span>{String(active + 1).padStart(2, "0")}</span><b>{divisions[active].signal}</b></div>
+        <div className={`core-signal signal-${active}`} aria-hidden="true"><span>S</span><i/><i/><i/><b>{divisions[active].signal}</b></div>
         <div className="core-service-list">
           {divisions.map((division, index) => <motion.article key={division.name} className={active===index?"active":""} tabIndex={0} onFocus={()=>setActive(index)} onHoverStart={()=>setActive(index)}>
             <header><span>0{index+1}</span><p>{division.signal}</p><h3>{division.name}</h3></header>
@@ -48,7 +48,7 @@ export function ServiceSections() {
     <section className="s3-section marketing-services" data-section="04">
       <div className="marketing-grid" aria-hidden="true"/>
       <div className="srx-shell marketing-services-head">
-        <p className="srx-section-tag srx-light">Marketing</p>
+        <p className="srx-section-tag srx-light">04 / Digital Marketing</p>
         <h2>Turn visibility into <em>measurable demand.</em></h2>
         <p>We combine organic search, social attention and performance campaigns to attract the right audience, convert interest and improve acquisition efficiency.</p>
       </div>
@@ -64,7 +64,7 @@ export function ServiceSections() {
 
     <section className="s3-section development-services" data-section="05">
       <div className="srx-shell development-services-head">
-        <p className="srx-section-tag">Development</p>
+        <p className="srx-section-tag">05 / Development</p>
         <h2>Digital products engineered to <em>perform and scale.</em></h2>
         <p>From conversion-focused websites to SaaS products and ecommerce platforms, Serptrix builds around speed, usability, scalability and business growth.</p>
       </div>

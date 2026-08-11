@@ -3,7 +3,9 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <section className="error-page shell">
-      <p className="eyebrow">Page not found</p>
+      <p className="eyebrow">
+        <span /> ERROR 404
+      </p>
       <h1>
         This signal went
         <br />
