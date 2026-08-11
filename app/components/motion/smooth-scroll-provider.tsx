@@ -10,39 +10,73 @@ gsap.registerPlugin(ScrollTrigger);
 let activeLenis: Lenis | null = null;
 
 export function SmoothScrollProvider({ children }: { children: ReactNode }) {
-  const { ready, reducedMotion } = useMotionCapabilities();
+  const { ready, reducedMotion, mobile, touch, lowPower } = useMotionCapabilities();
   const ownsInstance = useRef(false);
 
   useEffect(() => {
-    if (!ready || reducedMotion || activeLenis) return;
-    const lenis = new Lenis({ duration: 1.05, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true, syncTouch: false, touchMultiplier: 1.05, autoRaf: false });
+    // Native scroll is faster and more reliable on touch/low-power devices.
+    if (!ready || reducedMotion || mobile || touch || lowPower || activeLenis) {
+      document.documentElement.style.scrollBehavior = reducedMotion ? "auto" : "smooth";
+      return;
+    }
+
+    document.documentElement.style.scrollBehavior = "auto";
+    const lenis = new Lenis({
+      duration: 0.92,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: false,
+      touchMultiplier: 1,
+      autoRaf: false,
+      wheelMultiplier: 0.95,
+    });
     activeLenis = lenis;
     ownsInstance.current = true;
+
     const update = () => ScrollTrigger.update();
     const tick = (seconds: number) => lenis.raf(seconds * 1000);
     const anchors = (event: MouseEvent) => {
       const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[href^="#"]');
-      if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (
+        !link ||
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
       const id = link.hash.slice(1);
       const target = id ? document.getElementById(decodeURIComponent(id)) : document.documentElement;
       if (!target) return;
       event.preventDefault();
-      lenis.scrollTo(target, { offset: 0, duration: 0.85, onComplete: () => history.replaceState(null, "", link.hash || "#") });
+      lenis.scrollTo(target, {
+        offset: 0,
+        duration: 0.75,
+        onComplete: () => history.replaceState(null, "", link.hash || "#"),
+      });
     };
+
     lenis.on("scroll", update);
     gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.lagSmoothing(500, 33);
     document.addEventListener("click", anchors);
+    document.documentElement.classList.add("srx-smooth-scroll");
     ScrollTrigger.refresh();
+
     return () => {
       document.removeEventListener("click", anchors);
+      document.documentElement.classList.remove("srx-smooth-scroll");
+      document.documentElement.style.scrollBehavior = "";
       lenis.off("scroll", update);
       gsap.ticker.remove(tick);
       lenis.destroy();
       if (activeLenis === lenis) activeLenis = null;
       ownsInstance.current = false;
     };
-  }, [ready, reducedMotion]);
+  }, [ready, reducedMotion, mobile, touch, lowPower]);
 
   return children;
 }

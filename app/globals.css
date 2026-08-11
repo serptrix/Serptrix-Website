@@ -254,6 +254,25 @@ button,.btn,.srx-button,.nav-cta,a[role="button"]{border-radius:50px}
 .nav-cta>span:last-child{color:var(--gold);transition:color .3s cubic-bezier(.22,1,.36,1)}
 .site-header.is-transparent .nav-cta .nav-cta-face,.site-header.is-transparent .nav-cta>span:last-child,.nav-cta:hover .nav-cta-face,.nav-cta:hover>span:last-child{color:#05082d}
 
+/* Performance: scroll, paint containment, reduced-motion hardening */
+html{scroll-behavior:auto}
+.srx-smooth-scroll{overscroll-behavior-y:none}
+.s3-section:not(.s1-hero),.core-services,.marketing-services,.development-services,.blog-library-section,.contact-main,.case-library,.article-library{content-visibility:auto;contain-intrinsic-size:1px 720px}
+.srx-webgl-wrap,.s6-webgl,.s12-particles{contain:paint layout;transform:translateZ(0)}
+.btn,.srx-button,.srx-line-link,.nav-cta,.case-filters button,.article-tools button,.choice-grid label{transition:transform .22s cubic-bezier(.22,1,.36,1),background-color .22s,color .22s,border-color .22s,box-shadow .22s,opacity .22s}
+.btn:active,.srx-button:active,.nav-cta:active{transform:translateY(1px) scale(.985)}
+@media (hover:hover) and (pointer:fine){
+  .btn-primary:hover,.srx-button:hover{transform:translateY(-1px)}
+  .case-library article,.article-library article,.explorer-grid>a{transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s}
+  .case-library article:hover,.article-library article:hover,.explorer-grid>a:hover{transform:translateY(-3px)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  .srx-page-overlay,.srx-cursor,.s12-particles,.srx-webgl-wrap,.s6-webgl{display:none!important}
+  .btn,.srx-button,.srx-line-link,.nav-cta,.case-library article,.article-library article,.explorer-grid>a{transition:none!important;transform:none!important}
+  main{animation:none!important}
+}
+
 /* UX polish: forms, thank-you, empty states, consent, recovery */
 .project-form{display:grid;gap:1.5rem;padding:clamp(1.5rem,3vw,2.25rem);border:1px solid var(--mist);background:linear-gradient(180deg,#fff 0%,#f8f9fd 100%)}
 .form-progress{display:grid;gap:.85rem}

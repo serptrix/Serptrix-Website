@@ -2,21 +2,24 @@ import type { Metadata } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
 import { ConsentManager } from "./components/consent-manager";
 import { MotionShell } from "./components/motion-shell";
-import { Footer, Header } from "./components/site-shell";
+import { Footer } from "./components/site-footer";
+import { Header } from "./components/site-shell";
 import { StructuredData } from "./components/structured-data";
 import "./globals.css";
 
 const display = Manrope({
   variable: "--font-heading",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["500", "600", "700", "800"],
   display: "swap",
+  preload: true,
 });
 const body = DM_Sans({
   variable: "--font-copy",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -28,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Serptrix — Digital Growth, Engineered",
     description: "Marketing, development, AI, and strategy—connected.",
-    images: [{ url: "/og.png", width: 1659, height: 948, alt: "Serptrix digital growth ecosystem" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Serptrix digital growth ecosystem" }],
   },
   twitter: {
     card: "summary_large_image",

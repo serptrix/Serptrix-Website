@@ -73,7 +73,7 @@ export default function HomeExperience() {
 
   useEffect(() => { if (reduced || capabilities.touch) return; let frame = 0; let px = 0; let py = 0; const update = () => { mouseX.set(px / window.innerWidth - .5); mouseY.set(py / window.innerHeight - .5); frame = 0; }; const pointer = (event: PointerEvent) => { px = event.clientX; py = event.clientY; if (!frame) frame = requestAnimationFrame(update); }; window.addEventListener("pointermove", pointer, { passive: true }); return () => { window.removeEventListener("pointermove", pointer); cancelAnimationFrame(frame); }; }, [capabilities.touch, mouseX, mouseY, reduced]);
 
-  useEffect(() => { if (!root.current || reduced) return; const ctx = gsap.context(() => { const mm = gsap.matchMedia();
+  useEffect(() => { if (!root.current || reduced || capabilities.mobile || capabilities.lowPower) return; const ctx = gsap.context(() => { const mm = gsap.matchMedia();
     gsap.fromTo(".s6-node", { scale: .94, y: 16 }, { scale: 1, y: 0, stagger: .12, immediateRender: false, scrollTrigger: { trigger: ".s6-workflow", start: "top 85%", end: "bottom 45%", scrub: .7 } });
     gsap.fromTo(".s7-impact", { backgroundColor: "#ffffff" }, { backgroundColor: "#fff7d8", scrollTrigger: { trigger: ".s7-impact", start: "top 75%", end: "bottom 30%", scrub: true } });
     gsap.utils.toArray<HTMLElement>(".s7-metrics article").forEach((metric,i) => { ScrollTrigger.create({ trigger: metric, start: "top 55%", end: "bottom 45%", onEnter: () => setActiveMetric(i), onEnterBack: () => setActiveMetric(i) }); const label=metric.querySelector("p"); if(label) gsap.fromTo(label,{y:i%2?-15:15},{y:i%2?15:-15,ease:"none",scrollTrigger:{trigger:metric,start:"top bottom",end:"bottom top",scrub:true}}); });
@@ -82,11 +82,11 @@ export default function HomeExperience() {
     gsap.utils.toArray<HTMLElement>(".s11-article-art i").forEach((image) => gsap.fromTo(image, { yPercent: -8 }, { yPercent: 10, ease: "none", scrollTrigger: { trigger: image.parentElement, start: "top bottom", end: "bottom top", scrub: true } }));
     gsap.utils.toArray<HTMLElement>(".s11-article-art").forEach((art) => gsap.fromTo(art,{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",duration:1,ease:"power3.out",scrollTrigger:{trigger:art,start:"top 85%",once:true}}));
     gsap.utils.toArray<HTMLElement>(".s3-section").slice(1).forEach((section) => gsap.to(section,{"--section-progress":1,duration:.8,ease:"power3.out",scrollTrigger:{trigger:section,start:"top 92%",once:true}}));
-    gsap.utils.toArray<HTMLElement>(".s2-statement,.s4-layout,.s6-head,.s8-head,.s10-statements,.s11-head,.s12-inner").forEach((layer) => gsap.fromTo(layer,{y:34,scale:.985,filter:"blur(7px)"},{y:0,scale:1,filter:"blur(0px)",duration:.9,ease:"power3.out",scrollTrigger:{trigger:layer,start:"top 88%",once:true}}));
+    gsap.utils.toArray<HTMLElement>(".s2-statement,.s4-layout,.s6-head,.s8-head,.s10-statements,.s11-head,.s12-inner").forEach((layer) => gsap.fromTo(layer,{y:28,scale:.99},{y:0,scale:1,duration:.75,ease:"power3.out",scrollTrigger:{trigger:layer,start:"top 88%",once:true}}));
     gsap.utils.toArray<HTMLElement>(".s3-home h2 em").forEach((accent) => gsap.to(accent,{"--highlight":1,duration:.7,ease:"power2.out",scrollTrigger:{trigger:accent,start:"top 86%",once:true}}));
     const refresh = () => ScrollTrigger.refresh(); const observer = new ResizeObserver(refresh); observer.observe(root.current!); document.fonts.ready.then(refresh); window.addEventListener("load", refresh, { once: true });
     return () => { mm.revert(); observer.disconnect(); window.removeEventListener("load", refresh); };
-  }, root); return () => ctx.revert(); }, [reduced]);
+  }, root); return () => ctx.revert(); }, [capabilities.lowPower, capabilities.mobile, reduced]);
 
   const currentAi = aiServices[aiTab];
   return <main ref={root} className="srx-home s3-home">

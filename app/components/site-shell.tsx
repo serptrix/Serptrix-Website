@@ -12,12 +12,27 @@ const serviceGroups = [
   { title: "AI & Technology", href: "/services/ai-technology", items: [["AI Development", "Apply intelligence to valuable business problems.", "ai-development"], ["AI Automation", "Give teams back time and operating capacity.", "ai-automation"], ["Digital Strategy", "Connect technology choices to growth priorities.", "digital-strategy"]] },
 ];
 
-const stagger = { hidden: {}, show: { transition: { staggerChildren: .055, delayChildren: .08 } } };
-const item = { hidden: { opacity: 0, y: 14, filter: "blur(5px)" }, show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: .38, ease: [0.22, 1, 0.36, 1] as const } } };
+const stagger = { hidden: {}, show: { transition: { staggerChildren: .045, delayChildren: .05 } } };
+const item = { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0, transition: { duration: .3, ease: [0.22, 1, 0.36, 1] as const } } };
 
 export function Header() {
   const path = usePathname(); const reduced = useReducedMotion(); const capabilities = useMotionCapabilities(); const [mobile, setMobile] = useState(false); const [mega, setMega] = useState(false); const [scrolled, setScrolled] = useState(false); const navRef = useRef<HTMLElement>(null); const toggleRef = useRef<HTMLButtonElement>(null);
-  useEffect(() => { const onScroll = () => setScrolled(window.scrollY > 28); onScroll(); window.addEventListener("scroll", onScroll, { passive: true }); return () => window.removeEventListener("scroll", onScroll); }, []);
+  useEffect(() => {
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        setScrolled(window.scrollY > 28);
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
   useEffect(() => { const frame = requestAnimationFrame(() => { setMobile(false); setMega(false); }); return () => cancelAnimationFrame(frame); }, [path]);
   useEffect(() => { const outside = (event: PointerEvent) => { if (mega && !navRef.current?.contains(event.target as Node)) setMega(false); }; document.addEventListener("pointerdown", outside); return () => document.removeEventListener("pointerdown", outside); }, [mega]);
   useEffect(() => {
@@ -57,66 +72,5 @@ export function Header() {
 }
 
 function NavLink({ href, active, children }: { href: string; active: boolean; children: React.ReactNode }) { return <motion.div variants={item} className="nav-link-wrap"><Link className={active ? "active" : ""} href={href}>{children}<i className="nav-underline"/>{active && <motion.span className="nav-active-dot" layoutId="nav-active" transition={{type:"spring",stiffness:280,damping:26}}/>}</Link></motion.div>; }
-
-export function Footer() {
-  return (
-    <footer>
-      <div className="shell footer-grid">
-        <div className="footer-brand">
-          <Link className="logo logo-light" href="/">
-            <span className="logo-mark">S</span>
-            <span>SERPTRIX</span>
-          </Link>
-          <p>Serptrix connects marketing, development, AI, and strategy into growth systems for ambitious companies.</p>
-          <span>Working globally across time zones.</span>
-        </div>
-        <div>
-          <b>SERVICES</b>
-          <Link href="/services/digital-marketing">Digital Marketing</Link>
-          <Link href="/services/development">Development</Link>
-          <Link href="/services/ai-technology">AI & Technology</Link>
-          <Link href="/services">All Services</Link>
-        </div>
-        <div>
-          <b>COMPANY</b>
-          <Link href="/case-studies">Case Studies</Link>
-          <Link href="/about">About</Link>
-          <Link href="/blog">Insights</Link>
-          <Link href="/search">Search</Link>
-          <Link href="/contact">Contact</Link>
-        </div>
-        <div>
-          <b>CONTACT</b>
-          <a href="mailto:hello@serptrix.com">hello@serptrix.com</a>
-          <span className="social-placeholder">Social channels arriving soon</span>
-        </div>
-      </div>
-      <div className="shell newsletter">
-        <div>
-          <b>SERPTRIX SIGNAL</b>
-          <p>One useful idea on growth, technology, or AI. No noise.</p>
-        </div>
-        <form action="mailto:hello@serptrix.com?subject=Serptrix%20Signal%20subscribe" method="post" encType="text/plain">
-          <label className="sr-only" htmlFor="newsletter-email">
-            Work email
-          </label>
-          <input id="newsletter-email" type="email" name="email" required placeholder="Work email address" autoComplete="email" />
-          <button type="submit">
-            Join the signal <span>↗</span>
-          </button>
-        </form>
-      </div>
-      <div className="shell footer-bottom">
-        <span>© 2026 Serptrix. All rights reserved.</span>
-        <div>
-          <Link href="/privacy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
-          <Link href="/cookies">Cookies</Link>
-          <span>Strategy / Marketing / Development / AI</span>
-        </div>
-      </div>
-    </footer>
-  );
-}
 
 export function InteriorHero({ eyebrow, title, accent, copy }: { eyebrow: string; title: string; accent: string; copy: string }) { return <section className="interior-hero shell"><p className="eyebrow"><span/> {eyebrow}</p><h1>{title}<br/><em>{accent}</em></h1><p>{copy}</p></section>; }
