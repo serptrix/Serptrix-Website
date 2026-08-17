@@ -595,13 +595,10 @@ body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
 .contact-calendly-intro{max-width:720px}
 .contact-calendly h2{margin:.75rem 0 0;font-size:clamp(2rem,3.5vw,3.1rem);max-width:18ch}
 .contact-calendly-lede{color:var(--slate);max-width:var(--measure-hero);margin:1rem 0 0}
-.contact-calendly-frame{width:100%;max-width:980px;margin-inline:auto;border:1px solid var(--mist);background:#fff;border-radius:clamp(1rem,2vw,1.35rem);box-shadow:0 22px 55px rgba(9,16,95,.09);overflow:hidden;position:relative;min-height:620px}
-.contact-calendly-widget-wrap{width:100%;opacity:0;transition:opacity .35s ease, height .25s ease;overflow:hidden}
-.contact-calendly-widget-wrap.is-ready{opacity:1}
-.contact-calendly-widget-wrap .calendly-inline-widget{width:100%!important;min-width:100%!important;max-width:100%!important;height:100%!important}
-.contact-calendly-widget-wrap iframe{width:100%!important;min-width:100%!important;max-width:100%!important;height:100%!important;border:0;display:block}
+.contact-calendly-frame{width:100%;max-width:1000px;margin-inline:auto;border:1px solid var(--mist);background:#fff;border-radius:clamp(1rem,2vw,1.35rem);box-shadow:0 22px 55px rgba(9,16,95,.09);overflow:hidden;position:relative;min-height:700px}
+.contact-calendly-iframe{display:block;width:100%;height:700px;border:0;background:#fff}
 .contact-calendly-loading,.contact-calendly-fallback{display:grid;gap:1rem;place-items:start;padding:clamp(2rem,4vw,3rem);min-height:280px}
-.contact-calendly-loading{position:absolute;inset:0;z-index:2;align-items:center;justify-items:center;color:var(--slate);font-weight:600;background:rgba(255,255,255,.92)}
+.contact-calendly-loading{position:absolute;inset:0;z-index:1;align-items:center;justify-items:center;pointer-events:none;color:var(--slate);font-weight:600;background:rgba(255,255,255,.94)}
 .contact-calendly-spinner{width:28px;height:28px;border:2px solid var(--mist);border-top-color:var(--gold);border-radius:50%;animation:contactSpin .8s linear infinite}
 @keyframes contactSpin{to{transform:rotate(360deg)}}
 .contact-process{background:var(--white)}
@@ -646,8 +643,8 @@ body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
   .contact-hero-copy h1{font-size:clamp(2rem,10vw,2.75rem)}
   .contact-method-trigger{grid-template-columns:2rem 1fr auto;gap:.65rem;padding:1rem 0}
   .contact-method-label{font-size:1.15rem}
-  .contact-calendly-frame{max-width:100%;min-height:580px;border-radius:1rem}
-  .contact-calendly-widget-wrap{min-height:580px}
+  .contact-calendly-frame{max-width:100%;border-radius:1rem}
+  .contact-calendly-iframe{height:980px}
 }
 @media(prefers-reduced-motion:reduce){
   .contact-path-draw,.contact-node,.contact-path-glow,.contact-calendly-spinner{animation:none!important;stroke-dashoffset:0;opacity:.7}
