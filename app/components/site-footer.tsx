@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { siteConfig } from "@/content/site-config";
 
 export function Footer() {
   return (
@@ -29,7 +30,10 @@ export function Footer() {
         </div>
         <div>
           <b>CONTACT</b>
-          <a href="mailto:hello@serptrix.com">hello@serptrix.com</a>
+          <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+          {siteConfig.contact.phone ? (
+            <a href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`}>{siteConfig.contact.phone}</a>
+          ) : null}
           <span className="social-placeholder">Social channels arriving soon</span>
         </div>
       </div>
@@ -38,7 +42,7 @@ export function Footer() {
           <b>SERPTRIX SIGNAL</b>
           <p>One useful idea on growth, technology, or AI. No noise.</p>
         </div>
-        <form action="mailto:hello@serptrix.com?subject=Serptrix%20Signal%20subscribe" method="post" encType="text/plain">
+        <form action={`mailto:${siteConfig.contact.email}?subject=Serptrix%20Signal%20subscribe`} method="post" encType="text/plain">
           <label className="sr-only" htmlFor="newsletter-email">
             Work email
           </label>

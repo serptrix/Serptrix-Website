@@ -1,3 +1,4 @@
+import { siteConfig } from "@/content/site-config";
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
 import { ConsentManager } from "./components/consent-manager";
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 "@id": "https://serptrix.com/#organization",
                 name: "Serptrix",
                 url: "https://serptrix.com",
+                email: siteConfig.contact.email,
                 description: "A digital growth, development, AI, and technology agency.",
               },
               {

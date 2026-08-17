@@ -1,63 +1,65 @@
-import { ProjectForm } from "../components/project-form";
+import { ContactExperience } from "../components/contact/contact-experience";
+import { StructuredData } from "../components/structured-data";
+import { siteConfig } from "@/content/site-config";
 
 export const metadata = {
-  title: "Contact",
-  description: "Tell Serptrix what you are building, improving, or scaling.",
+  title: "Contact Serptrix | Digital Marketing, Development & AI",
+  description:
+    "Contact Serptrix for digital marketing, web development, SaaS, ecommerce, AI automation and digital strategy. Submit a project inquiry or book a strategy call.",
   alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Contact Serptrix | Digital Marketing, Development & AI",
+    description:
+      "Tell Serptrix what you are building, improving, or scaling. Submit a project inquiry or book a strategy call.",
+    url: "/contact",
+  },
 };
 
 export default function Contact() {
+  const contactPoint: Record<string, unknown>[] = [
+    {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      email: siteConfig.contact.email,
+      availableLanguage: "English",
+    },
+  ];
+
+  if (siteConfig.contact.phone) {
+    contactPoint.push({
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      telephone: siteConfig.contact.phone,
+      availableLanguage: "English",
+    });
+  }
+
   return (
     <>
-      <section className="contact-hero shell">
-        <p className="eyebrow">
-          <span /> START A CONVERSATION
-        </p>
-        <h1>
-          Bring us the constraint.
-          <br />
-          <em>We’ll find the leverage.</em>
-        </h1>
-        <p>
-          Tell us what you are trying to change. Five short steps, about four minutes—then we prepare a
-          summary you can send by email.
-        </p>
-      </section>
-      <section className="contact-main shell">
-        <ProjectForm />
-        <aside>
-          <p className="section-index">WHAT HAPPENS NEXT</p>
-          <ol>
-            <li>
-              <span>01</span>
-              <div>
-                <h3>Prepare a clear brief</h3>
-                <p>Your answers become a structured inquiry ready to send.</p>
-              </div>
-            </li>
-            <li>
-              <span>02</span>
-              <div>
-                <h3>Complete by email</h3>
-                <p>
-                  Send the prepared message to <b>hello@serptrix.com</b> to start the handoff.
-                </p>
-              </div>
-            </li>
-            <li>
-              <span>03</span>
-              <div>
-                <h3>Useful first call</h3>
-                <p>The conversation centers on the constraint—not a generic sales pitch.</p>
-              </div>
-            </li>
-          </ol>
-          <div className="contact-alternative">
-            <span>PREFER EMAIL?</span>
-            <a href="mailto:hello@serptrix.com">hello@serptrix.com ↗</a>
-          </div>
-        </aside>
-      </section>
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "ContactPage",
+              "@id": "https://serptrix.com/contact#webpage",
+              url: "https://serptrix.com/contact",
+              name: "Contact Serptrix",
+              description: metadata.description,
+              isPartOf: { "@id": "https://serptrix.com/#organization" },
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://serptrix.com/#organization",
+              name: "Serptrix",
+              url: "https://serptrix.com",
+              email: siteConfig.contact.email,
+              contactPoint,
+            },
+          ],
+        }}
+      />
+      <ContactExperience />
     </>
   );
 }
