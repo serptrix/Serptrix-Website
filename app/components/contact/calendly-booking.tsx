@@ -52,6 +52,7 @@ export function CalendlyBooking() {
   const sectionRef = useRef<HTMLElement>(null);
   const embedRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [shouldRenderWidget, setShouldRenderWidget] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const calendlyUrl = siteConfig.contact.calendlyUrl;
 
@@ -74,32 +75,45 @@ export function CalendlyBooking() {
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section || !calendlyUrl || initialized) return;
+    if (!section || !calendlyUrl || shouldRenderWidget) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
         observer.disconnect();
-        setState("loading");
-        loadCalendlyScript()
-          .then(() => {
-            if (!embedRef.current || !window.Calendly) throw new Error("Calendly unavailable");
-            embedRef.current.innerHTML = "";
-            window.Calendly.initInlineWidget({
-              url: calendlyUrl,
-              parentElement: embedRef.current,
-            });
-            trackContactEvent("calendly_booking_started");
-            setState("ready");
-            setInitialized(true);
-          })
-          .catch(() => setState("error"));
+        setShouldRenderWidget(true);
       },
       { rootMargin: "200px 0px", threshold: 0.01 },
     );
     observer.observe(section);
     return () => observer.disconnect();
-  }, [calendlyUrl, initialized]);
+  }, [calendlyUrl, shouldRenderWidget]);
+
+  useEffect(() => {
+    if (!shouldRenderWidget || !calendlyUrl || initialized) return;
+    setState("loading");
+    loadCalendlyScript()
+      .then(() => {
+        if (!embedRef.current || !window.Calendly) throw new Error("Calendly unavailable");
+        embedRef.current.innerHTML = "";
+        window.Calendly.initInlineWidget({
+          url: calendlyUrl,
+          parentElement: embedRef.current,
+        });
+        trackContactEvent("calendly_booking_started");
+        setInitialized(true);
+
+        // Wait for Calendly iframe to fully load before flipping to ready.
+        const iframe = embedRef.current.querySelector("iframe");
+        if (iframe) {
+          iframe.addEventListener("load", () => setState("ready"), { once: true });
+          window.setTimeout(() => setState("ready"), 1800);
+        } else {
+          window.setTimeout(() => setState("ready"), 900);
+        }
+      })
+      .catch(() => setState("error"));
+  }, [calendlyUrl, initialized, shouldRenderWidget]);
 
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
@@ -157,7 +171,7 @@ export function CalendlyBooking() {
               <div
                 ref={embedRef}
                 className={`contact-calendly-embed ${state === "ready" ? "is-ready" : ""}`}
-                style={{ minHeight: state === "ready" || state === "loading" ? "700px" : undefined }}
+                style={{ minHeight: state === "ready" || state === "loading" ? "760px" : undefined }}
               />
             </>
           )}
