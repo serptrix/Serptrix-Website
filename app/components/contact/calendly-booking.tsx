@@ -11,31 +11,30 @@ declare global {
       initInlineWidget: (options: {
         url: string;
         parentElement: HTMLElement;
-        prefill?: Record<string, string>;
-        utm?: Record<string, string>;
       }) => void;
     };
   }
 }
+const DEFAULT_HEIGHT = 700;
+const MIN_HEIGHT = 620;
 
 let calendlyScriptPromise: Promise<void> | null = null;
 
 function loadCalendlyScript() {
   if (typeof window === "undefined") return Promise.resolve();
-  if (window.Calendly) return Promise.resolve();
+  if (document.querySelector('script[data-calendly="true"]')) {
+    return calendlyScriptPromise ?? Promise.resolve();
+  }
   if (calendlyScriptPromise) return calendlyScriptPromise;
 
   calendlyScriptPromise = new Promise((resolve, reject) => {
-    const existing = document.querySelector('script[data-calendly="true"]');
-    if (existing) {
-      existing.addEventListener("load", () => resolve());
-      existing.addEventListener("error", () => reject(new Error("Calendly script failed")));
-      return;
+    if (!document.querySelector('link[data-calendly="true"]')) {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "https://assets.calendly.com/assets/external/widget.css";
+      link.dataset.calendly = "true";
+      document.head.appendChild(link);
     }
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://assets.calendly.com/assets/external/widget.css";
-    document.head.appendChild(link);
     const script = document.createElement("script");
     script.src = "https://assets.calendly.com/assets/external/widget.js";
     script.async = true;
@@ -50,10 +49,10 @@ function loadCalendlyScript() {
 
 export function CalendlyBooking() {
   const sectionRef = useRef<HTMLElement>(null);
-  const embedRef = useRef<HTMLDivElement>(null);
+  const widgetRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<"idle" | "loading" | "ready" | "error">("idle");
   const [shouldRenderWidget, setShouldRenderWidget] = useState(false);
-  const [initialized, setInitialized] = useState(false);
+  const [widgetHeight, setWidgetHeight] = useState(DEFAULT_HEIGHT);
   const calendlyUrl = siteConfig.contact.calendlyUrl;
 
   useEffect(() => {
@@ -83,42 +82,43 @@ export function CalendlyBooking() {
         observer.disconnect();
         setShouldRenderWidget(true);
       },
-      { rootMargin: "200px 0px", threshold: 0.01 },
+      { rootMargin: "240px 0px", threshold: 0.01 },
     );
     observer.observe(section);
     return () => observer.disconnect();
   }, [calendlyUrl, shouldRenderWidget]);
 
   useEffect(() => {
-    if (!shouldRenderWidget || !calendlyUrl || initialized) return;
+    if (!shouldRenderWidget || !calendlyUrl) return;
     setState("loading");
     loadCalendlyScript()
       .then(() => {
-        if (!embedRef.current || !window.Calendly) throw new Error("Calendly unavailable");
-        embedRef.current.innerHTML = "";
-        window.Calendly.initInlineWidget({
-          url: calendlyUrl,
-          parentElement: embedRef.current,
-        });
-        trackContactEvent("calendly_booking_started");
-        setInitialized(true);
+        const widget = widgetRef.current;
+        if (!widget) throw new Error("Calendly widget missing");
 
-        // Wait for Calendly iframe to fully load before flipping to ready.
-        const iframe = embedRef.current.querySelector("iframe");
+        if (!widget.querySelector("iframe") && window.Calendly) {
+          window.Calendly.initInlineWidget({ url: calendlyUrl, parentElement: widget });
+        }
+
+        trackContactEvent("calendly_booking_started");
+        const iframe = widget.querySelector("iframe");
         if (iframe) {
           iframe.addEventListener("load", () => setState("ready"), { once: true });
-          window.setTimeout(() => setState("ready"), 1800);
-        } else {
-          window.setTimeout(() => setState("ready"), 900);
         }
+        window.setTimeout(() => setState("ready"), 1200);
       })
       .catch(() => setState("error"));
-  }, [calendlyUrl, initialized, shouldRenderWidget]);
+  }, [calendlyUrl, shouldRenderWidget]);
 
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
       if (event.origin !== "https://calendly.com") return;
-      if (event.data?.event === "calendly.event_scheduled") {
+      const data = event.data as { event?: string; payload?: { height?: number } };
+
+      if (data.event === "calendly.page_height" && typeof data.payload?.height === "number") {
+        setWidgetHeight(Math.max(MIN_HEIGHT, data.payload.height));
+      }
+      if (data.event === "calendly.event_scheduled") {
         trackContactEvent("calendly_booking_completed");
       }
     };
@@ -133,17 +133,20 @@ export function CalendlyBooking() {
       className="contact-calendly section"
       aria-labelledby="calendly-title"
     >
-      <div className="shell">
+      <div className="shell contact-calendly-shell">
         <ScrollReveal type="fade-up">
-          <p className="section-index">PREFER TO TALK?</p>
-          <h2 id="calendly-title">
-            Book a strategy call at a time that <em>works for you.</em>
-          </h2>
-          <p className="contact-calendly-lede">
-            Choose an available time and tell us briefly what you would like to discuss. We&apos;ll use the
-            conversation to understand your goals, challenges and potential next steps.
-          </p>
+          <div className="contact-calendly-intro">
+            <p className="section-index">PREFER TO TALK?</p>
+            <h2 id="calendly-title">
+              Book a strategy call at a time that <em>works for you.</em>
+            </h2>
+            <p className="contact-calendly-lede">
+              Choose an available time and tell us briefly what you would like to discuss. We&apos;ll use the
+              conversation to understand your goals, challenges and potential next steps.
+            </p>
+          </div>
         </ScrollReveal>
+
         <div className="contact-calendly-frame">
           {!calendlyUrl ? (
             <div className="contact-calendly-fallback" role="status">
@@ -168,11 +171,19 @@ export function CalendlyBooking() {
                   </a>
                 </div>
               )}
-              <div
-                ref={embedRef}
-                className={`contact-calendly-embed ${state === "ready" ? "is-ready" : ""}`}
-                style={{ minHeight: state === "ready" || state === "loading" ? "760px" : undefined }}
-              />
+              {shouldRenderWidget && (
+                <div
+                  className={`contact-calendly-widget-wrap ${state === "ready" ? "is-ready" : ""}`}
+                  style={{ height: `${widgetHeight}px` }}
+                >
+                  <div
+                    ref={widgetRef}
+                    className="calendly-inline-widget"
+                    data-url={calendlyUrl}
+                    style={{ minWidth: "320px", height: "100%" }}
+                  />
+                </div>
+              )}
             </>
           )}
         </div>
