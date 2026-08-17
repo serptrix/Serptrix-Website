@@ -12,9 +12,9 @@ export const siteConfig = {
   tagline: "Digital Growth, Engineered",
   contact: {
     /** Verified business email */
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@serptrix.com",
-    /** Verified business phone — leave empty until configured */
-    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "",
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@serptrix.com",
+    /** Verified business phone */
+    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+1 (202) 839-9706",
     /** Verified Calendly scheduling URL */
     calendlyUrl: process.env.NEXT_PUBLIC_CALENDLY_URL || "",
   },

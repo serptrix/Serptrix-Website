@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { articles } from "@/content/site-data";
+import { siteConfig } from "@/content/site-config";
 import { ArticleLibrary } from "../components/article-library";
 
 export const metadata = {
@@ -78,7 +79,7 @@ export default function Blog() {
           <h2>One useful idea. No noise.</h2>
           <p>Join the newsletter for concise thinking on growth, technology, and practical AI.</p>
         </div>
-        <form action="mailto:hello@serptrix.com?subject=Serptrix%20Signal%20subscribe" method="post" encType="text/plain">
+        <form action={`mailto:${siteConfig.contact.email}?subject=Serptrix%20Signal%20subscribe`} method="post" encType="text/plain">
           <label className="sr-only" htmlFor="blog-newsletter">
             Work email
           </label>
