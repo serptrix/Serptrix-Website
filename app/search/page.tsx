@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { articles, caseStudies, services } from "@/content/site-data";
+import { Breadcrumbs } from "../components/breadcrumbs";
 
 type Props = { searchParams: Promise<{ q?: string }> };
 
@@ -40,6 +41,7 @@ export default async function Search({ searchParams }: Props) {
   return (
     <>
       <section className="search-hero shell">
+        <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Search" }]} />
         <p className="eyebrow">
           <span /> SITE SEARCH
         </p>

@@ -24,7 +24,7 @@ export function Parallax({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { reducedMotion, mobile, lowPower } = useMotionCapabilities();
+  const { ready, reducedMotion, mobile, lowPower } = useMotionCapabilities();
   const lite = mobile || lowPower;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const amount = strength * (type === "layered" ? layer : 1) * (type === "reverse" ? -1 : 1) * (lite ? 0.35 : 1);
@@ -35,21 +35,24 @@ export function Parallax({
   const opacity = useTransform(scrollYProgress, [0, 0.35, 0.8, 1], [0.35, 1, 1, 0.4]);
 
   useEffect(() => {
-    if (!advanced || reducedMotion || lite || !ref.current) return;
+    if (!ready || !advanced || reducedMotion || lite || !ref.current) return;
+    const node = ref.current;
     return createScopedGSAP(ref, () => {
       gsap.fromTo(
-        ref.current,
+        node,
         { y: -amount },
         {
           y: amount,
           ease: "none",
-          scrollTrigger: { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: 0.7 },
+          scrollTrigger: { trigger: node, start: "top bottom", end: "bottom top", scrub: 0.7 },
         },
       );
     });
-  }, [advanced, amount, lite, reducedMotion]);
+  }, [advanced, amount, lite, ready, reducedMotion]);
 
-  if (reducedMotion || (lite && type !== "opacity")) {
+  const useStatic = !ready || reducedMotion || (lite && type !== "opacity");
+
+  if (useStatic) {
     return (
       <div ref={ref} className={className}>
         {children}

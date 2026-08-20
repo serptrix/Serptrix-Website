@@ -24,7 +24,7 @@ export default function HeroScene({ scrollProgress }: { scrollProgress: MotionVa
   const capabilities = useMotionCapabilities(); const wrapper = useRef<HTMLDivElement>(null); const [visible,setVisible]=useState(true);
   useEffect(()=>{const el=wrapper.current;if(!el)return;const observer=new IntersectionObserver(([entry])=>setVisible(entry.isIntersecting),{rootMargin:"150px"});observer.observe(el);return()=>observer.disconnect();},[capabilities.ready,capabilities.webgl]);
   if (!capabilities.ready) return <div className="srx-canvas-loading" aria-hidden="true" />;
-  if (!capabilities.webgl || capabilities.canvasFailed || capabilities.reducedMotion || capabilities.lowPower || capabilities.mobile) return <WebGLFallback />;
+  if (!capabilities.webgl || capabilities.canvasFailed || capabilities.reducedMotion || capabilities.lowPower) return <WebGLFallback />;
   const count = capabilities.touch ? 70 : 160;
   return <div ref={wrapper} className="srx-webgl-wrap" role="img" aria-label="Interactive Serptrix ecosystem connecting Marketing, Development, and AI around a central digital core"><CanvasBoundary><Canvas frameloop={visible?"always":"never"} dpr={[1, Math.min(capabilities.devicePixelRatio, 1.5)]} camera={{ position: [0, 0, 7.2], fov: 46 }} gl={{ antialias: false, alpha: true, powerPreference: "high-performance", stencil: false, depth: true }} fallback={<WebGLFallback />}><ambientLight intensity={1.4} /><directionalLight position={[-3, 4, 5]} intensity={3.2} color="#ffffff" /><Suspense fallback={null}><Float speed={.45} rotationIntensity={.06} floatIntensity={.14}><BrandObject scrollProgress={scrollProgress} particleCount={count} /></Float></Suspense></Canvas></CanvasBoundary></div>;
 }

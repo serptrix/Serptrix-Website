@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { Breadcrumbs } from "./breadcrumbs";
 
 const serviceGroups = [
   {
@@ -289,9 +290,22 @@ function NavLink({ href, active, children }: { href: string; active: boolean; ch
   );
 }
 
-export function InteriorHero({ eyebrow, title, accent, copy }: { eyebrow: string; title: string; accent: string; copy: string }) {
+export function InteriorHero({
+  eyebrow,
+  title,
+  accent,
+  copy,
+  crumbs,
+}: {
+  eyebrow: string;
+  title: string;
+  accent: string;
+  copy: string;
+  crumbs?: { label: string; href?: string }[];
+}) {
   return (
     <section className="interior-hero shell">
+      {crumbs?.length ? <Breadcrumbs items={crumbs} /> : null}
       <p className="eyebrow">
         <span /> {eyebrow}
       </p>

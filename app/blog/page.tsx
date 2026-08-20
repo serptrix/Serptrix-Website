@@ -2,6 +2,7 @@ import Link from "next/link";
 import { articles } from "@/content/site-data";
 import { siteConfig } from "@/content/site-config";
 import { ArticleLibrary } from "../components/article-library";
+import { Breadcrumbs } from "../components/breadcrumbs";
 
 export const metadata = {
   title: "Insights",
@@ -21,6 +22,7 @@ export default function Blog() {
   return (
     <>
       <section className="blog-hero shell">
+        <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Insights" }]} />
         <p className="eyebrow">
           <span /> SERPTRIX SIGNAL
         </p>

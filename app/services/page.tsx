@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ServiceExplorer } from "../components/service-explorer";
 import { MagneticButton } from "../components/motion/magnetic-button";
 import { FAQ } from "../components/faq";
+import { Breadcrumbs } from "../components/breadcrumbs";
 import { divisions, services } from "@/content/site-data";
 import { StructuredData } from "../components/structured-data";
 
@@ -35,6 +36,7 @@ export default function Services() {
         }}
       />
       <section className="sv-hub-hero shell">
+        <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Services" }]} />
         <p className="eyebrow">
           <span /> Connected capabilities
         </p>

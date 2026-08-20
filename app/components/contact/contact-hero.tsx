@@ -4,6 +4,7 @@ import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } fro
 import { useEffect, useRef } from "react";
 import { ScrollReveal } from "../motion/scroll-reveal";
 import { useMotionCapabilities } from "../motion/use-motion-capabilities";
+import { Breadcrumbs } from "../breadcrumbs";
 
 type Props = {
   onStartProject: () => void;
@@ -61,6 +62,7 @@ export function ContactHero({ onStartProject, onBookCall }: Props) {
         <i className="contact-hero-shape shape-b" />
       </motion.div>
       <div className="shell contact-hero-layout">
+        <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
         <div className="contact-hero-copy">
           <ScrollReveal type="mask">
             <p className="eyebrow">

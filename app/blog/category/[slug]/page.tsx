@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { articles } from "@/content/site-data";
 import { ArticleLibrary } from "@/app/components/article-library";
+import { Breadcrumbs } from "@/app/components/breadcrumbs";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -32,13 +32,9 @@ export default async function Category({ params }: Props) {
   const items = articles.filter((article) => article.category === name);
   return (
     <>
-      <nav className="breadcrumbs shell">
-        <Link href="/">Home</Link>
-        <span>/</span>
-        <Link href="/blog">Insights</Link>
-        <span>/</span>
-        <span>{name}</span>
-      </nav>
+      <div className="shell crumbs-bar">
+        <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Insights", href: "/blog" }, { label: name }]} />
+      </div>
       <section className="category-hero shell">
         <p className="eyebrow">
           <span /> TOPIC
