@@ -206,7 +206,7 @@ footer .newsletter label{color:rgba(255,255,255,.72)}
 .s5-development{overflow:hidden}.s5-progress i{width:100%;transform:scaleX(0);transform-origin:left;animation:none}.s5-intro h2,.s5-outro h2{font-size:var(--text-h2)!important;line-height:var(--leading-h2)!important}.s5-intro>p:last-child{max-width:55ch}.s5-dev-panel{opacity:1;visibility:visible}.s5-panel-head h2{font-size:var(--text-h2)!important;line-height:1.08!important}
 .s6-ai{overflow:hidden}.s6-webgl,.srx-ai3d-fallback{pointer-events:none}.s6-head>div>p{color:rgba(255,255,255,.67);max-width:62ch}.s6-workflow,.s6-node{opacity:1!important;visibility:visible!important}.s6-tabs button:focus-visible{outline:2px solid #fbbc03;outline-offset:3px}.s6-node b{font-size:clamp(.9rem,1.3vw,1.15rem)}
 @media(max-width:900px){
-  .s1-hero,.s1-layout{min-height:auto}.s1-layout{display:block;padding-top:1rem}.s1-copy{padding:5rem 0 2rem}.s1-copy h1{font-size:clamp(2.5rem,11vw,3rem);max-width:none;width:100%}.s1-copy h1>span{display:block;width:100%;max-width:none}.s1-scene{position:relative;right:auto;top:auto;width:100%;height:320px;opacity:1!important;mask-image:linear-gradient(#000 80%,transparent)}.s1-division-rail{position:relative;inset:auto;margin:0 1rem 1.5rem;grid-template-columns:1fr 1fr}.s1-division-rail>span{grid-column:1/3;padding-left:1rem}.srx-scroll-mark{display:none}
+  .s1-hero,.s1-layout{min-height:auto}.s1-layout{display:block;padding-top:1rem}.s1-copy{padding:5rem 0 2rem}.s1-copy h1{font-size:clamp(2.5rem,11vw,3rem);max-width:none;width:100%}.s1-copy h1>span{display:block;width:100%;max-width:none}.s1-scene{position:relative;right:auto;top:auto;width:100%;height:min(400px,62vw);min-height:340px;opacity:1!important;mask-image:none}.s1-scene .srx-webgl-wrap{display:block!important;opacity:1!important}.s1-division-rail{position:relative;inset:auto;margin:0 1rem 1.5rem;grid-template-columns:1fr 1fr}.s1-division-rail>span{grid-column:1/3;padding-left:1rem}.srx-scroll-mark{display:none}
   .s3-ecosystem{padding:0}.s3-eco-layout{height:auto;min-height:0;display:grid;grid-template-columns:1fr;padding-block:5rem}.s3-eco-intro{grid-column:auto;display:block}.s3-eco-intro h2{margin:1rem 0}.s3-eco-nav,.s3-eco-visual,.s3-eco-copy{display:none}.s3-mobile-chapters{display:grid;gap:1rem}.s3-mobile-chapters article{position:relative;padding:1.5rem;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.055)}.s3-mobile-chapters article>span{color:#fbbc03;font-size:.75rem}.s3-mobile-chapters h3{color:#fff;margin:.4rem 0}.s3-mobile-chapters p{color:rgba(255,255,255,.68)}.s3-mobile-chapters ul{list-style:none;padding:0;margin:1rem 0 0;border-top:1px solid rgba(255,255,255,.13)}.s3-mobile-chapters li{padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.1)}
   .s4-layout{grid-template-columns:1fr;gap:3rem}.s3-data-field{min-height:480px}.s4-metrics{grid-template-columns:1fr}.s4-metrics article{border-right:0;border-bottom:1px solid rgba(255,255,255,.14)}
   .s5-development{padding:4rem 1rem}.s5-track{gap:1rem}.s5-intro,.s5-outro,.s5-dev-panel{padding:3.5rem 1.5rem}.s5-dev-panel{min-height:0}.s5-device-stage,.s5-dashboard{height:320px}.s5-commerce-flow{grid-template-columns:1fr 1fr;gap:1rem}.s5-commerce-flow:before{display:none}.s5-commerce-flow i{margin:1.2rem auto}
@@ -443,7 +443,10 @@ body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
   .s1-copy{padding:clamp(4.5rem,12vh,7rem) 0 2rem;max-width:100%;padding-right:0!important;width:100%;box-sizing:border-box}
   .s1-copy h1{max-width:none;width:100%;font-size:clamp(2.4rem,10vw,3.6rem)}
   .s1-copy h1>span{display:block;width:100%;max-width:none}
-  .s1-scene{position:relative;right:auto;top:auto;width:100%;height:min(360px,48vw);opacity:1!important;mask-image:linear-gradient(#000 78%,transparent)}
+  .s1-scene{position:relative;right:auto;top:auto;width:100%;height:min(420px,58vw);min-height:340px;opacity:1!important;mask-image:none;pointer-events:none;z-index:2}
+  .s1-scene:before{right:auto;left:0;top:0;font-size:.62rem}
+  .s1-scene .srx-webgl-wrap,.s1-scene .srx-webgl-fallback,.s1-scene .srx-canvas-loading{position:absolute;inset:0;width:100%;height:100%;display:block!important;opacity:1!important}
+  .s1-system-label{display:flex!important;font-size:.62rem;padding:7px 10px}
   .s1-division-rail{position:relative;inset:auto;margin:0 var(--pad-inline) 1.25rem;grid-template-columns:1fr 1fr;left:auto;right:auto}
   .s1-division-rail>span{grid-column:1/-1;padding-left:1rem}
   .core-services-head,.marketing-services-head,.development-services-head,.s12-reviews-head,.s6-head{grid-template-columns:1fr}
@@ -494,7 +497,7 @@ body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
   .s1-copy h1{font-size:clamp(2.15rem,11.5vw,2.85rem);max-width:none;width:100%}
   .s1-copy h1>span{width:100%;max-width:none}
   .s1-copy h1>span:last-child em{display:block;width:100%;max-width:none}
-  .s1-scene{height:280px}
+  .s1-scene{height:min(380px,72vw);min-height:320px}
   .s1-division-rail{grid-template-columns:1fr;margin-inline:.75rem}
   .s1-division-rail>*{border-right:0;border-bottom:1px solid rgba(255,255,255,.14)}
   .announcement>.shell{gap:8px;flex-wrap:wrap;white-space:normal;overflow:visible;justify-content:flex-start}
@@ -531,7 +534,7 @@ body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
 }
 @media(max-height:500px) and (orientation:landscape){
   .s1-hero,.s1-layout{min-height:auto}
-  .s1-scene{height:220px}
+  .s1-scene{height:min(260px,70vh);min-height:200px}
   .s1-division-rail{display:none}
   .site-header nav{padding-top:4.5rem!important}
   .announcement{display:none}
@@ -1416,5 +1419,192 @@ footer .newsletter button{
     overflow-wrap:anywhere;
     word-break:break-word;
     text-wrap:wrap;
+  }
+  /* Hero 3D: keep WebGL canvas visible on phones/tablets */
+  .s1-scene{
+    position:relative!important;
+    inset:auto!important;
+    right:auto!important;
+    top:auto!important;
+    width:100%!important;
+    height:min(420px,62vw)!important;
+    min-height:340px!important;
+    opacity:1!important;
+    mask-image:none!important;
+    -webkit-mask-image:none!important;
+  }
+  .s1-scene .srx-webgl-wrap,
+  .s1-scene canvas{
+    display:block!important;
+    opacity:1!important;
+    width:100%!important;
+    height:100%!important;
+  }
+  .s1-system-label{display:flex!important}
+}
+
+@media(max-width:600px){
+  .s1-scene{
+    height:min(380px,78vw)!important;
+    min-height:320px!important;
+  }
+}
+
+/* ── Homepage section spacing rhythm ───────────────────────
+   Unifies uneven paddings: some sections were 80px, others 185–190px
+   with large min-heights and stacked internal gaps. */
+.srx-home,
+.s3-home{
+  --home-section-y:clamp(4.75rem,8.5vw,7.5rem);
+  --home-section-gap:clamp(2rem,4vw,3.5rem);
+  --home-overlap:clamp(1.25rem,2.5vw,2.5rem);
+}
+
+.srx-home > .s3-section:not(.s1-hero),
+.s3-home > .s3-section:not(.s1-hero),
+.srx-home .core-services,
+.srx-home .marketing-services,
+.srx-home .development-services,
+.s3-home .core-services,
+.s3-home .marketing-services,
+.s3-home .development-services{
+  padding-block:var(--home-section-y)!important;
+  min-height:0!important;
+}
+
+/* Soft overlaps between banded sections — keep rhythm consistent */
+.srx-home .s2-trust,
+.s3-home .s2-trust{
+  margin-top:calc(var(--home-overlap) * -1)!important;
+  padding-block:var(--home-section-y) calc(var(--home-section-y) * .85)!important;
+}
+.srx-home .s6-ai,
+.s3-home .s6-ai,
+.srx-home .s12-final,
+.s3-home .s12-final{
+  margin-top:calc(var(--home-overlap) * -1)!important;
+}
+.srx-home .s4-marketing,
+.s3-home .s4-marketing,
+.srx-home .s8-cases,
+.s3-home .s8-cases,
+.srx-home .s10-manifesto,
+.s3-home .s10-manifesto{
+  margin-top:0!important;
+  padding-top:var(--home-section-y)!important;
+  clip-path:none;
+}
+
+/* Trust: stop double-padding from statement block */
+.srx-home .s2-statement,
+.s3-home .s2-statement{
+  padding:var(--home-section-gap) 0 0!important;
+  gap:clamp(1.25rem,3vw,2.5rem);
+}
+.srx-home .s2-trust-mobile,
+.s3-home .s2-trust-mobile{
+  padding-bottom:0;
+}
+
+/* Service blocks share the same vertical beat */
+.srx-home .core-services-stage,
+.srx-home .marketing-command,
+.srx-home .development-chapters,
+.s3-home .core-services-stage,
+.s3-home .marketing-command,
+.s3-home .development-chapters{
+  margin-top:var(--home-section-gap)!important;
+}
+
+/* Section heads / galleries — tighten oversized bottom margins */
+.srx-home .s6-tabs,
+.s3-home .s6-tabs,
+.srx-home .s6x-tabs,
+.s3-home .s6x-tabs{
+  margin-top:var(--home-section-gap)!important;
+}
+.srx-home .s8-head,
+.srx-home .s11-head,
+.s3-home .s8-head,
+.s3-home .s11-head{
+  margin-bottom:var(--home-section-gap)!important;
+}
+.srx-home .s12-review-grid,
+.s3-home .s12-review-grid{
+  margin-top:var(--home-section-gap)!important;
+}
+.srx-home .s10-manifesto h2,
+.s3-home .s10-manifesto h2{
+  margin:clamp(1.25rem,3vw,2.5rem) 0 var(--home-section-gap)!important;
+}
+.srx-home .s12-inner h2,
+.s3-home .s12-inner h2{
+  margin:clamp(1.5rem,3vw,2.75rem) 0 var(--home-section-gap)!important;
+}
+.srx-home .s12-final,
+.s3-home .s12-final{
+  padding-block:var(--home-section-y) calc(var(--home-section-y) * 1.15)!important;
+  margin-bottom:0!important;
+  min-height:0!important;
+}
+.srx-home .s7-sticky,
+.s3-home .s7-sticky,
+.srx-home .s9-sticky,
+.s3-home .s9-sticky{
+  top:clamp(5.5rem,12vh,7.5rem);
+}
+
+@media(max-width:1100px){
+  .srx-home,
+  .s3-home{
+    --home-section-y:clamp(4rem,9vw,6rem);
+    --home-section-gap:clamp(1.5rem,4vw,2.5rem);
+    --home-overlap:1.25rem;
+  }
+  .srx-home .s7-mobile-only,
+  .s3-home .s7-mobile-only{
+    padding:0!important;
+  }
+  .srx-home .s2-statement,
+  .s3-home .s2-statement{
+    padding:1.25rem 0 0!important;
+  }
+  .srx-home .s6x-stage,
+  .s3-home .s6x-stage{
+    margin-top:1rem;
+  }
+  .srx-home .s8m-carousel,
+  .srx-home .s11m-carousel,
+  .s3-home .s8m-carousel,
+  .s3-home .s11m-carousel{
+    margin-top:1.25rem;
+  }
+}
+
+@media(max-width:600px){
+  .srx-home,
+  .s3-home{
+    --home-section-y:clamp(3.5rem,12vw,4.75rem);
+    --home-section-gap:1.35rem;
+    --home-overlap:1rem;
+  }
+  .srx-home .s2-trust,
+  .s3-home .s2-trust{
+    border-radius:28px 28px 0 0;
+  }
+  .srx-home .s6-ai,
+  .srx-home .s12-final,
+  .s3-home .s6-ai,
+  .s3-home .s12-final{
+    border-radius:28px 28px 0 0;
+  }
+  .srx-home .s7-metrics article,
+  .s3-home .s7-metrics article{
+    min-height:0;
+    padding-block:1.5rem;
+  }
+  .srx-home .s9-timeline article,
+  .s3-home .s9-timeline article{
+    min-height:0;
   }
 }
