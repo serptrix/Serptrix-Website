@@ -137,7 +137,7 @@ export function Header() {
     };
   }, [mega, menuOpen]);
 
-  const transparent = path === "/" && !scrolled;
+  const transparent = path === "/" && !scrolled && !compactNav;
 
   return (
     <>
@@ -151,8 +151,8 @@ export function Header() {
         </div>
       </div>
       <motion.header
-        className={`site-header ${scrolled ? "scrolled" : ""} ${transparent ? "is-transparent" : ""} ${path === "/" ? "is-home" : ""}`}
-        initial={reduced ? false : { y: -18, opacity: 0 }}
+        className={`site-header ${scrolled ? "scrolled" : ""} ${transparent ? "is-transparent" : ""} ${path === "/" ? "is-home" : ""} ${compactNav ? "is-compact-nav" : ""}`}
+        initial={reduced || compactNav ? false : { y: -18, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.55 }}
       >
