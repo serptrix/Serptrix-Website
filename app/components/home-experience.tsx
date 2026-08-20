@@ -86,20 +86,52 @@ export default function HomeExperience() {
   useEffect(() => { setActiveAiNode(0); }, [aiTab]);
 
   /* Desktop-only heavy GSAP (skipped on mobile / low-power) */
-  useEffect(() => { if (!root.current || !capabilities.ready || reduced || capabilities.mobile || capabilities.lowPower) return; const ctx = gsap.context(() => { const mm = gsap.matchMedia();
-    gsap.fromTo(".s6-node", { scale: .94, y: 16 }, { scale: 1, y: 0, stagger: .12, immediateRender: false, scrollTrigger: { trigger: ".s6-workflow", start: "top 85%", end: "bottom 45%", scrub: .7 } });
-    gsap.fromTo(".s7-impact", { backgroundColor: "#ffffff" }, { backgroundColor: "#fff7d8", scrollTrigger: { trigger: ".s7-impact", start: "top 75%", end: "bottom 30%", scrub: true } });
-    gsap.utils.toArray<HTMLElement>(".s7-metrics article").forEach((metric,i) => { ScrollTrigger.create({ trigger: metric, start: "top 55%", end: "bottom 45%", onEnter: () => setActiveMetric(i), onEnterBack: () => setActiveMetric(i) }); const label=metric.querySelector("p"); if(label) gsap.fromTo(label,{y:i%2?-15:15},{y:i%2?15:-15,ease:"none",scrollTrigger:{trigger:metric,start:"top bottom",end:"bottom top",scrub:true}}); });
-    ScrollTrigger.create({ trigger: process.current, start: "top 25%", end: "bottom 70%", onUpdate: (self) => setActiveProcess(Math.min(5, Math.floor(self.progress * 6))) });
-    gsap.fromTo(".s9-timeline-fill", { scaleY: 0 }, { scaleY: 1, transformOrigin: "top", ease: "none", scrollTrigger: { trigger: process.current, start: "top 35%", end: "bottom 65%", scrub: true } });
-    gsap.utils.toArray<HTMLElement>(".s11-article-art i").forEach((image) => gsap.fromTo(image, { yPercent: -8 }, { yPercent: 10, ease: "none", scrollTrigger: { trigger: image.parentElement, start: "top bottom", end: "bottom top", scrub: true } }));
-    gsap.utils.toArray<HTMLElement>(".s11-article-art").forEach((art) => gsap.fromTo(art,{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",duration:1,ease:"power3.out",scrollTrigger:{trigger:art,start:"top 85%",once:true}}));
-    gsap.utils.toArray<HTMLElement>(".s3-section").slice(1).forEach((section) => gsap.to(section,{"--section-progress":1,duration:.8,ease:"power3.out",scrollTrigger:{trigger:section,start:"top 92%",once:true}}));
-    gsap.utils.toArray<HTMLElement>(".s2-statement,.s4-layout,.s6-head,.s8-head,.s10-statements,.s11-head,.s12-inner").forEach((layer) => gsap.fromTo(layer,{y:28,scale:.99},{y:0,scale:1,duration:.75,ease:"power3.out",scrollTrigger:{trigger:layer,start:"top 88%",once:true}}));
-    gsap.utils.toArray<HTMLElement>(".s3-home h2 em").forEach((accent) => gsap.to(accent,{"--highlight":1,duration:.7,ease:"power2.out",scrollTrigger:{trigger:accent,start:"top 86%",once:true}}));
-    const refresh = () => ScrollTrigger.refresh(); const observer = new ResizeObserver(refresh); observer.observe(root.current!); document.fonts.ready.then(refresh); window.addEventListener("load", refresh, { once: true });
-    return () => { mm.revert(); observer.disconnect(); window.removeEventListener("load", refresh); };
-  }, root); return () => ctx.revert(); }, [capabilities.lowPower, capabilities.mobile, capabilities.ready, reduced]);
+  useEffect(() => {
+    if (!root.current || !capabilities.ready || reduced || capabilities.mobile || capabilities.lowPower) return;
+
+    const ctx = gsap.context(() => {
+      const workflowStage = root.current?.querySelector(".s6x-stage");
+      if (workflowStage) {
+        gsap.fromTo(
+          ".s6-node",
+          { scale: 0.94, y: 16 },
+          {
+            scale: 1,
+            y: 0,
+            stagger: 0.12,
+            immediateRender: false,
+            scrollTrigger: { trigger: workflowStage, start: "top 85%", end: "bottom 45%", scrub: 0.7 },
+          },
+        );
+      }
+
+      gsap.fromTo(".s7-impact", { backgroundColor: "#ffffff" }, { backgroundColor: "#fff7d8", scrollTrigger: { trigger: ".s7-impact", start: "top 75%", end: "bottom 30%", scrub: true } });
+      gsap.utils.toArray<HTMLElement>(".s7-metrics article").forEach((metric, i) => {
+        ScrollTrigger.create({ trigger: metric, start: "top 55%", end: "bottom 45%", onEnter: () => setActiveMetric(i), onEnterBack: () => setActiveMetric(i) });
+        const label = metric.querySelector("p");
+        if (label) gsap.fromTo(label, { y: i % 2 ? -15 : 15 }, { y: i % 2 ? 15 : -15, ease: "none", scrollTrigger: { trigger: metric, start: "top bottom", end: "bottom top", scrub: true } });
+      });
+      ScrollTrigger.create({ trigger: process.current, start: "top 25%", end: "bottom 70%", onUpdate: (self) => setActiveProcess(Math.min(5, Math.floor(self.progress * 6))) });
+      gsap.fromTo(".s9-timeline-fill", { scaleY: 0 }, { scaleY: 1, transformOrigin: "top", ease: "none", scrollTrigger: { trigger: process.current, start: "top 35%", end: "bottom 65%", scrub: true } });
+      gsap.utils.toArray<HTMLElement>(".s11-article-art i").forEach((image) => gsap.fromTo(image, { yPercent: -8 }, { yPercent: 10, ease: "none", scrollTrigger: { trigger: image.parentElement, start: "top bottom", end: "bottom top", scrub: true } }));
+      gsap.utils.toArray<HTMLElement>(".s11-article-art").forEach((art) => gsap.fromTo(art, { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 1, ease: "power3.out", scrollTrigger: { trigger: art, start: "top 85%", once: true } }));
+      gsap.utils.toArray<HTMLElement>(".s3-section").slice(1).forEach((section) => gsap.to(section, { "--section-progress": 1, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: section, start: "top 92%", once: true } }));
+      gsap.utils.toArray<HTMLElement>(".s2-statement,.s4-layout,.s6-head,.s8-head,.s10-statements,.s11-head,.s12-inner").forEach((layer) => gsap.fromTo(layer, { y: 28, scale: 0.99 }, { y: 0, scale: 1, duration: 0.75, ease: "power3.out", scrollTrigger: { trigger: layer, start: "top 88%", once: true } }));
+      gsap.utils.toArray<HTMLElement>(".s3-home h2 em").forEach((accent) => gsap.to(accent, { "--highlight": 1, duration: 0.7, ease: "power2.out", scrollTrigger: { trigger: accent, start: "top 86%", once: true } }));
+    }, root);
+
+    const refresh = () => ScrollTrigger.refresh();
+    const observer = new ResizeObserver(refresh);
+    observer.observe(root.current);
+    document.fonts.ready.then(refresh);
+    window.addEventListener("load", refresh, { once: true });
+
+    return () => {
+      ctx.revert();
+      observer.disconnect();
+      window.removeEventListener("load", refresh);
+    };
+  }, [capabilities.lowPower, capabilities.mobile, capabilities.ready, reduced]);
 
   /* Mobile/low-power process activation — IntersectionObserver when GSAP is skipped */
   useEffect(() => {

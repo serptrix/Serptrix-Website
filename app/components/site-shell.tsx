@@ -44,6 +44,10 @@ const item = {
 
 const NAV_COMPACT_QUERY = "(max-width: 1100px)";
 
+function cn(...parts: Array<string | false | null | undefined>) {
+  return parts.filter(Boolean).join(" ");
+}
+
 export function Header() {
   const path = usePathname();
   const reduced = useReducedMotion();
@@ -138,6 +142,13 @@ export function Header() {
   }, [mega, menuOpen]);
 
   const transparent = path === "/" && !scrolled && !compactNav;
+  const headerClass = cn(
+    "site-header",
+    scrolled && "scrolled",
+    transparent && "is-transparent",
+    path === "/" && "is-home",
+    compactNav && "is-compact-nav",
+  );
 
   return (
     <>
@@ -151,8 +162,8 @@ export function Header() {
         </div>
       </div>
       <motion.header
-        className={`site-header ${scrolled ? "scrolled" : ""} ${transparent ? "is-transparent" : ""} ${path === "/" ? "is-home" : ""} ${compactNav ? "is-compact-nav" : ""}`}
-        initial={reduced || compactNav ? false : { y: -18, opacity: 0 }}
+        className={headerClass}
+        initial={false}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.55 }}
       >
@@ -173,7 +184,7 @@ export function Header() {
           </Link>
           <button
             ref={toggleRef}
-            className={`menu-toggle ${menuOpen ? "is-open" : ""}`}
+            className={cn("menu-toggle", menuOpen && "is-open")}
             aria-label={menuOpen ? "Close navigation" : "Open navigation"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen(!menuOpen)}
@@ -183,7 +194,7 @@ export function Header() {
           </button>
           <motion.nav
             ref={navRef}
-            className={menuOpen ? "open" : ""}
+            className={cn(menuOpen && "open")}
             aria-label="Primary navigation"
             initial={false}
             animate={

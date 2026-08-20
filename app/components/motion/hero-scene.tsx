@@ -138,6 +138,7 @@ export default function HeroScene({ scrollProgress }: { scrollProgress: MotionVa
   const capabilities = useMotionCapabilities();
   const wrapper = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
+  const [contextLost, setContextLost] = useState(false);
 
   useEffect(() => {
     const el = wrapper.current;
@@ -147,11 +148,13 @@ export default function HeroScene({ scrollProgress }: { scrollProgress: MotionVa
     return () => observer.disconnect();
   }, [capabilities.ready, capabilities.webgl]);
 
+  useEffect(() => {
+    setContextLost(false);
+  }, [capabilities.ready, capabilities.webgl]);
+
   if (!capabilities.ready) return <div className="srx-canvas-loading" aria-hidden="true" />;
 
-  // Show real WebGL on mobile/desktop. Only fall back for no-WebGL, crash, or reduced-motion.
-  // lowPower used to force the 2D "S" mark on most phones — keep a lighter scene instead.
-  if (!capabilities.webgl || capabilities.canvasFailed || capabilities.reducedMotion) {
+  if (!capabilities.webgl || capabilities.canvasFailed || capabilities.reducedMotion || contextLost) {
     return <WebGLFallback />;
   }
 
@@ -173,6 +176,14 @@ export default function HeroScene({ scrollProgress }: { scrollProgress: MotionVa
           camera={{ position: [0, 0, compact ? 8.1 : 7.2], fov: compact ? 50 : 46 }}
           gl={{ antialias: false, alpha: true, powerPreference: compact ? "default" : "high-performance", stencil: false, depth: true }}
           fallback={<WebGLFallback />}
+          onCreated={({ gl }) => {
+            const canvas = gl.domElement;
+            const onLost = (event: Event) => {
+              event.preventDefault();
+              setContextLost(true);
+            };
+            canvas.addEventListener("webglcontextlost", onLost, false);
+          }}
         >
           <ambientLight intensity={1.4} />
           <directionalLight position={[-3, 4, 5]} intensity={3.2} color="#ffffff" />

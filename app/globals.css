@@ -257,7 +257,7 @@ button,.btn,.srx-button,.nav-cta,a[role="button"]{border-radius:50px}
 .site-header.scrolled{width:min(88%,1320px);max-width:1320px;height:72px;top:12px;border:1px solid rgba(255,255,255,.72);border-radius:50px;background:rgba(255,255,255,.78);box-shadow:0 18px 55px rgba(5,9,54,.16)}
 .site-header.is-home.scrolled{top:12px;left:0;right:0}
 .site-header.scrolled .mega-menu{top:92px}
-@media(max-width:900px){.site-header>.nav-wrap{padding-inline:var(--pad-inline)}.site-header.is-home,.site-header.is-home.is-transparent,.site-header.is-home:not(.scrolled).is-transparent{position:sticky!important;top:0!important;left:auto!important;right:auto!important;width:100%!important;max-width:100%!important;margin:0!important;border-radius:0!important;background:rgba(5,8,45,.94)!important;border-color:rgba(255,255,255,.12)!important}.site-header.is-home.scrolled{position:sticky;top:0}.announcement{padding-block:.65rem}.announcement>.shell{width:100%;max-width:100%;padding-inline:var(--pad-inline);flex-wrap:wrap;white-space:normal!important;overflow:visible!important;gap:.45rem .65rem}.announcement span{flex:1 1 100%;white-space:normal!important;overflow:visible!important;text-overflow:unset!important}.announcement a{margin-left:0;font-size:var(--text-small)!important;white-space:nowrap}.s1-hero,.s1-layout{width:100%;max-width:100%}.s1-copy{width:100%;max-width:100%;padding-right:0!important;box-sizing:border-box}.s1-copy h1,.s1-copy h1>span,.s1-copy h1 em,.s1-copy h1 .srx-reveal-unit{max-width:100%!important;width:100%;overflow-wrap:anywhere;word-break:break-word;text-wrap:wrap}.s1-lede{max-width:100%}.site-header.scrolled,.site-header.is-home.scrolled{width:100%!important;max-width:100%!important;height:64px;top:0!important;border-radius:0!important;margin:0!important}.site-header.scrolled .mega-menu{top:auto}}
+@media(max-width:900px){.site-header>.nav-wrap{padding-inline:var(--pad-inline)}.site-header.is-home,.site-header.is-home.is-transparent,.site-header.is-home:not(.scrolled).is-transparent{position:sticky!important;top:0!important;left:auto!important;right:auto!important;width:100%!important;max-width:100%!important;margin:0!important;border-radius:0!important;background:rgba(5,8,45,.94)!important;border-color:rgba(255,255,255,.12)!important}.site-header.is-home.scrolled{position:sticky;top:0}.announcement{display:none!important}.s1-hero,.s1-layout{width:100%;max-width:100%}.s1-copy{width:100%;max-width:100%;padding-right:0!important;box-sizing:border-box}.s1-copy h1,.s1-copy h1>span,.s1-copy h1 em,.s1-copy h1 .srx-reveal-unit{max-width:100%!important;width:100%;overflow-wrap:anywhere;word-break:break-word;text-wrap:wrap}.s1-lede{max-width:100%}.site-header.scrolled,.site-header.is-home.scrolled{width:100%!important;max-width:100%!important;height:64px;top:0!important;border-radius:0!important;margin:0!important}.site-header.scrolled .mega-menu{top:auto}}
 @media(prefers-reduced-motion:reduce){.site-header{transition:none!important}}
 .nav-cta .nav-cta-face{color:#fff;transition:color .3s cubic-bezier(.22,1,.36,1)}
 .nav-cta>span:last-child{color:var(--gold);transition:color .3s cubic-bezier(.22,1,.36,1)}
@@ -266,7 +266,8 @@ button,.btn,.srx-button,.nav-cta,a[role="button"]{border-radius:50px}
 /* Performance: scroll, paint containment, reduced-motion hardening */
 html{scroll-behavior:auto}
 .srx-smooth-scroll{overscroll-behavior-y:none}
-.s3-section:not(.s1-hero),.core-services,.marketing-services,.development-services,.blog-library-section,.contact-main,.case-library,.article-library{content-visibility:auto;contain-intrinsic-size:1px 720px}
+.s3-section:not(.s1-hero),.core-services,.marketing-services,.development-services,.blog-library-section,.contact-main,.case-library,.article-library{content-visibility:auto;contain-intrinsic-size:1px 900px}
+.srx-home > .s3-section:not(.s1-hero),.s3-home > .s3-section:not(.s1-hero),.srx-home .core-services,.srx-home .marketing-services,.srx-home .development-services{content-visibility:visible;contain-intrinsic-size:auto}
 .srx-webgl-wrap,.s6-webgl,.s12-particles{contain:paint layout;transform:translateZ(0)}
 .btn,.srx-button,.srx-line-link,.nav-cta,.case-filters button,.article-tools button,.choice-grid label{transition:transform .22s cubic-bezier(.22,1,.36,1),background-color .22s,color .22s,border-color .22s,box-shadow .22s,opacity .22s}
 .btn:active,.srx-button:active,.nav-cta:active{transform:translateY(1px) scale(.985)}
@@ -469,7 +470,7 @@ body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
   .mega-group:not(:first-of-type){display:block!important}
   .mega-group small{display:block}
   .shell{width:min(var(--shell-max),calc(100% - 2rem))}
-  .s2-trust{border-radius:28px 28px 0 0;margin-top:-24px;padding:2.75rem 0 3rem}
+  .s2-trust{border-radius:28px 28px 0 0;margin-top:0;padding:var(--home-section-y,3.75rem) 0}
   .s2-trust-desktop{display:none!important}
   .s2-trust-mobile{display:block;padding-bottom:.5rem}
   .s2-trust .s2-statement{padding:0 0 1.5rem;gap:.85rem}
@@ -480,7 +481,7 @@ body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
   .s2-mobile-tags li{display:flex;align-items:center;min-height:44px;padding:.65rem .8rem;background:#fff;border:1px solid rgba(9,16,95,.1);font-family:var(--body);font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);line-height:1.35}
   .s2-mobile-tags.is-capabilities li{background:#fffdf2;border-color:rgba(251,188,3,.32)}
   .s4-marketing,.s8-cases,.s10-manifesto{clip-path:none;padding-top:clamp(4rem,10vw,6rem)}
-  .s6-ai,.s12-final{border-radius:28px 28px 0 0;margin-top:-24px}
+  .s6-ai,.s12-final{border-radius:28px 28px 0 0;margin-top:0}
   .s1-actions .srx-button,.s12-actions .srx-button,.nav-cta{width:100%}
   .s1-actions,.s12-actions{width:100%;gap:1rem}
   .field-row,.choice-grid{grid-template-columns:1fr}
@@ -1064,8 +1065,8 @@ nav.srx-crumbs.breadcrumbs,.srx-crumbs.breadcrumbs{
 .s7-mobile-only{display:none}
 @media(max-width:900px){
   .s7-desktop-only{display:none}
-  .s7-mobile-only{display:block;padding:80px 0 100px}
-  .s7-mobile-only h2{font-size:clamp(2.6rem,12vw,4.2rem);margin:24px 0 18px;line-height:1.1}
+  .s7-mobile-only{display:block;padding:0}
+  .s7-mobile-only h2{font-size:clamp(2.6rem,12vw,4.2rem);margin:1.25rem 0 1rem;line-height:1.1}
   .s7m-lede{color:#687089;font-size:15px;line-height:1.65;margin-bottom:36px;max-width:52ch}
   .s7m-cards{display:flex;flex-direction:column;gap:1px;border-top:1px solid #d3d5dd}
   .s7m-card{background:#fff;border-bottom:1px solid #d3d5dd;transition:background .22s}
@@ -1087,7 +1088,7 @@ nav.srx-crumbs.breadcrumbs,.srx-crumbs.breadcrumbs{
 .s8-mobile-only{display:none}
 @media(max-width:900px){
   .s8-desktop-only{display:none}
-  .s8-mobile-only{display:block;padding:80px 0 100px}
+  .s8-mobile-only{display:block;padding:0}
   .s8-mobile-only .srx-section-tag{margin-bottom:16px}
   .s8-mobile-only h2{font-size:clamp(2.5rem,12.5vw,4rem);line-height:1.06;letter-spacing:-.03em;margin:0 0 32px}
   .s8m-carousel{overflow:hidden;border:1px solid #c9d2ea;background:#f7f9ff;touch-action:pan-y}
@@ -1194,7 +1195,7 @@ nav.srx-crumbs.breadcrumbs,.srx-crumbs.breadcrumbs{
 .s11-mobile-only{display:none}
 @media(max-width:900px){
   .s11-desktop-only{display:none}
-  .s11-mobile-only{display:block;padding:80px 0 100px;position:relative;z-index:1}
+  .s11-mobile-only{display:block;padding:0;position:relative;z-index:1}
   .s11-ghost{font-size:18vw;top:4%;left:-4%;opacity:.55}
   .s11-mobile-only .srx-section-tag{margin-bottom:16px}
   .s11-mobile-only h2{font-size:clamp(2.5rem,12.5vw,4rem);line-height:1.06;letter-spacing:-.03em;margin:0 0 28px}
@@ -1343,40 +1344,11 @@ footer .newsletter button{
   }
 }
 
-/* Mobile top bar stack — announcement + header must not overlap */
+/* Mobile top bar — hide announcement on compact / mobile viewports */
 @media(max-width:1100px){
   html,body{width:100%;max-width:100%;overflow-x:clip}
   body{padding-left:0;padding-right:0}
-  .announcement{
-    width:100%;
-    max-width:100%;
-    padding-top:max(.65rem,env(safe-area-inset-top));
-    padding-bottom:.65rem;
-  }
-  .announcement>.shell{
-    width:100%;
-    max-width:100%;
-    margin:0;
-    padding-inline:var(--pad-inline);
-    display:flex;
-    flex-wrap:wrap;
-    align-items:flex-start;
-    gap:.45rem .65rem;
-    white-space:normal;
-    overflow:visible;
-  }
-  .announcement span{
-    flex:1 1 100%;
-    min-width:0;
-    white-space:normal;
-    overflow:visible;
-    text-overflow:unset;
-  }
-  .announcement a{
-    margin-left:0;
-    font-size:var(--text-small)!important;
-    white-space:nowrap;
-  }
+  .announcement{display:none!important}
   .site-header,
   .site-header.is-home,
   .site-header.is-home.is-transparent,
@@ -1450,14 +1422,19 @@ footer .newsletter button{
   }
 }
 
-/* ── Homepage section spacing rhythm ───────────────────────
-   Unifies uneven paddings: some sections were 80px, others 185–190px
-   with large min-heights and stacked internal gaps. */
+/* ── Homepage section spacing (post-QA) ────────────────────
+   QA findings (390px / 1280px):
+   - Outer padT was already equal (56 / 109) via tokens
+   - Sections 07/08/11 mobile wrappers added EXTRA 80–100px
+     on top of section padding → looked uneven vs other sections
+   - Negative overlaps only on 02/06/13 created uneven gaps
+   - content-visibility placeholder heights made sections look
+     identical until scrolled
+*/
 .srx-home,
 .s3-home{
-  --home-section-y:clamp(4.75rem,8.5vw,7.5rem);
-  --home-section-gap:clamp(2rem,4vw,3.5rem);
-  --home-overlap:clamp(1.25rem,2.5vw,2.5rem);
+  --home-section-y:clamp(5rem,8vw,7rem);
+  --home-section-gap:clamp(1.5rem,3.5vw,2.75rem);
 }
 
 .srx-home > .s3-section:not(.s1-hero),
@@ -1469,21 +1446,18 @@ footer .newsletter button{
 .s3-home .marketing-services,
 .s3-home .development-services{
   padding-block:var(--home-section-y)!important;
+  margin-top:0!important;
+  margin-bottom:0!important;
   min-height:0!important;
 }
 
-/* Soft overlaps between banded sections — keep rhythm consistent */
+/* No soft overlaps — even seams between bands */
 .srx-home .s2-trust,
-.s3-home .s2-trust{
-  margin-top:calc(var(--home-overlap) * -1)!important;
-  padding-block:var(--home-section-y) calc(var(--home-section-y) * .85)!important;
-}
+.s3-home .s2-trust,
 .srx-home .s6-ai,
 .s3-home .s6-ai,
 .srx-home .s12-final,
-.s3-home .s12-final{
-  margin-top:calc(var(--home-overlap) * -1)!important;
-}
+.s3-home .s12-final,
 .srx-home .s4-marketing,
 .s3-home .s4-marketing,
 .srx-home .s8-cases,
@@ -1491,22 +1465,29 @@ footer .newsletter button{
 .srx-home .s10-manifesto,
 .s3-home .s10-manifesto{
   margin-top:0!important;
-  padding-top:var(--home-section-y)!important;
   clip-path:none;
 }
 
-/* Trust: stop double-padding from statement block */
 .srx-home .s2-statement,
 .s3-home .s2-statement{
   padding:var(--home-section-gap) 0 0!important;
-  gap:clamp(1.25rem,3vw,2.5rem);
+  gap:clamp(1rem,2.5vw,2rem);
 }
 .srx-home .s2-trust-mobile,
 .s3-home .s2-trust-mobile{
-  padding-bottom:0;
+  padding:0!important;
 }
 
-/* Service blocks share the same vertical beat */
+/* Kill mobile double-padding wrappers (root cause of uneven spacing) */
+.srx-home .s7-mobile-only,
+.srx-home .s8-mobile-only,
+.srx-home .s11-mobile-only,
+.s3-home .s7-mobile-only,
+.s3-home .s8-mobile-only,
+.s3-home .s11-mobile-only{
+  padding:0!important;
+}
+
 .srx-home .core-services-stage,
 .srx-home .marketing-command,
 .srx-home .development-chapters,
@@ -1516,92 +1497,95 @@ footer .newsletter button{
   margin-top:var(--home-section-gap)!important;
 }
 
-/* Section heads / galleries — tighten oversized bottom margins */
 .srx-home .s6-tabs,
 .s3-home .s6-tabs,
 .srx-home .s6x-tabs,
-.s3-home .s6x-tabs{
+.s3-home .s6x-tabs,
+.srx-home .s12-review-grid,
+.s3-home .s12-review-grid,
+.srx-home .s8m-carousel,
+.srx-home .s11m-carousel,
+.s3-home .s8m-carousel,
+.s3-home .s11m-carousel{
   margin-top:var(--home-section-gap)!important;
 }
+
 .srx-home .s8-head,
 .srx-home .s11-head,
 .s3-home .s8-head,
 .s3-home .s11-head{
   margin-bottom:var(--home-section-gap)!important;
 }
-.srx-home .s12-review-grid,
-.s3-home .s12-review-grid{
-  margin-top:var(--home-section-gap)!important;
-}
+
+/* Normalize section title margins inside home */
+.srx-home .s7-sticky h2,
+.srx-home .s7-mobile-only h2,
+.srx-home .s9-sticky h2,
 .srx-home .s10-manifesto h2,
-.s3-home .s10-manifesto h2{
-  margin:clamp(1.25rem,3vw,2.5rem) 0 var(--home-section-gap)!important;
-}
 .srx-home .s12-inner h2,
-.s3-home .s12-inner h2{
-  margin:clamp(1.5rem,3vw,2.75rem) 0 var(--home-section-gap)!important;
+.srx-home .s6x-head h2,
+.srx-home .s8-mobile-only h2,
+.srx-home .s11-mobile-only h2,
+.s3-home .s7-sticky h2,
+.s3-home .s7-mobile-only h2,
+.s3-home .s9-sticky h2,
+.s3-home .s10-manifesto h2,
+.s3-home .s12-inner h2,
+.s3-home .s6x-head h2,
+.s3-home .s8-mobile-only h2,
+.s3-home .s11-mobile-only h2{
+  margin:clamp(1rem,2.5vw,1.75rem) 0 var(--home-section-gap)!important;
 }
+
 .srx-home .s12-final,
 .s3-home .s12-final{
-  padding-block:var(--home-section-y) calc(var(--home-section-y) * 1.15)!important;
+  padding-block:var(--home-section-y) calc(var(--home-section-y) * 1.1)!important;
   margin-bottom:0!important;
   min-height:0!important;
 }
+
 .srx-home .s7-sticky,
 .s3-home .s7-sticky,
 .srx-home .s9-sticky,
 .s3-home .s9-sticky{
-  top:clamp(5.5rem,12vh,7.5rem);
+  top:clamp(5rem,12vh,7rem);
+}
+
+.srx-home .s7m-lede,
+.s3-home .s7m-lede{
+  margin-bottom:var(--home-section-gap)!important;
 }
 
 @media(max-width:1100px){
   .srx-home,
   .s3-home{
-    --home-section-y:clamp(4rem,9vw,6rem);
-    --home-section-gap:clamp(1.5rem,4vw,2.5rem);
-    --home-overlap:1.25rem;
-  }
-  .srx-home .s7-mobile-only,
-  .s3-home .s7-mobile-only{
-    padding:0!important;
+    --home-section-y:clamp(3.75rem,8vw,5rem);
+    --home-section-gap:1.25rem;
   }
   .srx-home .s2-statement,
   .s3-home .s2-statement{
-    padding:1.25rem 0 0!important;
+    padding:1rem 0 0!important;
   }
-  .srx-home .s6x-stage,
-  .s3-home .s6x-stage{
-    margin-top:1rem;
-  }
-  .srx-home .s8m-carousel,
-  .srx-home .s11m-carousel,
-  .s3-home .s8m-carousel,
-  .s3-home .s11m-carousel{
-    margin-top:1.25rem;
+  .srx-home .s2-trust,
+  .s3-home .s2-trust,
+  .srx-home .s6-ai,
+  .s3-home .s6-ai,
+  .srx-home .s12-final,
+  .s3-home .s12-final{
+    border-radius:28px 28px 0 0;
   }
 }
 
 @media(max-width:600px){
   .srx-home,
   .s3-home{
-    --home-section-y:clamp(3.5rem,12vw,4.75rem);
-    --home-section-gap:1.35rem;
-    --home-overlap:1rem;
-  }
-  .srx-home .s2-trust,
-  .s3-home .s2-trust{
-    border-radius:28px 28px 0 0;
-  }
-  .srx-home .s6-ai,
-  .srx-home .s12-final,
-  .s3-home .s6-ai,
-  .s3-home .s12-final{
-    border-radius:28px 28px 0 0;
+    --home-section-y:3.5rem;
+    --home-section-gap:1.15rem;
   }
   .srx-home .s7-metrics article,
   .s3-home .s7-metrics article{
     min-height:0;
-    padding-block:1.5rem;
+    padding-block:1.25rem;
   }
   .srx-home .s9-timeline article,
   .s3-home .s9-timeline article{
