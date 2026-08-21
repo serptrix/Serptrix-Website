@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState, type ReactElement } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { CapabilityPattern, ServicePageContent } from "@/content/service-pages";
-import { createScopedGSAP, gsap, ScrollTrigger } from "../motion/gsap-runtime";
+import { createScopedGSAP, ScrollTrigger } from "../motion/gsap-runtime";
 import { ScrollReveal } from "../motion/scroll-reveal";
 import { motionTokens } from "../motion/tokens";
 import { useMotionCapabilities } from "../motion/use-motion-capabilities";

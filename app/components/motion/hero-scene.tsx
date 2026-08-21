@@ -148,13 +148,14 @@ export default function HeroScene({ scrollProgress }: { scrollProgress: MotionVa
     return () => observer.disconnect();
   }, [capabilities.ready, capabilities.webgl]);
 
-  useEffect(() => {
-    setContextLost(false);
-  }, [capabilities.ready, capabilities.webgl]);
-
   if (!capabilities.ready) return <div className="srx-canvas-loading" aria-hidden="true" />;
 
-  if (!capabilities.webgl || capabilities.canvasFailed || capabilities.reducedMotion || contextLost) {
+  if (
+    !capabilities.webgl ||
+    capabilities.canvasFailed ||
+    capabilities.reducedMotion ||
+    contextLost
+  ) {
     return <WebGLFallback />;
   }
 

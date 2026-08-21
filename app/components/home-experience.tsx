@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { articles as cmsArticles } from "@/content/site-data";
+import { articles as cmsArticles, serviceBySlug } from "@/content/site-data";
 import { siteConfig } from "@/content/site-config";
 import { MagneticButton } from "./motion/magnetic-button";
 import { Parallax } from "./motion/parallax";
@@ -20,11 +20,14 @@ const HeroScene = dynamic(() => import("./motion/hero-scene"), { ssr: false, loa
 const WorkflowScene = dynamic(() => import("./motion/workflow-scene"), { ssr: false, loading: () => <div className="srx-ai3d-fallback" aria-hidden="true" /> });
 const ParticleField = dynamic(() => import("./motion/particle-field"), { ssr: false });
 
-const aiServices = [
-  { name: "AI Development", badge: "New", copy: "Build practical AI tools, assistants and internal systems around business workflows and customer needs.", nodes: ["Business Input", "Data + Context", "AI Processing", "Automated Action", "Business Result"] },
-  { name: "AI Automation", copy: "Automate repetitive tasks, connect platforms and reduce manual operational work.", nodes: ["Business Input", "Connected Data", "Workflow Logic", "Automated Action", "Business Result"] },
-  { name: "Digital Strategy", copy: "Create a clear roadmap connecting marketing, technology, data, customer experience and business goals.", nodes: ["Business Context", "Evidence", "Strategic Model", "Roadmap", "Measured Result"] },
-];
+const aiServices = ([
+  { slug: "ai-development", badge: "New", nodes: ["Business Input", "Data + Context", "AI Processing", "Automated Action", "Business Result"] },
+  { slug: "ai-automation", badge: undefined, nodes: ["Business Input", "Connected Data", "Workflow Logic", "Automated Action", "Business Result"] },
+  { slug: "digital-strategy", badge: undefined, nodes: ["Business Context", "Evidence", "Strategic Model", "Roadmap", "Measured Result"] },
+] as const).map((item) => {
+  const service = serviceBySlug(item.slug)!;
+  return { name: service.name, copy: service.summary, badge: item.badge, nodes: item.nodes };
+});
 
 const cases = [
   { id: "01", type: "B2B SaaS / Acquisition", title: "Making a complex platform easier to understand—and easier to buy.", tags: "Strategy · Web · SEO", className: "case-saas" },
@@ -83,7 +86,10 @@ export default function HomeExperience() {
   const { scrollYProgress } = useScroll({ target: hero, offset: ["start start", "end start"] }); const heroY = useTransform(scrollYProgress, [0,1], [0,170]); const heroScale = useTransform(scrollYProgress, [0,1], [1,.92]); const heroOpacity = useTransform(scrollYProgress, [0,.82], [1,0]);
 
   useEffect(() => { if (reduced || capabilities.touch) return; let frame = 0; let px = 0; let py = 0; const update = () => { mouseX.set(px / window.innerWidth - .5); mouseY.set(py / window.innerHeight - .5); frame = 0; }; const pointer = (event: PointerEvent) => { px = event.clientX; py = event.clientY; if (!frame) frame = requestAnimationFrame(update); }; window.addEventListener("pointermove", pointer, { passive: true }); return () => { window.removeEventListener("pointermove", pointer); cancelAnimationFrame(frame); }; }, [capabilities.touch, mouseX, mouseY, reduced]);
-  useEffect(() => { setActiveAiNode(0); }, [aiTab]);
+  const selectAiTab = (index: number) => {
+    setAiTab(index);
+    setActiveAiNode(0);
+  };
 
   /* Desktop-only heavy GSAP (skipped on mobile / low-power) */
   useEffect(() => {
@@ -276,12 +282,12 @@ export default function HomeExperience() {
                 aria-controls="ai-workflow-panel"
                 tabIndex={aiTab === index ? 0 : -1}
                 key={service.name}
-                onClick={() => setAiTab(index)}
+                onClick={() => selectAiTab(index)}
                 onKeyDown={(event) => {
                   if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
                   event.preventDefault();
                   const next = (index + (event.key === "ArrowRight" ? 1 : 2)) % 3;
-                  setAiTab(next);
+                  selectAiTab(next);
                   document.getElementById(`ai-tab-${next}`)?.focus();
                 }}
               >
@@ -444,7 +450,7 @@ export default function HomeExperience() {
             }}
           >
             {cases.map((item,i)=>(
-              <article className={`s8m-slide ${activeCase===i?"active":""}`} key={item.id}>
+              <article className={`s8m-slide ${activeCase===i?"active":""}`} key={item.id} aria-hidden={activeCase!==i} inert={activeCase!==i}>
                 <div className="s8-case-art">
                   <i/><i/><i/><span>{item.id}</span><b>[XX]{i===1?"×":"%"}</b>
                 </div>
@@ -574,7 +580,7 @@ export default function HomeExperience() {
             }}
           >
             {articles.map((a,i)=>(
-              <article className={`s11m-slide ${activeInsight===i?"active":""}`} key={a.slug}>
+              <article className={`s11m-slide ${activeInsight===i?"active":""}`} key={a.slug} aria-hidden={activeInsight!==i} inert={activeInsight!==i}>
                 <div className="s11-article-art">
                   <i/><span>{i===0 ? "FEATURED / 01" : `0${i+1}`}</span>
                 </div>

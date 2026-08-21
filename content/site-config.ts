@@ -14,7 +14,7 @@ export const siteConfig = {
     /** Verified business email */
     email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@serptrix.com",
     /** Verified business phone */
-    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+1 (202) 839-9706",
+    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+15402421808",
     /** Verified Calendly scheduling URL */
     calendlyUrl:
       process.env.NEXT_PUBLIC_CALENDLY_URL ||

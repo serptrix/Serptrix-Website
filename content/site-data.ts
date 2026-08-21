@@ -21,12 +21,50 @@ export const services: Service[] = [
   {slug:"digital-strategy",name:"Digital Strategy",division:"ai-technology",eyebrow:"CONNECTED DIRECTION",promise:"Make the next digital investment part of a coherent system.",summary:"Serptrix connects customer needs, commercial priorities, data, marketing, product, and technology into a roadmap leaders can use to make better decisions.",problems:["Teams pursue competing digital priorities","Technology investment lacks commercial context","The customer journey crosses disconnected systems","Leaders cannot see the highest-leverage next move"],outcomes:["A shared view of the growth system","Clearer investment priorities","Better alignment across functions","A staged, measurable transformation roadmap"],capabilities:["Digital maturity assessment","Customer-journey strategy","Growth-system mapping","Technology roadmapping","Operating-model design","Measurement architecture"],methodology:[["Understand","Align on business context, customers, constraints, and ambition."],["Map","Visualize the current system, decision points, dependencies, and gaps."],["Prioritize","Compare opportunities by value, confidence, risk, and effort."],["Sequence","Create a staged roadmap with owners, measures, and learning gates."]],deliverables:["Current-state assessment","Customer and growth-system map","Opportunity portfolio","Prioritized roadmap","Measurement framework","Operating recommendations"],platforms:["Analytics platforms","CRM and automation systems","Content and commerce platforms","Cloud architecture","Collaboration tools","Data visualization"],faqs:[["Is strategy a standalone engagement?","Yes. It can create an independent roadmap or become the foundation for a longer implementation partnership."],["Who should participate?","The right group usually includes commercial, marketing, product, operations, and technology decision-makers."],["How do you prevent strategy from becoming a slide deck?","Recommendations include sequencing, ownership, measures, and explicit next decisions—not just aspirations."]],related:["ai-development","website-development","performance-marketing"]},
 ];
 
-export type CaseStudy={slug:string;project:string;industry:string;challenge:string;services:string[];summary:string;result:string;status:"placeholder";};
-export const caseStudies:CaseStudy[]=[
+export const serviceGroups = Object.entries(divisions).map(([slug, division]) => ({
+  slug,
+  name: division.name,
+  href: `/services/${slug}`,
+  items: division.services.map((serviceSlug) => {
+    const service = services.find((item) => item.slug === serviceSlug);
+    if (!service) throw new Error(`Division ${slug} references missing service ${serviceSlug}`);
+    return service;
+  }),
+}));
+
+export type CaseStudyEvidence = {
+  source: string;
+  baseline: string;
+  timeRange: string;
+  attributionMethod: string;
+  approved: boolean;
+};
+export type CaseStudy={slug:string;project:string;industry:string;challenge:string;services:string[];summary:string;result:string;status:"placeholder"|"verified";evidence?:CaseStudyEvidence;};
+const rawCaseStudies:CaseStudy[]=[
   {slug:"confidential-saas-acquisition-system",project:"[CONFIDENTIAL SAAS PLATFORM]",industry:"B2B SaaS",challenge:"Clarify a complex offer and connect acquisition around qualified demand.",services:["Digital Strategy","Website Development","SEO Optimization"],summary:"A representative framework for aligning positioning, buyer journeys, search architecture, and campaign measurement.",result:"[XX]% qualified-pipeline improvement",status:"placeholder"},
   {slug:"confidential-commerce-experience",project:"[CONFIDENTIAL ECOMMERCE BRAND]",industry:"Ecommerce",challenge:"Reduce friction from product discovery through repeat purchase.",services:["Ecommerce Development","Performance Marketing"],summary:"A representative commerce system connecting experience, storefront performance, acquisition, and retention priorities.",result:"[XX]× conversion improvement",status:"placeholder"},
   {slug:"confidential-ai-operations",project:"[CONFIDENTIAL SERVICES BUSINESS]",industry:"Professional Services",challenge:"Reduce slow, repetitive intake and knowledge-routing work.",services:["AI Development","AI Automation","Digital Strategy"],summary:"A representative human-in-the-loop workflow for classifying requests, retrieving knowledge, and routing the next action.",result:"[XX] hours saved per quarter",status:"placeholder"},
 ];
+
+export function validateCaseStudy(item:CaseStudy){
+  if(item.status==="placeholder"&&!item.result.includes("[XX]")){
+    throw new Error(`Unverified case study ${item.slug} must retain an [XX] placeholder`);
+  }
+  if(item.status==="verified"){
+    const evidence=item.evidence;
+    if(!item.result.trim()||item.result.includes("[XX]")){
+      throw new Error(`Verified case study ${item.slug} requires a non-placeholder result`);
+    }
+    if(!evidence?.source.trim()||!evidence.baseline.trim()||!evidence.timeRange.trim()||!evidence.attributionMethod.trim()||!evidence.approved){
+      throw new Error(`Verified case study ${item.slug} requires complete, approved evidence`);
+    }
+  }
+  return item;
+}
+
+// Validate once at the content boundary so every route and component receives
+// governed case-study data, rather than relying on individual pages to remember.
+export const caseStudies:CaseStudy[]=rawCaseStudies.map(validateCaseStudy);
 
 export type Article={slug:string;title:string;category:string;author:string;date:string;updated:string;readingTime:string;excerpt:string;sections:{heading:string;body:string[]}[];takeaway:string};
 export const articles:Article[]=[
@@ -38,4 +76,3 @@ export const articles:Article[]=[
 export const categories=["SEO","Digital Marketing","Social Media","Performance Marketing","Web Development","SaaS","Ecommerce","AI","Automation","Digital Strategy","Conversion Optimization"];
 
 export function serviceBySlug(slug:string){return services.find(s=>s.slug===slug)}
-export function validateCaseStudy(item:CaseStudy){if(item.status!=="placeholder"&&!item.result.trim())throw new Error("Verified case studies require a result");if(item.status==="placeholder"&&!item.result.includes("[XX]"))throw new Error("Unverified results must retain an [XX] placeholder");return item}

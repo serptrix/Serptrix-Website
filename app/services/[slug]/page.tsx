@@ -1,16 +1,13 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { divisions, services } from "@/content/site-data";
-import { pageBySlug } from "@/content/service-pages";
+import { pageBySlug, servicePageSlugs } from "@/content/service-pages";
 import { ServiceExperience } from "@/app/components/services/service-experience";
 import { StructuredData } from "@/app/components/structured-data";
 
 type Props = { params: Promise<{ slug: string }> };
 
-const slugs = [...Object.keys(divisions), ...services.map((item) => item.slug)];
-
 export async function generateStaticParams() {
-  return slugs.map((slug) => ({ slug }));
+  return servicePageSlugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

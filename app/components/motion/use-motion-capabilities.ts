@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { createContext, createElement, useContext, useEffect, useState, type ReactNode } from "react";
 
 export type MotionCapabilities = {
   ready: boolean;
@@ -13,9 +13,20 @@ export type MotionCapabilities = {
   canvasFailed: boolean;
 };
 
-const initial: MotionCapabilities = { ready: false, webgl: true, reducedMotion: false, touch: false, mobile: false, devicePixelRatio: 1, lowPower: false, canvasFailed: false };
+const initial: MotionCapabilities = {
+  ready: false,
+  webgl: true,
+  reducedMotion: false,
+  touch: false,
+  mobile: false,
+  devicePixelRatio: 1,
+  lowPower: false,
+  canvasFailed: false,
+};
 
-export function useMotionCapabilities() {
+const MotionCapabilitiesContext = createContext<MotionCapabilities>(initial);
+
+export function MotionCapabilitiesProvider({ children }: { children: ReactNode }) {
   const [capabilities, setCapabilities] = useState(initial);
 
   useEffect(() => {
@@ -28,8 +39,6 @@ export function useMotionCapabilities() {
       let canvasFailed = false;
       try {
         const canvas = document.createElement("canvas");
-        // Prefer a strict check, but many mobile GPUs fail the performance caveat —
-        // retry without it so the hero 3D scene can still run.
         const strict =
           canvas.getContext("webgl2", { failIfMajorPerformanceCaveat: true }) ||
           canvas.getContext("webgl", { failIfMajorPerformanceCaveat: true });
@@ -39,12 +48,18 @@ export function useMotionCapabilities() {
       } catch {
         canvasFailed = true;
       }
-      const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
+
+      const nav = navigator as Navigator & {
+        deviceMemory?: number;
+        connection?: { saveData?: boolean };
+      };
       const mobile = mobileQuery.matches;
       const touch = pointerQuery.matches || (navigator.maxTouchPoints > 0 && mobile);
       const lowPower =
         nav.connection?.saveData === true ||
         ((nav.hardwareConcurrency ?? 8) <= 2 && (nav.deviceMemory ?? 8) <= 2);
+
+      document.documentElement.classList.add("srx-motion-ready");
       setCapabilities({
         ready: true,
         webgl,
@@ -65,8 +80,13 @@ export function useMotionCapabilities() {
       motionQuery.removeEventListener("change", detect);
       pointerQuery.removeEventListener("change", detect);
       mobileQuery.removeEventListener("change", detect);
+      document.documentElement.classList.remove("srx-motion-ready");
     };
   }, []);
 
-  return capabilities;
+  return createElement(MotionCapabilitiesContext.Provider, { value: capabilities }, children);
+}
+
+export function useMotionCapabilities() {
+  return useContext(MotionCapabilitiesContext);
 }

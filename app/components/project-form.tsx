@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/content/site-config";
+import { serviceGroups } from "@/content/site-data";
 import { trackContactEvent } from "@/lib/analytics";
 import { motionTokens } from "./motion/tokens";
 
@@ -47,21 +48,6 @@ const steps = [
   "Tell us about the project",
   "Investment and timeline",
   "Final details",
-] as const;
-
-const serviceGroups = [
-  {
-    category: "Digital Marketing",
-    options: ["SEO Optimization", "Social Media Marketing", "Performance Marketing"],
-  },
-  {
-    category: "Development",
-    options: ["Website Development", "SaaS Development", "Ecommerce Development"],
-  },
-  {
-    category: "AI & Technology",
-    options: ["AI Development", "AI Automation", "Digital Strategy"],
-  },
 ] as const;
 
 const stepVariants = {
@@ -178,10 +164,16 @@ export function ProjectForm() {
         return;
       }
 
-      sessionStorage.setItem(
-        "serptrix-inquiry",
-        JSON.stringify({ ...payload, createdAt: new Date().toISOString() }),
-      );
+      try {
+        sessionStorage.setItem(
+          "serptrix-inquiry",
+          JSON.stringify({ ...payload, createdAt: new Date().toISOString() }),
+        );
+      } catch {
+        // Browser storage is only a convenience for the thank-you summary.
+        // Delivery has already succeeded, so storage restrictions must not turn
+        // a successful inquiry into a false failure or duplicate submission.
+      }
       trackContactEvent("contact_form_submitted", { services: data.services.join(", ") });
       trackContactEvent("project_inquiry", { service: data.services[0] || "unspecified" });
       setSubmitted(true);
@@ -325,18 +317,18 @@ export function ProjectForm() {
             <fieldset>
               <legend>What do you need?</legend>
               {serviceGroups.map((group) => (
-                <div key={group.category} className="service-group">
-                  <p className="service-group-label">{group.category}</p>
+                <div key={group.slug} className="service-group">
+                  <p className="service-group-label">{group.name}</p>
                   <div className="choice-grid">
-                    {group.options.map((service) => (
-                      <label key={service} className={data.services.includes(service) ? "is-selected" : ""}>
+                    {group.items.map((service) => (
+                      <label key={service.slug} className={data.services.includes(service.name) ? "is-selected" : ""}>
                         <input
                           type="checkbox"
                           name="services"
-                          checked={data.services.includes(service)}
-                          onChange={() => toggleService(service)}
+                          checked={data.services.includes(service.name)}
+                          onChange={() => toggleService(service.name)}
                         />
-                        <span>{service}</span>
+                        <span>{service.name}</span>
                       </label>
                     ))}
                   </div>
@@ -372,6 +364,7 @@ export function ProjectForm() {
               <label>
                 What is currently holding your business back? *
                 <textarea
+                  className="resize-none"
                   name="challenge"
                   required
                   maxLength={2000}
@@ -383,6 +376,7 @@ export function ProjectForm() {
               <label>
                 Tell us briefly what you would like Serptrix to help you achieve. *
                 <textarea
+                  className="resize-none"
                   name="details"
                   required
                   maxLength={2000}
@@ -439,6 +433,7 @@ export function ProjectForm() {
               <label>
                 Anything else?
                 <textarea
+                  className="resize-none"
                   rows={4}
                   value={data.anythingElse}
                   onChange={(event) => update("anythingElse", event.target.value)}

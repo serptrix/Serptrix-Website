@@ -5,36 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Breadcrumbs } from "./breadcrumbs";
+import { serviceGroups as canonicalServiceGroups } from "@/content/site-data";
 
-const serviceGroups = [
-  {
-    title: "Digital Marketing",
-    href: "/services/digital-marketing",
-    items: [
-      ["SEO Optimization", "Earn durable, qualified search visibility.", "seo-optimization"],
-      ["Social Media Marketing", "Turn attention into relevance and trust.", "social-media-marketing"],
-      ["Performance Marketing", "Acquire customers against commercial targets.", "performance-marketing"],
-    ],
-  },
-  {
-    title: "Development",
-    href: "/services/development",
-    items: [
-      ["Website Development", "Make every digital interaction faster and clearer.", "website-development"],
-      ["SaaS Development", "Build useful products on scalable foundations.", "saas-development"],
-      ["Ecommerce Development", "Remove friction from discovery to retention.", "ecommerce-development"],
-    ],
-  },
-  {
-    title: "AI & Technology",
-    href: "/services/ai-technology",
-    items: [
-      ["AI Development", "Apply intelligence to valuable business problems.", "ai-development"],
-      ["AI Automation", "Give teams back time and operating capacity.", "ai-automation"],
-      ["Digital Strategy", "Connect technology choices to growth priorities.", "digital-strategy"],
-    ],
-  },
-];
+const serviceGroups = canonicalServiceGroups.map((group) => ({
+  title: group.name,
+  href: group.href,
+  items: group.items.map((service) => [service.name, service.promise, service.slug] as const),
+}));
 
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.045, delayChildren: 0.05 } } };
 const item = {
@@ -187,12 +164,14 @@ export function Header() {
             className={cn("menu-toggle", menuOpen && "is-open")}
             aria-label={menuOpen ? "Close navigation" : "Open navigation"}
             aria-expanded={menuOpen}
+            aria-controls="primary-navigation"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             <motion.span animate={menuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }} />
             <motion.span animate={menuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }} />
           </button>
           <motion.nav
+            id="primary-navigation"
             ref={navRef}
             className={cn(menuOpen && "open")}
             aria-label="Primary navigation"

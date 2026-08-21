@@ -67,14 +67,17 @@ export function ThankYouExperience() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = sessionStorage.getItem("serptrix-inquiry");
-      if (raw) setInquiry(JSON.parse(raw) as Inquiry);
-    } catch {
-      setInquiry(null);
-    } finally {
-      setReady(true);
-    }
+    const frame = requestAnimationFrame(() => {
+      try {
+        const raw = sessionStorage.getItem("serptrix-inquiry");
+        if (raw) setInquiry(JSON.parse(raw) as Inquiry);
+      } catch {
+        setInquiry(null);
+      } finally {
+        setReady(true);
+      }
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const mailto = useMemo(() => buildMailto(inquiry), [inquiry]);

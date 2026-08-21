@@ -4,24 +4,37 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { MagneticButton } from "./motion/magnetic-button";
+import { serviceBySlug, serviceGroups } from "@/content/site-data";
 
-const divisions = [
-  { name: "Digital Marketing", signal: "Demand", outcome: "Attract attention, build demand and create measurable acquisition.", href: "/services/digital-marketing", services: ["SEO Optimization", "Social Media Marketing", "Performance Marketing"] },
-  { name: "Development", signal: "Experience", outcome: "Turn strategy into fast, scalable and conversion-focused digital products.", href: "/services/development", services: ["Website Development", "SaaS Development", "Ecommerce Development"] },
-  { name: "AI & Technology", signal: "Intelligence", outcome: "Connect systems, automate workflows and create smarter business operations.", href: "/services/ai-technology", services: ["AI Development", "AI Automation", "Digital Strategy"] },
-];
+const divisionPresentation: Record<string, { signal: string; outcome: string }> = {
+  "digital-marketing": { signal: "Demand", outcome: "Attract attention, build demand and create measurable acquisition." },
+  development: { signal: "Experience", outcome: "Turn strategy into fast, scalable and conversion-focused digital products." },
+  "ai-technology": { signal: "Intelligence", outcome: "Connect systems, automate workflows and create smarter business operations." },
+};
+const divisions = serviceGroups.map((group) => ({
+  name: group.name,
+  href: group.href,
+  services: group.items.map((service) => service.name),
+  ...divisionPresentation[group.slug],
+}));
 
-const marketing = [
-  ["SEO Optimization", "Improve technical health, search visibility, topical authority and qualified organic traffic.", "Intent → Visibility"],
-  ["Social Media Marketing", "Build attention, credibility and engagement through platform-specific strategy and content.", "Attention → Relevance"],
-  ["Performance Marketing", "Optimize paid campaigns around leads, revenue, acquisition cost and return on investment.", "Signal → Acquisition"],
-];
+const marketing = ([
+  ["seo-optimization", "Intent → Visibility"],
+  ["social-media-marketing", "Attention → Relevance"],
+  ["performance-marketing", "Signal → Acquisition"],
+] as const).map(([slug, outcome]) => {
+  const service = serviceBySlug(slug)!;
+  return [service.name, service.summary, outcome] as const;
+});
 
-const development = [
-  ["Website Development", "Fast, responsive and conversion-focused websites built around clear business goals.", "Responsive interface"],
-  ["SaaS Development", "Scalable platforms, portals and digital products designed for long-term growth.", "Modular product system"],
-  ["Ecommerce Development", "High-performing stores engineered around conversion, retention and operational efficiency.", "Discovery to retention"],
-];
+const development = ([
+  ["website-development", "Responsive interface"],
+  ["saas-development", "Modular product system"],
+  ["ecommerce-development", "Discovery to retention"],
+] as const).map(([slug, outcome]) => {
+  const service = serviceBySlug(slug)!;
+  return [service.name, service.summary, outcome] as const;
+});
 
 export function ServiceSections() {
   const [active, setActive] = useState(0);

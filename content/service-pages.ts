@@ -1,4 +1,4 @@
-import { articles, caseStudies, type CaseStudy } from "./site-data";
+import { articles, caseStudies, divisions, services, type CaseStudy } from "./site-data";
 
 export type HeroVisual =
   | "ecosystem"
@@ -1051,6 +1051,44 @@ export const servicePages: Record<string, ServicePageContent> = {
     metaDescription: "Serptrix connects marketing, technology, customer experience, data and AI into a staged, measurable digital roadmap leaders can run.",
   },
 };
+
+const expectedPageSlugs = [...Object.keys(divisions), ...services.map((item) => item.slug)];
+
+function validateServicePageRegistry() {
+  const actual = Object.keys(servicePages);
+  const missing = expectedPageSlugs.filter((slug) => !servicePages[slug]);
+  const unexpected = actual.filter((slug) => !expectedPageSlugs.includes(slug));
+  if (missing.length || unexpected.length) {
+    throw new Error(
+      `Service page registry mismatch. Missing: ${missing.join(", ") || "none"}; unexpected: ${unexpected.join(", ") || "none"}`,
+    );
+  }
+  for (const [key, page] of Object.entries(servicePages)) {
+    if (page.slug !== key) throw new Error(`Service page key ${key} does not match slug ${page.slug}`);
+    const canonicalName =
+      services.find((item) => item.slug === key)?.name ??
+      divisions[key as keyof typeof divisions]?.name;
+    if (canonicalName && page.name !== canonicalName) {
+      throw new Error(`Service page ${key} uses name ${page.name}; canonical name is ${canonicalName}`);
+    }
+    for (const related of page.related) {
+      if (!servicePages[related]) throw new Error(`Service page ${key} references missing related page ${related}`);
+    }
+    for (const articleSlug of page.insightSlugs) {
+      if (!articles.some((item) => item.slug === articleSlug)) {
+        throw new Error(`Service page ${key} references missing insight ${articleSlug}`);
+      }
+    }
+    for (const caseSlug of page.caseSlugs) {
+      if (!caseStudies.some((item) => item.slug === caseSlug)) {
+        throw new Error(`Service page ${key} references missing case study ${caseSlug}`);
+      }
+    }
+  }
+  return actual;
+}
+
+export const servicePageSlugs = validateServicePageRegistry();
 
 export function pageBySlug(slug: string) {
   return servicePages[slug];

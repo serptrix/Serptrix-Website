@@ -52,7 +52,7 @@ Photography should feel observed rather than staged: senior teams making decisio
 
 ## Technical, SEO, Accessibility, and Performance
 
-The implementation uses Next-compatible React through Vinext for Cloudflare Workers, server-rendered route content, CSS-native responsive layout and motion, optimized local font loading, and minimal client state limited to navigation. No heavy animation or WebGL dependency is required for the first release.
+The implementation uses Next.js App Router on Vercel, server-rendered route content, responsive CSS, optimized font loading, and focused client interaction islands. Three.js, React Three Fiber, Framer Motion, GSAP, and Lenis power capability-aware motion with reduced-motion, touch, low-power, and WebGL fallbacks.
 
 SEO architecture uses one clear intent per route, unique titles/descriptions, semantic headings, internal links, crawlable service language, Open Graph metadata, and a future content cluster around SEO, conversion, AI operations, SaaS, and ecommerce. Future service and case-study pages should add `Service`, `Article`, `BreadcrumbList`, and verified `Organization` structured data.
 

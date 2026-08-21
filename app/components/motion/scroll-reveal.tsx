@@ -126,7 +126,7 @@ export function ScrollReveal({
 
   return (
     <MotionTag
-      className={className}
+      className={`srx-reveal-root ${className}`.trim()}
       variants={container}
       initial="hidden"
       animate={immediate ? "visible" : undefined}

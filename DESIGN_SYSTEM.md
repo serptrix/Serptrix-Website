@@ -44,16 +44,16 @@ Motion follows three verbs: **reveal, connect, progress**. Headline masks reveal
 - **Newsletter:** email default/focus/error/success; current email handoff should be replaced with an approved mailing provider before campaign use.
 - **Navigation utilities:** breadcrumb, pagination, related content, and empty/loading states inherit the same label, border, focus, and spacing tokens.
 - **404:** clear recovery message and primary return action.
-- **Cookie notice:** intentionally omitted because this release includes no advertising or behavioral tracking. Add only when consent-requiring technology is introduced.
+- **Cookie notice:** the current consent manager stores only the visitor’s essential/analytics preference. No analytics provider is loaded; the scheduling embed is disclosed separately as a functional third-party service.
 
 ## Responsive behavior
 
 - **Large desktop (1440+):** full asymmetrical compositions, maximum type scale, cursor-reactive WebGL.
 - **Desktop/laptop (1024–1439):** compressed grids and type, reduced scene depth, complete mega menu.
 - **Tablet (768–1023):** major two-column systems stack; service map and copy become sequential; mobile navigation activates.
-- **Mobile (375–767):** vertical story, compact orbit visual, simplified interface simulations, single-column metrics and cases, released sticky content.
+- **Mobile (375–767):** vertical story, compact orbit visual, simplified interface simulations, single-column metrics and cases, released sticky content. Top-level content sections share the `--mobile-section-y` vertical inset so the page rhythm stays consistent between routes.
 - **Small mobile (<375):** fluid headline floor, text-safe announcement treatment, full-width actions, no off-canvas decorative elements.
 
 ## Homepage narrative
 
-The homepage contains exactly twelve content sections: immersive hero; trust and positioning; service ecosystem; digital marketing spotlight; development spotlight; AI and technology spotlight; business impact; featured case studies; six-stage process; Why Serptrix; insights; final conversion experience.
+The homepage contains thirteen content sections: immersive hero; trust and positioning; service ecosystem; digital marketing spotlight; development spotlight; AI and technology spotlight; business impact; featured case studies; six-stage process; Why Serptrix; insights; verified-review policy; final conversion experience.

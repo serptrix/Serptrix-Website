@@ -4,14 +4,17 @@ import { articles, caseStudies, services } from "@/content/site-data";
 const base = "https://serptrix.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPages = ["", "/services", "/about", "/case-studies", "/blog", "/contact", "/privacy", "/terms", "/cookies"].map(
+  const hasVerifiedCaseStudies = caseStudies.some((study) => study.status === "verified");
+  const staticPages = ["", "/services", "/about", "/case-studies", "/blog", "/contact", "/privacy", "/terms", "/cookies"]
+    .filter((url) => url !== "/case-studies" || hasVerifiedCaseStudies)
+    .map(
     (url) => ({
       url: `${base}${url}`,
       lastModified: new Date("2026-08-06"),
       changeFrequency: (url === "/blog" ? "weekly" : "monthly") as "weekly" | "monthly",
       priority: url === "" ? 1 : url === "/services" ? 0.9 : 0.7,
     }),
-  );
+    );
   const division = ["digital-marketing", "development", "ai-technology"].map((slug) => ({
     url: `${base}/services/${slug}`,
     lastModified: new Date("2026-08-06"),
@@ -30,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.65,
   }));
-  const cases = caseStudies.map((study) => ({
+  const cases = caseStudies.filter((study) => study.status === "verified").map((study) => ({
     url: `${base}/case-studies/${study.slug}`,
     lastModified: new Date("2026-08-06"),
     changeFrequency: "monthly" as const,

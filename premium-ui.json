@@ -1,0 +1,8 @@
+{
+  "profile": "marketing-site",
+  "sourceRoots": ["app"],
+  "requiredCapabilities": ["Select/Listbox", "Form", "Scrollbar"],
+  "ownership": {
+    "Select/Listbox": "native"
+  }
+}

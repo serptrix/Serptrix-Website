@@ -50,7 +50,7 @@ export default async function Search({ searchParams }: Props) {
           <br />
           <em>signal.</em>
         </h1>
-        <form action="/search" role="search">
+        <form action="/search" role="search" noValidate>
           <label className="sr-only" htmlFor="site-search">
             Search services, insights, and case studies
           </label>

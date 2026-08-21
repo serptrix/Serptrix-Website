@@ -7,11 +7,10 @@ import { ScrollReveal } from "../motion/scroll-reveal";
 
 const WIDGET_HEIGHT = 700;
 
-function buildEmbedSrc(url: string, hostname?: string) {
+function buildEmbedSrc(url: string) {
   try {
     const parsed = new URL(url);
     parsed.searchParams.set("embed_type", "Inline");
-    if (hostname) parsed.searchParams.set("embed_domain", hostname);
     return parsed.toString();
   } catch {
     return url;
@@ -21,13 +20,8 @@ function buildEmbedSrc(url: string, hostname?: string) {
 export function CalendlyBooking() {
   const sectionRef = useRef<HTMLElement>(null);
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
-  const [hostname, setHostname] = useState("");
   const calendlyUrl = siteConfig.contact.calendlyUrl;
-  const embedSrc = useMemo(() => buildEmbedSrc(calendlyUrl, hostname), [calendlyUrl, hostname]);
-
-  useEffect(() => {
-    setHostname(window.location.hostname);
-  }, []);
+  const embedSrc = useMemo(() => buildEmbedSrc(calendlyUrl), [calendlyUrl]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -102,7 +96,7 @@ export function CalendlyBooking() {
                   </a>
                 </div>
               )}
-              {state !== "error" && hostname && (
+              {state !== "error" && (
                 <iframe
                   className="contact-calendly-iframe"
                   src={embedSrc}

@@ -42,7 +42,7 @@ export function Footer() {
           <b>SERPTRIX SIGNAL</b>
           <p>One useful idea on growth, technology, or AI. No noise.</p>
         </div>
-        <form action={`mailto:${siteConfig.contact.email}?subject=Serptrix%20Signal%20subscribe`} method="post" encType="text/plain">
+        <form action={`mailto:${siteConfig.contact.email}?subject=Serptrix%20Signal%20subscribe`} method="post" encType="text/plain" noValidate>
           <label className="sr-only" htmlFor="newsletter-email">
             Work email
           </label>

@@ -38,4 +38,6 @@ npm start
 4. Build command: `next build` (default)
 5. Deploy
 
-Site code lives under `app/`. Content lives in `content/site-data.ts`.
+Site code lives under `app/`. Shared entities live in `content/site-data.ts`; rich division and service-page narratives live in `content/service-pages.ts`. Build-time registry validation prevents those route definitions from drifting apart.
+
+Online project inquiries require `CONTACT_WEBHOOK_URL`. When it is absent or unavailable, the API returns an error and directs the visitor to the verified contact email instead of claiming that an undelivered inquiry was received.

@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
 import { ConsentManager } from "./components/consent-manager";
 import { MotionShell } from "./components/motion-shell";
+import { MotionCapabilitiesProvider } from "./components/motion/use-motion-capabilities";
 import { Footer } from "./components/site-footer";
 import { Header } from "./components/site-shell";
 import { StructuredData } from "./components/structured-data";
@@ -79,12 +80,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <Header />
-        <MotionShell>
-          <div id="main">{children}</div>
-        </MotionShell>
-        <Footer />
-        <ConsentManager />
+        <MotionCapabilitiesProvider>
+          <Header />
+          <MotionShell>
+            <div id="main">{children}</div>
+          </MotionShell>
+          <Footer />
+          <ConsentManager />
+        </MotionCapabilitiesProvider>
       </body>
     </html>
   );
