@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { siteConfig } from "@/content/site-config";
 
 export function Footer() {
@@ -6,9 +7,14 @@ export function Footer() {
     <footer>
       <div className="shell footer-grid">
         <div className="footer-brand">
-          <Link className="logo logo-light" href="/">
-            <span className="logo-mark">S</span>
-            <span>SERPTRIX</span>
+          <Link className="logo logo-light footer-logo" href="/" aria-label="Serptrix home">
+            <Image
+              className="site-logo-image site-logo-image--footer"
+              src="/serptrix_footer.svg"
+              alt=""
+              width={837}
+              height={798}
+            />
           </Link>
           <p>Serptrix connects marketing, development, AI, and strategy into growth systems for ambitious companies.</p>
           <span>Working globally across time zones.</span>

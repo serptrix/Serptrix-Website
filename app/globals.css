@@ -1737,3 +1737,13 @@ footer .newsletter button{
     min-height:0;
   }
 }
+
+/* Supplied canonical logo assets; preserve each artwork's intrinsic ratio. */
+.site-logo-motion{display:block;line-height:0;transform-origin:left center}
+.site-logo-image{display:block;height:auto;object-fit:contain}
+.site-logo-image--header{width:clamp(148px,12vw,176px)}
+.site-logo-image--footer{width:clamp(96px,8vw,124px)}
+@media(max-width:600px){
+  .site-logo-image--header{width:148px}
+  .site-logo-image--footer{width:104px}
+}

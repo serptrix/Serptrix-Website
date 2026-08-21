@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -147,17 +148,21 @@ export function Header() {
         <div className="shell nav-wrap">
           <Link className="logo" href="/" aria-label="Serptrix home">
             <motion.span
-              className="logo-mark"
+              className="site-logo-motion"
               animate={{
-                rotate: scrolled ? 0 : -6,
-                scale: scrolled ? 0.9 : 1,
-                clipPath: scrolled ? "polygon(0 0,100% 0,100% 72%,72% 100%,0 100%)" : "polygon(8% 0,100% 8%,92% 100%,0 92%)",
+                scale: scrolled ? 0.94 : 1,
               }}
               transition={{ type: "spring", stiffness: 210, damping: 22 }}
             >
-              S
+              <Image
+                className="site-logo-image site-logo-image--header"
+                src="/Serptrix-header.svg"
+                alt=""
+                width={2000}
+                height={600}
+                priority
+              />
             </motion.span>
-            <motion.span animate={{ letterSpacing: scrolled ? ".1em" : ".16em" }}>SERPTRIX</motion.span>
           </Link>
           <button
             ref={toggleRef}

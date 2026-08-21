@@ -36,7 +36,10 @@ export const metadata: Metadata = {
   title: { default: "Serptrix — Digital Growth, Engineered", template: "%s — Serptrix" },
   description:
     "Serptrix connects marketing, development, AI, and strategy into measurable growth systems for ambitious companies.",
-  icons: { icon: [{ url: "/favicon.svg", type: "image/svg+xml" }] },
+  icons: {
+    icon: [{ url: "/favicon.svg?v=3", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg?v=3",
+  },
   openGraph: {
     title: "Serptrix — Digital Growth, Engineered",
     description: "Marketing, development, AI, and strategy—connected.",

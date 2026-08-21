@@ -25,6 +25,8 @@ Display typography uses Manrope; body and interface typography use DM Sans. Disp
 
 Spacing uses an 8 px base rhythm with major section spacing fluid between 80 and 170 px. Corners remain predominantly square; circles are reserved for the signal/orbit identity. Borders use low-contrast navy or white at 9–18% opacity.
 
+Canonical brand artwork is supplied in `public/Serptrix-header.svg`, `public/serptrix_footer.svg`, and `public/favicon.svg`. These source assets own the header, footer, and browser-icon treatments respectively and must retain their intrinsic aspect ratios.
+
 ## Motion identity
 
 Motion follows three verbs: **reveal, connect, progress**. Headline masks reveal the message; orbit and workflow motion communicate connection; arrows, tabs, and paths show progression. Interaction transitions are 180–350 ms. Ambient loops run slowly and stop under `prefers-reduced-motion`. WebGL caps pixel density, avoids external libraries, reacts softly to pointer position, and has a CSS fallback.
