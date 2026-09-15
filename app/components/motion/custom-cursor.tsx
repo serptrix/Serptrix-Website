@@ -1,14 +1,13 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { motionTokens } from "./tokens";
 import { useMotionCapabilities } from "./use-motion-capabilities";
 
 export function CustomCursor() {
   const { ready, reducedMotion, touch, mobile, lowPower } = useMotionCapabilities();
-  const x = useSpring(useMotionValue(-100), motionTokens.spring.pointer);
-  const y = useSpring(useMotionValue(-100), motionTokens.spring.pointer);
+  const x = useMotionValue(-100);
+  const y = useMotionValue(-100);
   const [visible, setVisible] = useState(false);
   const initialized = useRef(false);
   const [state, setState] = useState<"default" | "interactive" | "view" | "drag">("default");
@@ -22,8 +21,6 @@ export function CustomCursor() {
     let nextY = -100;
 
     const update = (now: number) => {
-      x.set(nextX);
-      y.set(nextY);
       if (now - lastProbe.current > 48) {
         lastProbe.current = now;
         const target = document.elementFromPoint(nextX, nextY)?.closest<HTMLElement>("[data-cursor],a,button,[role='button']");
@@ -38,6 +35,8 @@ export function CustomCursor() {
     const move = (event: PointerEvent) => {
       nextX = event.clientX;
       nextY = event.clientY;
+      x.set(nextX);
+      y.set(nextY);
       if (!initialized.current) {
         initialized.current = true;
         setVisible(true);
