@@ -1,23 +1,16 @@
 import { siteConfig } from "@/content/site-config";
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Manrope } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { ConsentManager } from "./components/consent-manager";
 import { MotionShell } from "./components/motion-shell";
 import { MotionCapabilitiesProvider } from "./components/motion/use-motion-capabilities";
 import { Footer } from "./components/site-footer";
-import { Header } from "./components/site-shell";
+import { Header } from "./components/primary-header";
 import { StructuredData } from "./components/structured-data";
-import "./globals.css";
+import "./ui.css";
 
 const display = Manrope({
   variable: "--font-heading",
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  display: "swap",
-  preload: true,
-});
-const body = DM_Sans({
-  variable: "--font-copy",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
@@ -56,7 +49,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${display.variable} ${body.variable}`}>
+      <body className={display.variable}>
         <StructuredData
           data={{
             "@context": "https://schema.org",

@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/content/site-config";
-import { serviceGroups } from "@/content/site-data";
+import { servicePillars } from "@/content/service-catalog";
 import { trackContactEvent } from "@/lib/analytics";
 import { motionTokens } from "./motion/tokens";
 
@@ -56,12 +56,12 @@ const stepVariants = {
   exit: { opacity: 0, y: -8 },
 };
 
-export function ProjectForm() {
+export function ProjectForm({ preselectedService }: { preselectedService?: string }) {
   const formId = useId();
   const router = useRouter();
   const started = useRef(false);
   const [step, setStep] = useState(1);
-  const [data, setData] = useState(initial);
+  const [data, setData] = useState<FormState>(() => ({ ...initial, services: preselectedService ? [preselectedService] : [] }));
   const [errors, setErrors] = useState<string[]>([]);
   const [sending, setSending] = useState(false);
   const [submitError, setSubmitError] = useState("");
@@ -73,6 +73,7 @@ export function ProjectForm() {
       trackContactEvent("contact_form_started");
     }
   }, []);
+
 
   const update = (key: keyof FormState, value: string | boolean | string[]) =>
     setData((current) => ({
@@ -316,19 +317,26 @@ export function ProjectForm() {
           {step === 2 && (
             <fieldset>
               <legend>What do you need?</legend>
-              {serviceGroups.map((group) => (
-                <div key={group.slug} className="service-group">
-                  <p className="service-group-label">{group.name}</p>
+              {preselectedService && data.services.includes(preselectedService) && (
+                <div className="preselected-service" role="status">
+                  <span>Selected from the service page</span>
+                  <b>{preselectedService}</b>
+                  <button type="button" onClick={() => toggleService(preselectedService)}>Remove</button>
+                </div>
+              )}
+              {servicePillars.map((pillar) => (
+                <div key={pillar.slug} className="service-group">
+                  <p className="service-group-label">{pillar.name}</p>
                   <div className="choice-grid">
-                    {group.items.map((service) => (
-                      <label key={service.slug} className={data.services.includes(service.name) ? "is-selected" : ""}>
+                    {pillar.categories.map((category) => (
+                      <label key={category.slug} className={data.services.includes(category.name) ? "is-selected" : ""}>
                         <input
                           type="checkbox"
                           name="services"
-                          checked={data.services.includes(service.name)}
-                          onChange={() => toggleService(service.name)}
+                          checked={data.services.includes(category.name)}
+                          onChange={() => toggleService(category.name)}
                         />
-                        <span>{service.name}</span>
+                        <span>{category.name}</span>
                       </label>
                     ))}
                   </div>

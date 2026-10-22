@@ -33,7 +33,7 @@ const contactFaqs = [
   ],
 ] as const;
 
-export function ContactExperience() {
+export function ContactExperience({ preselectedService }: { preselectedService?: string }) {
   const formRef = useRef<HTMLElement>(null);
 
   const scrollToForm = useCallback(() => {
@@ -59,7 +59,7 @@ export function ContactExperience() {
               Five focused steps—about four minutes. Your answers help us understand your goals before we connect.
             </p>
           </ScrollReveal>
-          <ProjectForm />
+          <ProjectForm preselectedService={preselectedService} />
         </div>
       </section>
       <CalendlyBooking />

@@ -9,7 +9,10 @@ export type ContactAnalyticsEvent =
   | "calendly_section_viewed"
   | "calendly_booking_started"
   | "calendly_booking_completed"
-  | "project_inquiry";
+  | "project_inquiry"
+  | "homepage_primary_cta"
+  | "homepage_secondary_cta"
+  | "service_path_selected";
 
 export function trackContactEvent(
   event: ContactAnalyticsEvent,

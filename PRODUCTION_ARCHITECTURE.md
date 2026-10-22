@@ -8,7 +8,7 @@ The sitemap now supports Home, Services, About, Case Studies, Blog, Contact, thr
 
 ## Phase 2 — Brand system
 
-The deployed system uses the signal-path identity, navy/gold/white palette, Manrope and DM Sans typography, square editorial surfaces, circular connection motifs, strong focus treatment, and motion built around reveal, connection, and progression. The WebGL hero remains dependency-free, capability-aware, pointer-enhanced, and reduced-motion safe.
+The deployed system uses the signal-path identity, navy/gold/white palette, Manrope typography, a shared role-based radius scale, circular icon controls, strong focus treatment, and restrained motion built around feedback and comprehension. The homepage hero uses dependency-free CSS 3D, keeps copy available immediately, pauses motion offscreen or in a hidden tab, and provides a static reduced-motion presentation.
 
 ## Phase 3 — UX architecture
 

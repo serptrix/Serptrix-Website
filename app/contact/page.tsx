@@ -1,6 +1,7 @@
 import { ContactExperience } from "../components/contact/contact-experience";
 import { StructuredData } from "../components/structured-data";
 import { siteConfig } from "@/content/site-config";
+import { serviceBySlug } from "@/content/service-catalog";
 
 export const metadata = {
   title: "Contact Serptrix | Digital Marketing, Development & AI",
@@ -15,7 +16,9 @@ export const metadata = {
   },
 };
 
-export default function Contact() {
+export default async function Contact({ searchParams }: { searchParams: Promise<{ service?: string }> }) {
+  const { service } = await searchParams;
+  const preselectedService = service ? serviceBySlug.get(service)?.service?.name : undefined;
   const contactPoint: Record<string, unknown>[] = [
     {
       "@type": "ContactPoint",
@@ -59,7 +62,7 @@ export default function Contact() {
           ],
         }}
       />
-      <ContactExperience />
+      <ContactExperience preselectedService={preselectedService} />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import { articles, caseStudies, services } from "@/content/site-data";
+import { articles, caseStudies } from "@/content/site-data";
+import { catalogEntries } from "@/content/service-catalog";
 
 const base = "https://serptrix.com";
 
@@ -15,17 +16,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: url === "" ? 1 : url === "/services" ? 0.9 : 0.7,
     }),
     );
-  const division = ["digital-marketing", "development", "ai-technology"].map((slug) => ({
-    url: `${base}/services/${slug}`,
-    lastModified: new Date("2026-08-06"),
+  const servicePages = catalogEntries.map((entry) => ({
+    url: `${base}${entry.href}`,
+    lastModified: new Date("2026-10-22"),
     changeFrequency: "monthly" as const,
-    priority: 0.85,
-  }));
-  const servicePages = services.map((service) => ({
-    url: `${base}/services/${service.slug}`,
-    lastModified: new Date("2026-08-06"),
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
+    priority: entry.kind === "pillar" ? 0.85 : entry.kind === "category" ? 0.8 : 0.75,
   }));
   const posts = articles.map((article) => ({
     url: `${base}/blog/${article.slug}`,
@@ -46,5 +41,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "weekly" as const,
     priority: 0.5,
   }));
-  return [...staticPages, ...division, ...servicePages, ...posts, ...cases, ...cats];
+  return [...staticPages, ...servicePages, ...posts, ...cases, ...cats];
 }

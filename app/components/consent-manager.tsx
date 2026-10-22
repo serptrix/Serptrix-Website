@@ -55,12 +55,9 @@ export function ConsentManager() {
   return (
     <aside className="consent-banner" aria-label="Cookie choices" role="dialog" aria-modal="false">
       <div>
-        <b>YOUR PRIVACY CHOICE</b>
-        <p>
-          This release uses essential browser storage only. You can also permit future consent-aware
-          analytics; no analytics provider is currently loaded.
-        </p>
-        <Link href="/cookies">Read the cookie policy</Link>
+        <b>Cookie choices</b>
+        <p>Essential storage keeps your privacy choice. Optional analytics help Serptrix understand which pages and actions are useful.</p>
+        <Link href="/cookies">Cookie policy</Link>
       </div>
       <div className="consent-actions">
         <button type="button" onClick={() => select("essential")}>

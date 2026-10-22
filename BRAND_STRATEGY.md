@@ -32,7 +32,7 @@
 
 The identity is built around the **signal path**: a precise route through connected nodes representing visibility, decisions, systems, and forward movement. The primary mark is an angular S formed from a continuous path; a secondary form uses an S intersecting a matrix node. The monogram remains the avatar and favicon. Clear space equals the monogram’s inner counter; minimum sizes are 24 px for the monogram and 112 px for the horizontal lockup. White/gold is used on navy, navy/gold on white.
 
-Typography pairs Manrope for decisive editorial display with DM Sans for highly readable interfaces and long-form copy. Type uses fluid `clamp()` sizing, compact display tracking, and uppercase technical labels.
+Typography uses Manrope throughout the public experience, with a restrained 400–700 weight range. Type uses fluid `clamp()` sizing, compact display tracking, and short uppercase wayfinding labels where they carry structural meaning.
 
 Core tokens: Navy `#09105F`; Midnight `#050936`; Gold `#FBBC03`; White `#FFFFFF`; Cloud `#F5F6FA`; Mist `#E5E8F1`; Slate `#66708A`; Ink `#101742`; Pale Gold `#FFF7D8`. Motion is purposeful: signal pulses, short reveal transitions, and directional hover movement, all disabled under reduced-motion preferences.
 

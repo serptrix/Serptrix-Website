@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { articles, caseStudies, services } from "@/content/site-data";
+import { articles, caseStudies } from "@/content/site-data";
+import { serviceEntries } from "@/content/service-catalog";
 import { Breadcrumbs } from "../components/breadcrumbs";
 
 type Props = { searchParams: Promise<{ q?: string }> };
@@ -15,11 +16,11 @@ export default async function Search({ searchParams }: Props) {
   const { q = "" } = await searchParams;
   const term = q.trim().toLowerCase();
   const all = [
-    ...services.map((item) => ({
+    ...serviceEntries.map((entry) => ({
       type: "Service",
-      title: item.name,
-      copy: item.summary,
-      href: `/services/${item.slug}`,
+      title: entry.service!.name,
+      copy: entry.service!.outcome,
+      href: entry.href,
     })),
     ...articles.map((item) => ({
       type: "Insight",
