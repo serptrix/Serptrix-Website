@@ -1,0 +1,153 @@
+/* Services 2026 — compact agency operating canvas. Scoped away from the approved homepage and About. */
+.agency-page:not(.agency-about){--svc-border:#dfe3ec;--svc-soft:#f7f8fb;--svc-shadow:0 18px 55px rgba(5,9,54,.08);font-family:var(--body)}
+.agency-page:not(.agency-about) h1,.agency-page:not(.agency-about) h2,.agency-page:not(.agency-about) h3,.agency-page:not(.agency-about) b{font-family:var(--display)}
+.agency-page:not(.agency-about) .agency-hero{padding:1.5rem 0 clamp(3.75rem,6vw,6rem)}
+.agency-page:not(.agency-about) .agency-hero .breadcrumbs{margin-bottom:clamp(2rem,4vw,3.5rem)}
+.agency-page:not(.agency-about) .agency-hero-copy{max-width:900px}
+.agency-page:not(.agency-about) .agency-hero h1{max-width:860px;font-size:clamp(2.65rem,4.8vw,4.35rem);line-height:1.04;letter-spacing:-.05em}
+.agency-page:not(.agency-about) .agency-hero-copy>p:not(.agency-eyebrow){max-width:700px;margin-top:1.25rem;font-size:clamp(1rem,1.25vw,1.15rem);line-height:1.65}
+.agency-page:not(.agency-about) .agency-actions{margin-top:1.7rem}
+.agency-page:not(.agency-about) .agency-hero-copy>small{margin-top:.9rem;font-size:.78rem}
+.agency-page:not(.agency-about) .agency-decision-line{max-width:760px;margin-top:clamp(2.5rem,4.5vw,4rem);font-size:.65rem}
+.agency-page:not(.agency-about) .agency-section{padding:clamp(4rem,6.5vw,6.75rem) 0}
+.agency-page:not(.agency-about) .agency-section-head{grid-template-columns:minmax(120px,.25fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,4.5rem);margin-bottom:clamp(2rem,4vw,3.75rem)}
+.agency-page:not(.agency-about) .agency-section-head h2{max-width:780px;font-size:clamp(2rem,3.6vw,3.65rem);line-height:1.08;letter-spacing:-.045em}
+.agency-page:not(.agency-about) .agency-section-head span{max-width:620px;margin-top:.9rem;font-size:1rem;line-height:1.65}
+.agency-page:not(.agency-about) .agency-eyebrow,.agency-page:not(.agency-about) .agency-section-head>p{font-size:.68rem}
+
+/* Pillar/category recognition becomes a balanced two-module bento. */
+.agency-page:not(.agency-about) .agency-problem{background:var(--svc-soft)}
+.agency-page:not(.agency-about) .agency-problem .agency-split{grid-template-columns:1.15fr .85fr;gap:1rem}
+.agency-page:not(.agency-about) .agency-problem .agency-split>div{min-height:320px;padding:clamp(1.6rem,3vw,3rem);border:1px solid var(--svc-border);border-radius:var(--radius-xl);background:#fff}
+.agency-page:not(.agency-about) .agency-problem .agency-split>div:first-child{display:flex;flex-direction:column;justify-content:space-between;background:var(--navy);color:#fff;border-color:var(--navy)}
+.agency-page:not(.agency-about) .agency-problem .agency-split>div:first-child h2{max-width:760px;color:#fff;font-size:clamp(2rem,3.6vw,3.5rem);line-height:1.1}
+.agency-page:not(.agency-about) .agency-problem .agency-outcome{border-left:0}
+.agency-page:not(.agency-about) .agency-problem .agency-outcome p{font-size:clamp(1.25rem,2vw,1.75rem)}
+
+/* Category comparisons read like an editorial bento rather than repeated rows. */
+.agency-page:not(.agency-about) .agency-category-editorial{display:grid;gap:1rem}
+.agency-page:not(.agency-about) .agency-category-editorial>article{grid-template-columns:minmax(230px,.6fr) minmax(0,1.4fr);gap:2rem;padding:clamp(1.5rem,3vw,2.5rem);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius-xl);background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.015))}
+.agency-page:not(.agency-about) .agency-category-editorial h3{font-size:clamp(1.55rem,2.4vw,2.25rem)}
+.agency-page:not(.agency-about) .agency-category-editorial header p{font-size:.95rem;line-height:1.6}
+.agency-page:not(.agency-about) .agency-category-editorial nav{display:grid;grid-template-columns:1fr 1fr;gap:0 1.5rem}
+.agency-page:not(.agency-about) .agency-category-editorial nav a{min-height:68px;padding:.85rem 0}
+.agency-page:not(.agency-about) .agency-category-editorial nav small{font-size:.75rem;line-height:1.4}
+
+/* Scope canvas: three deliberate modules, with the centre as the visual anchor. */
+.agency-page:not(.agency-about) .agency-three-column{gap:1rem;border:0}
+.agency-page:not(.agency-about) .agency-three-column article{min-height:285px;padding:clamp(1.4rem,2.4vw,2rem);border:1px solid var(--svc-border)!important;border-radius:var(--radius-lg);background:#fff}
+.agency-page:not(.agency-about) .agency-three-column article:nth-child(2){transform:translateY(-1rem);background:var(--pale-gold);border-color:#ecdc9a!important}
+.agency-page:not(.agency-about) .agency-three-column h3{font-size:clamp(1.25rem,1.8vw,1.6rem)}
+.agency-page:not(.agency-about) .agency-three-column li{font-size:.9rem}
+.agency-page:not(.agency-about) .agency-approach-grid{grid-template-columns:minmax(260px,.65fr) minmax(0,1.35fr);gap:clamp(2rem,6vw,6rem)}
+.agency-page:not(.agency-about) .agency-approach-grid>div h2{font-size:clamp(2rem,3.6vw,3.6rem)}
+.agency-page:not(.agency-about) .agency-approach ol{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.agency-page:not(.agency-about) .agency-approach li{grid-template-columns:2.5rem 1fr;align-content:start;min-height:170px;padding:1.5rem;border:1px solid #d8dce6;border-radius:var(--radius-lg);background:#fff}
+.agency-page:not(.agency-about) .agency-approach h3{font-size:1.15rem}
+.agency-page:not(.agency-about) .agency-engagement .agency-split{gap:1rem;padding:1rem;border:1px solid var(--svc-border);border-radius:var(--radius-xl);background:var(--svc-soft)}
+.agency-page:not(.agency-about) .agency-engagement .agency-split>div{padding:clamp(1.25rem,3vw,2.4rem)}
+.agency-page:not(.agency-about) .agency-engagement .agency-split h2{font-size:clamp(2rem,3.3vw,3.2rem)}
+
+/* Detail-page problem cards use asymmetry and readable density. */
+.agency-page:not(.agency-about) .agency-situation-list{display:grid;grid-template-columns:1.15fr .85fr;grid-template-areas:"first second" "first third";gap:1rem;margin-left:0}
+.agency-page:not(.agency-about) .agency-situation-list article{display:flex;flex-direction:column;min-height:210px;padding:clamp(1.4rem,2.5vw,2rem);border:1px solid var(--svc-border);border-radius:var(--radius-lg);background:#fff}
+.agency-page:not(.agency-about) .agency-situation-list article:first-child{grid-area:first;min-height:436px;justify-content:flex-end;background:var(--navy);border-color:var(--navy);color:#fff}
+.agency-page:not(.agency-about) .agency-situation-list article:nth-child(2){grid-area:second;background:var(--pale-gold)}
+.agency-page:not(.agency-about) .agency-situation-list article:nth-child(3){grid-area:third;background:var(--cloud)}
+.agency-page:not(.agency-about) .agency-situation-list h3{font-size:clamp(1.35rem,2.3vw,2rem);line-height:1.2}
+.agency-page:not(.agency-about) .agency-situation-list article:first-child h3{color:#fff;font-size:clamp(1.8rem,3.3vw,3rem)}
+.agency-page:not(.agency-about) .agency-situation-list article:first-child p{color:#b8c0dc}
+.agency-page:not(.agency-about) .agency-situation-list p{margin-top:auto;font-size:.92rem;line-height:1.6}
+.agency-page:not(.agency-about) .agency-change{background:#fff}
+.agency-page:not(.agency-about) .agency-change-grid{grid-template-columns:.72fr 1.28fr;gap:1rem;padding:1rem;border:1px solid var(--svc-border);border-radius:var(--radius-xl);background:var(--svc-soft)}
+.agency-page:not(.agency-about) .agency-change-grid>div:first-child{display:flex;flex-direction:column;justify-content:flex-end;min-height:380px;padding:clamp(1.5rem,3vw,2.5rem);border-radius:calc(var(--radius-xl) - 8px);background:var(--pale-gold)}
+.agency-page:not(.agency-about) .agency-change h2{font-size:clamp(2rem,3.5vw,3.5rem)}
+.agency-page:not(.agency-about) .agency-flow{grid-template-columns:1fr;gap:.65rem;padding:0}
+.agency-page:not(.agency-about) .agency-flow>div{min-height:112px;padding:1.2rem;border-color:var(--svc-border);box-shadow:0 8px 20px rgba(5,9,54,.04)}
+.agency-page:not(.agency-about) .agency-flow>i{height:auto;justify-self:center;transform:rotate(90deg);padding:0}
+
+/* Capabilities turn into a true bento with one larger opening module. */
+.agency-page:not(.agency-about) .agency-scope-list{display:grid;grid-template-columns:1.2fr .8fr;gap:1rem;margin-left:0}
+.agency-page:not(.agency-about) .agency-scope-list article{display:grid;grid-template-columns:2.5rem 1fr;align-content:start;min-height:220px;padding:clamp(1.4rem,2.5vw,2rem);border:1px solid var(--svc-border);border-radius:var(--radius-lg);background:#fff}
+.agency-page:not(.agency-about) .agency-scope-list article:first-child{grid-row:span 2;min-height:456px;align-content:end;background:var(--navy);border-color:var(--navy);color:#fff}
+.agency-page:not(.agency-about) .agency-scope-list article:first-child h3{color:#fff;font-size:clamp(1.7rem,3vw,2.75rem)}
+.agency-page:not(.agency-about) .agency-scope-list article:first-child p{color:#b8c0dc}
+.agency-page:not(.agency-about) .agency-scope-list h3{font-size:clamp(1.25rem,2vw,1.8rem)}
+.agency-page:not(.agency-about) .agency-deliverable-band{grid-template-columns:.75fr 1.25fr;gap:clamp(2rem,5vw,5rem)}
+.agency-page:not(.agency-about) .agency-deliverable-band h2{font-size:clamp(2rem,3.6vw,3.6rem)}
+.agency-page:not(.agency-about) .agency-deliverable-band li{padding:1.2rem 0}
+.agency-page:not(.agency-about) .agency-demo-grid{grid-template-columns:.95fr 1.05fr;gap:clamp(2rem,5vw,5rem)}
+.agency-page:not(.agency-about) .agency-demo-visual{min-height:280px}
+.agency-page:not(.agency-about) .agency-demo-grid h2{font-size:clamp(2rem,3.4vw,3.4rem)}
+
+/* Process and evidence avoid the previous four identical vertical columns. */
+.agency-page:not(.agency-about) .agency-process ol{grid-template-columns:1.25fr .75fr;gap:1rem;border:0}
+.agency-page:not(.agency-about) .agency-process li{display:grid;grid-template-columns:2.5rem 1fr;min-height:170px;padding:1.5rem;border:1px solid var(--svc-border)!important;border-radius:var(--radius-lg);background:#fff}
+.agency-page:not(.agency-about) .agency-process li:first-child,.agency-page:not(.agency-about) .agency-process li:last-child{grid-column:span 2}
+.agency-page:not(.agency-about) .agency-process h3{margin-top:0;font-size:1.25rem}
+.agency-page:not(.agency-about) .agency-evidence-grid{grid-template-columns:1.05fr .95fr;gap:1rem}
+.agency-page:not(.agency-about) .agency-evidence-grid>div,.agency-page:not(.agency-about) .agency-evidence-grid>ul{min-height:350px;margin:0;padding:clamp(1.5rem,3vw,2.5rem);border:1px solid var(--svc-border);border-radius:var(--radius-xl)}
+.agency-page:not(.agency-about) .agency-evidence-grid>div{display:flex;flex-direction:column;justify-content:flex-end;background:var(--navy);color:#fff}
+.agency-page:not(.agency-about) .agency-evidence-grid>div h2{color:#fff;font-size:clamp(2rem,3.3vw,3.25rem)}
+.agency-page:not(.agency-about) .agency-evidence-grid>div p{color:#b8c0dc}
+.agency-page:not(.agency-about) .agency-evidence-grid>ul{background:var(--pale-gold)}
+.agency-page:not(.agency-about) .agency-ecosystem .agency-three-column{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.agency-page:not(.agency-about) .agency-ecosystem .agency-three-column article{min-height:190px}
+.agency-page:not(.agency-about) .agency-ecosystem .agency-three-column article:nth-child(2){transform:none;background:#fff;border-color:var(--svc-border)!important}
+.agency-page:not(.agency-about) .agency-related>div>div{display:grid;grid-template-columns:1fr 1fr;gap:1rem;border:0}
+.agency-page:not(.agency-about) .agency-related a{min-height:210px;border:1px solid var(--svc-border)!important;border-radius:var(--radius-lg);background:#fff}
+
+/* Directory: compact goal and pillar bento instead of large repeated slabs. */
+.agency-directory .agency-goals>div>div:last-child{display:grid;grid-template-columns:1.1fr .9fr;grid-template-areas:"g1 g2" "g1 g3" "g4 g4";gap:1rem}
+.agency-directory .agency-goals a{min-height:150px;padding:1.5rem;border:1px solid var(--svc-border)!important;border-radius:var(--radius-lg);background:#fff}
+.agency-directory .agency-goals a:nth-child(1){grid-area:g1;min-height:316px;align-content:end;background:var(--navy);color:#fff}.agency-directory .agency-goals a:nth-child(1) h3{color:#fff}
+.agency-directory .agency-goals a:nth-child(2){grid-area:g2}.agency-directory .agency-goals a:nth-child(3){grid-area:g3;background:var(--pale-gold)}.agency-directory .agency-goals a:nth-child(4){grid-area:g4}
+.agency-directory .agency-goals a h3{font-size:clamp(1.2rem,2vw,1.6rem)}
+.agency-directory .agency-pillar-overview{display:grid;grid-template-columns:1.15fr .85fr .85fr 1.15fr;gap:1rem;border:0}
+.agency-directory .agency-pillar-overview>a{min-height:320px;padding:1.5rem;border:1px solid rgba(255,255,255,.15)!important;border-radius:var(--radius-lg);background:rgba(255,255,255,.035)}
+.agency-directory .agency-pillar-overview>a:nth-child(2),.agency-directory .agency-pillar-overview>a:nth-child(3){transform:translateY(1.5rem)}
+.agency-directory .agency-pillar-overview h3{font-size:clamp(1.5rem,2.3vw,2rem)}
+.agency-directory .agency-directory-pillar-grid{grid-template-columns:minmax(230px,.32fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem)}
+.agency-directory .agency-directory-pillar header h2{font-size:clamp(2.5rem,4.5vw,4.5rem)}
+.agency-directory .agency-directory-pillar article{padding:1.5rem;border:1px solid var(--svc-border);border-radius:var(--radius-lg);background:#fff;margin-bottom:1rem}
+.agency-directory .agency-directory-pillar article>div{grid-template-columns:.55fr 1fr}
+.agency-directory .agency-directory-pillar article h3{font-size:1.35rem}
+.agency-directory .agency-directory-pillar nav a{min-height:48px;font-size:.84rem}
+.agency-directory .agency-connection-line{padding:1.5rem}
+
+/* Compact FAQ and close: sales clarity without billboard typography. */
+.agency-page:not(.agency-about) .agency-faq-list{max-width:920px}
+.agency-page:not(.agency-about) .agency-faq summary{font-size:1rem}
+.agency-page:not(.agency-about) .agency-final{padding:clamp(3.75rem,6vw,6rem) 0}
+.agency-page:not(.agency-about) .agency-final h2{font-size:clamp(2.35rem,4.3vw,4.25rem);line-height:1.04}
+.agency-page:not(.agency-about) .agency-final-grid{grid-template-columns:1fr .7fr}
+
+@media(max-width:1050px){
+  .agency-directory .agency-pillar-overview{grid-template-columns:1fr 1fr}
+  .agency-directory .agency-pillar-overview>a:nth-child(2),.agency-directory .agency-pillar-overview>a:nth-child(3){transform:none}
+  .agency-page:not(.agency-about) .agency-category-editorial nav{grid-template-columns:1fr}
+  .agency-page:not(.agency-about) .agency-ecosystem .agency-three-column{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .agency-page:not(.agency-about) .agency-hero h1{font-size:clamp(2.1rem,9.5vw,3rem);line-height:1.06}
+  .agency-page:not(.agency-about) .agency-hero-copy>p:not(.agency-eyebrow){font-size:1rem}
+  .agency-page:not(.agency-about) .agency-decision-line{grid-template-columns:repeat(7,auto);gap:.45rem;overflow:hidden;white-space:nowrap}
+  .agency-page:not(.agency-about) .agency-decision-line i{width:18px;height:1px}
+  .agency-page:not(.agency-about) .agency-section-head h2{font-size:clamp(1.9rem,9vw,2.75rem)}
+  .agency-page:not(.agency-about) .agency-problem .agency-split,.agency-page:not(.agency-about) .agency-category-editorial>article,.agency-page:not(.agency-about) .agency-approach-grid,.agency-page:not(.agency-about) .agency-change-grid,.agency-page:not(.agency-about) .agency-deliverable-band,.agency-page:not(.agency-about) .agency-demo-grid,.agency-page:not(.agency-about) .agency-evidence-grid,.agency-page:not(.agency-about) .agency-final-grid,.agency-directory .agency-directory-pillar-grid{grid-template-columns:1fr}
+  .agency-page:not(.agency-about) .agency-problem .agency-split>div{min-height:240px}
+  .agency-page:not(.agency-about) .agency-situation-list{grid-template-columns:1fr;grid-template-areas:"first" "second" "third"}
+  .agency-page:not(.agency-about) .agency-situation-list article:first-child{min-height:310px}
+  .agency-page:not(.agency-about) .agency-scope-list{grid-template-columns:1fr}
+  .agency-page:not(.agency-about) .agency-scope-list article:first-child{grid-row:auto;min-height:310px}
+  .agency-page:not(.agency-about) .agency-approach ol,.agency-page:not(.agency-about) .agency-process ol,.agency-page:not(.agency-about) .agency-ecosystem .agency-three-column,.agency-page:not(.agency-about) .agency-related>div>div{grid-template-columns:1fr}
+  .agency-page:not(.agency-about) .agency-process li:first-child,.agency-page:not(.agency-about) .agency-process li:last-child{grid-column:auto}
+  .agency-page:not(.agency-about) .agency-evidence-grid>div,.agency-page:not(.agency-about) .agency-evidence-grid>ul{min-height:auto}
+  .agency-page:not(.agency-about) .agency-three-column{grid-template-columns:1fr}
+  .agency-page:not(.agency-about) .agency-three-column article:nth-child(2){transform:none}
+  .agency-directory .agency-goals>div>div:last-child{grid-template-columns:1fr;grid-template-areas:"g1" "g2" "g3" "g4"}
+  .agency-directory .agency-goals a:nth-child(1){min-height:260px}
+  .agency-directory .agency-pillar-overview{grid-template-columns:1fr}
+  .agency-directory .agency-directory-pillar article>div,.agency-directory .agency-directory-pillar nav{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){.agency-page:not(.agency-about) .agency-three-column article:nth-child(2),.agency-directory .agency-pillar-overview>a{transform:none}}
