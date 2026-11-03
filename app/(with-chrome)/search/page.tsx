@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { articles, caseStudies } from "@/content/site-data";
 import { serviceEntries } from "@/content/service-catalog";
-import { Breadcrumbs } from "../components/breadcrumbs";
+import { Breadcrumbs } from "@/app/components/breadcrumbs";
 
 type Props = { searchParams: Promise<{ q?: string }> };
 

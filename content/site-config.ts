@@ -20,6 +20,11 @@ export const siteConfig = {
       process.env.NEXT_PUBLIC_CALENDLY_URL ||
       "https://calendly.com/serptrix-info/30min?hide_event_type_details=1&hide_gdpr_banner=1",
   },
+  social: {
+    linkedin: "https://www.linkedin.com/in/serptrixofficial/",
+    instagram: "https://www.instagram.com/serptrix",
+    facebook: "https://www.facebook.com/serptrixofficial",
+  },
   form: {
     budgetOptions: [
       "Under $2,500",

@@ -1,0 +1,144 @@
+/* Hide legacy site chrome if it still mounts beside the redesigned services page */
+body:has(.srx-services-root) .site3-header,
+body:has(.srx-services-root) .site3-footer {
+  display: none !important;
+}
+
+/* Kill global ui.css heading/footer leakage on the redesigned services page */
+.srx-services-root {
+  background: #fff !important;
+  color: #09105f;
+}
+
+.srx-services-root h1,
+.srx-services-root h2,
+.srx-services-root h3,
+.srx-services-root h4 {
+  color: inherit !important;
+  font-family: var(--font-schibsted), "Schibsted Grotesk", var(--font-instrument), Arial, sans-serif !important;
+  max-width: none !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.05 !important;
+}
+
+.srx-services-root .fl h3 {
+  font: 600 12px var(--font-instrument), "Instrument Sans", sans-serif !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #fbbc03 !important;
+  font-weight: 600 !important;
+}
+
+.srx-services-root footer,
+.srx-services-root footer.ftw,
+.srx-services-root .ftw {
+  background: #fff !important;
+  color: inherit !important;
+  padding: 0 12px 12px !important;
+  margin-top: 40px !important;
+}
+
+.srx-services-root .ftp {
+  background: #09105f !important;
+  color: #fff !important;
+}
+
+.srx-services-root .pn,
+.srx-services-root .dk {
+  color: #fff !important;
+}
+
+.srx-services-root .pa.pl,
+.srx-services-root .pa.pt,
+.srx-services-root .pa[style*="background:#fff"],
+.srx-services-root .pa[style*="background: #fff"],
+.srx-services-root .pa[style*="background:#FBBC03"],
+.srx-services-root .pa[style*="background: #FBBC03"],
+.srx-services-root form.pa,
+.srx-services-root .stk,
+.srx-services-root .mi {
+  color: #09105f !important;
+}
+
+.srx-services-root .pn .pa.pl,
+.srx-services-root .dk .pa.pl {
+  color: #09105f !important;
+}
+
+.srx-services-root a {
+  color: inherit;
+}
+
+.srx-services-root p {
+  max-width: none;
+}
+
+.srx-services-root .pa.pn h2,
+.srx-services-root .pa.pn h3,
+.srx-services-root .pa.pn p,
+.srx-services-root .ftp h2,
+.srx-services-root .ftp p,
+.srx-services-root .ftp a,
+.srx-services-root .ftp li {
+  color: inherit !important;
+}
+
+.srx-services-root .ftp .fl h3 {
+  color: #fbbc03 !important;
+}
+
+.srx-services-root .stk {
+  background: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Footer social icons: centered glyphs, always one row */
+.srx-services-root .soc {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  max-width: 100%;
+}
+
+.srx-services-root .soc a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 44px;
+  width: 44px !important;
+  height: 44px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 0 !important;
+  box-sizing: border-box;
+}
+
+.srx-services-root .soc a svg {
+  display: block !important;
+  width: 22px !important;
+  height: 22px !important;
+  max-width: none !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+@media (max-width: 900px) {
+  .srx-services-root .soc {
+    flex-wrap: nowrap !important;
+    gap: 8px;
+  }
+
+  .srx-services-root .soc a {
+    flex: 0 0 40px;
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .srx-services-root .soc a svg {
+    width: 20px;
+    height: 20px;
+  }
+}

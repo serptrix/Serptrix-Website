@@ -1,24 +1,29 @@
-import { ContactExperience } from "../components/contact/contact-experience";
-import { StructuredData } from "../components/structured-data";
+import ContactPage from "@/app/components/contact/contact-page";
+import { StructuredData } from "@/app/components/structured-data";
 import { siteConfig } from "@/content/site-config";
 import { serviceBySlug } from "@/content/service-catalog";
 
 export const metadata = {
-  title: "Contact Serptrix | Digital Marketing, Development & AI",
+  title: "Contact",
   description:
-    "Contact Serptrix for digital marketing, web development, SaaS, ecommerce, AI automation and digital strategy. Submit a project inquiry or book a strategy call.",
+    "Contact Serptrix for design, development, AI and digital marketing. Book a Strategy Call or send a short project inquiry.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Contact Serptrix | Digital Marketing, Development & AI",
+    title: "Contact Serptrix",
     description:
-      "Tell Serptrix what you are building, improving, or scaling. Submit a project inquiry or book a strategy call.",
+      "Book a Strategy Call or send a short project inquiry. A person reads every message.",
     url: "/contact",
   },
 };
 
 export default async function Contact({ searchParams }: { searchParams: Promise<{ service?: string }> }) {
   const { service } = await searchParams;
-  const preselectedService = service ? serviceBySlug.get(service)?.service?.name : undefined;
+  const preselectedService = service
+    ? serviceBySlug.get(service)?.service?.name ||
+      serviceBySlug.get(service)?.pillar?.name ||
+      service
+    : undefined;
+
   const contactPoint: Record<string, unknown>[] = [
     {
       "@type": "ContactPoint",
@@ -62,7 +67,7 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
           ],
         }}
       />
-      <ContactExperience preselectedService={preselectedService} />
+      <ContactPage preselectedService={preselectedService} />
     </>
   );
 }

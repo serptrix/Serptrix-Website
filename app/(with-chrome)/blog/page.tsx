@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { articles } from "@/content/site-data";
 import { siteConfig } from "@/content/site-config";
-import { ArticleLibrary } from "../components/article-library";
-import { Breadcrumbs } from "../components/breadcrumbs";
+import { ArticleLibrary } from "@/app/components/article-library";
+import { Breadcrumbs } from "@/app/components/breadcrumbs";
 
 export const metadata = {
   title: "Insights",

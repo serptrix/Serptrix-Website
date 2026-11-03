@@ -1,7 +1,6 @@
 import { siteConfig } from "@/content/site-config";
 import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Manrope, Schibsted_Grotesk } from "next/font/google";
-import { SiteChrome } from "./components/site-chrome";
 import { StructuredData } from "./components/structured-data";
 import "./ui.css";
 import "./agency-pages.css";
@@ -85,7 +84,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             ],
           }}
         />
-        <SiteChrome>{children}</SiteChrome>
+        {children}
       </body>
     </html>
   );

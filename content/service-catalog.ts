@@ -116,6 +116,6 @@ export const catalogByPath=new Map(catalogEntries.map(e=>[e.segments.join("/"),e
 export const serviceBySlug=new Map(serviceEntries.map(e=>[e.service!.slug,e]));
 export const getCatalogEntry=(segments:string[])=>catalogByPath.get(segments.join("/"));
 export const getServiceHref=(serviceSlug:string)=>serviceBySlug.get(serviceSlug)?.href??"/services";
-export const getEntryTitle=(e:CatalogEntry)=>e.kind==="pillar"?`${e.pillar.name} Services | Serptrix`:e.kind==="category"?(e.category!.slug==="seo"?"SEO Strategy and Specialist Services | Serptrix":`${e.category!.name} Services | Serptrix`):`${e.service!.name} | Serptrix`;
+export const getEntryTitle=(e:CatalogEntry)=>e.kind==="pillar"?`${e.pillar.name} Services`:e.kind==="category"?(e.category!.slug==="seo"?"SEO Strategy and Specialist Services":`${e.category!.name} Services`):e.service!.name;
 export const getEntryDescription=(e:CatalogEntry)=>e.kind==="pillar"?`${e.pillar.description} Explore specialist ${e.pillar.name.toLowerCase()} services from Serptrix.`:e.kind==="category"?`${e.category!.description} Compare options and discuss a focused engagement with Serptrix.`:`${e.service!.outcome} Explore scope, use cases, delivery, and next steps with Serptrix.`;
 export const inquiryHref=(service?:ServiceDefinition)=>service?`/contact?service=${encodeURIComponent(service.slug)}#project-inquiry`:"/contact#project-inquiry";

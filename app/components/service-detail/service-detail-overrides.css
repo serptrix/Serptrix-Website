@@ -1,0 +1,175 @@
+body:has(.srx-svc-detail) .site3-header,
+body:has(.srx-svc-detail) .site3-footer {
+  display: none !important;
+}
+
+.srx-svc-detail {
+  background: #fff !important;
+  color: #09105f;
+}
+
+.srx-svc-detail h1,
+.srx-svc-detail h2,
+.srx-svc-detail h3,
+.srx-svc-detail h4 {
+  color: inherit !important;
+  font-family: var(--font-schibsted), "Schibsted Grotesk", var(--font-instrument), Arial, sans-serif !important;
+  max-width: none !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.05 !important;
+}
+
+.srx-svc-detail .fl h3 {
+  font: 600 12px var(--font-instrument), "Instrument Sans", sans-serif !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #fbbc03 !important;
+  font-weight: 600 !important;
+}
+
+.srx-svc-detail footer,
+.srx-svc-detail .ftw {
+  background: #fff !important;
+  color: inherit !important;
+  padding: 0 12px 12px !important;
+  margin-top: 40px !important;
+}
+
+.srx-svc-detail .ftp {
+  background: #09105f !important;
+  color: #fff !important;
+}
+
+.srx-svc-detail .pn,
+.srx-svc-detail .dk {
+  color: #fff !important;
+}
+
+.srx-svc-detail .pa.pl,
+.srx-svc-detail .pa.pt,
+.srx-svc-detail .pa[style*="background:#fff"],
+.srx-svc-detail form.pa,
+.srx-svc-detail .serp,
+.srx-svc-detail .sr {
+  color: #09105f !important;
+}
+
+.srx-svc-detail a {
+  color: inherit;
+}
+
+.srx-svc-detail p {
+  max-width: none;
+}
+
+.srx-svc-detail .ftp .fl h3 {
+  color: #fbbc03 !important;
+}
+
+/* Breadcrumbs must stay in-flow on the navy hero */
+.srx-svc-detail .cr {
+  position: static !important;
+  inset: auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: auto !important;
+  height: auto !important;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.srx-svc-detail nav.fl {
+  position: static !important;
+  display: block !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  inset: auto !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+.srx-svc-detail .mm-panel {
+  display: none !important;
+  position: absolute !important;
+  right: 0 !important;
+  top: 52px !important;
+  z-index: 5 !important;
+  background: #fff !important;
+  color: #09105f !important;
+  border-radius: 20px !important;
+  padding: 12px 20px !important;
+  min-width: 200px !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  font-weight: 600 !important;
+}
+
+.srx-svc-detail .mm[open] .mm-panel {
+  display: flex !important;
+}
+
+/* Hero copy must stay readable on navy */
+.srx-svc-detail .pn.dk .h1,
+.srx-svc-detail .pn.dk h1,
+.srx-svc-detail .pn.dk .lede {
+  color: #fff !important;
+}
+
+.srx-svc-detail .pn.dk .cr a {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Social icons */
+.srx-svc-detail .soc {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  max-width: 100%;
+}
+
+.srx-svc-detail .soc a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 44px;
+  width: 44px !important;
+  height: 44px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 0 !important;
+  box-sizing: border-box;
+}
+
+.srx-svc-detail .soc a svg {
+  display: block !important;
+  width: 22px !important;
+  height: 22px !important;
+  max-width: none !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .srx-svc-detail .soc {
+    flex-wrap: nowrap !important;
+    gap: 8px;
+  }
+  .srx-svc-detail .soc a {
+    flex: 0 0 40px;
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .srx-svc-detail .soc a svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}

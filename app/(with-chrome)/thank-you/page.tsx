@@ -1,4 +1,4 @@
-import { ThankYouExperience } from "../components/thank-you-experience";
+import { ThankYouExperience } from "@/app/components/thank-you-experience";
 
 export const metadata = {
   title: "Thank You",
