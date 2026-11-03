@@ -1,0 +1,95 @@
+/* Kill global ui.css heading/footer leakage on the redesigned homepage */
+.srx-home-root {
+  background: #fff !important;
+  color: #09105f;
+}
+
+.srx-home-root h1,
+.srx-home-root h2,
+.srx-home-root h3,
+.srx-home-root h4 {
+  color: inherit !important;
+  font-family: var(--font-schibsted), "Schibsted Grotesk", var(--font-instrument), Arial, sans-serif !important;
+  max-width: none !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.05 !important;
+}
+
+.srx-home-root .fl h3 {
+  font: 600 12px var(--font-instrument), "Instrument Sans", sans-serif !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #fbbc03 !important;
+  font-weight: 600 !important;
+}
+
+.srx-home-root footer,
+.srx-home-root footer.ftw,
+.srx-home-root .ftw {
+  background: #fff !important;
+  color: inherit !important;
+  padding: 0 12px 12px !important;
+  margin-top: 40px !important;
+}
+
+.srx-home-root .ftp {
+  background: #09105f !important;
+  color: #fff !important;
+}
+
+.srx-home-root .pn,
+.srx-home-root .dk {
+  color: #fff !important;
+}
+
+/* Keep light panels / yellow cards readable */
+.srx-home-root .pc[style*="background:#fff"],
+.srx-home-root .pc[style*="background: #fff"],
+.srx-home-root .pa.pl,
+.srx-home-root .pa.pt,
+.srx-home-root .pa[style*="background:#fff"],
+.srx-home-root .pa[style*="background: #fff"],
+.srx-home-root .pa[style*="background:#FBBC03"],
+.srx-home-root .pa[style*="background: #FBBC03"],
+.srx-home-root .pc[style*="background:#FBBC03"],
+.srx-home-root .pc[style*="background: #FBBC03"] {
+  color: #09105f !important;
+}
+
+.srx-home-root .pn .pa.pl,
+.srx-home-root .dk .pa.pl,
+.srx-home-root form.pa {
+  color: #09105f !important;
+}
+
+.srx-home-root a {
+  color: inherit;
+}
+
+.srx-home-root p {
+  max-width: none;
+}
+
+.srx-home-root .mk {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+}
+
+/* How-we-work dark panel headings must stay light */
+.srx-home-root .pa.pn h2,
+.srx-home-root .pa.pn h3,
+.srx-home-root .pa.pn p,
+.srx-home-root .ftp h2,
+.srx-home-root .ftp p,
+.srx-home-root .ftp a,
+.srx-home-root .ftp li {
+  color: inherit !important;
+}
+
+.srx-home-root .ftp .fl h3 {
+  color: #fbbc03 !important;
+}

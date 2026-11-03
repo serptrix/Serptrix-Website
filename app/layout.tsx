@@ -1,22 +1,32 @@
 import { siteConfig } from "@/content/site-config";
 import type { Metadata, Viewport } from "next";
-import { Manrope } from "next/font/google";
-import { ConsentManager } from "./components/consent-manager";
-import { MotionShell } from "./components/motion-shell";
-import { MotionCapabilitiesProvider } from "./components/motion/use-motion-capabilities";
-import { Footer } from "./components/site-footer";
-import { Header } from "./components/primary-header";
+import { Instrument_Sans, Manrope, Schibsted_Grotesk } from "next/font/google";
+import { SiteChrome } from "./components/site-chrome";
 import { StructuredData } from "./components/structured-data";
 import "./ui.css";
 import "./agency-pages.css";
 import "./services-redesign.css";
 
-const display = Manrope({
+const manrope = Manrope({
   variable: "--font-heading",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
   preload: true,
+});
+
+const instrument = Instrument_Sans({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const schibsted = Schibsted_Grotesk({
+  variable: "--font-schibsted",
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  display: "swap",
 });
 
 export const viewport: Viewport = {
@@ -51,7 +61,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={display.variable}>
+      <body className={`${manrope.variable} ${instrument.variable} ${schibsted.variable} ${manrope.className}`}>
         <StructuredData
           data={{
             "@context": "https://schema.org",
@@ -75,17 +85,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             ],
           }}
         />
-        <a className="skip-link" href="#main">
-          Skip to content
-        </a>
-        <MotionCapabilitiesProvider>
-          <Header />
-          <MotionShell>
-            <div id="main">{children}</div>
-          </MotionShell>
-          <Footer />
-          <ConsentManager />
-        </MotionCapabilitiesProvider>
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );
