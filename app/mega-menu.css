@@ -1,0 +1,273 @@
+/* Services mega menu. Headings sit above every service page link. */
+.srx-home-root .hd,
+.srx-about-root .hd,
+.srx-services-root .hd,
+.srx-svc-detail .hd,
+.srx-contact-root .hd,
+.srx-blog-root .hd {
+  position: relative !important;
+  z-index: 40;
+  overflow: visible !important;
+}
+
+.srx-home-root .mega,
+.srx-about-root .mega,
+.srx-services-root .mega,
+.srx-svc-detail .mega,
+.srx-contact-root .mega,
+.srx-blog-root .mega {
+  position: static;
+}
+
+.srx-home-root .mega > a,
+.srx-about-root .mega > a,
+.srx-services-root .mega > a,
+.srx-svc-detail .mega > a,
+.srx-contact-root .mega > a,
+.srx-blog-root .mega > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.srx-home-root .mega > a::after,
+.srx-about-root .mega > a::after,
+.srx-services-root .mega > a::after,
+.srx-svc-detail .mega > a::after,
+.srx-contact-root .mega > a::after,
+.srx-blog-root .mega > a::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  transform: translateY(1px);
+}
+
+.srx-home-root .mega-panel,
+.srx-about-root .mega-panel,
+.srx-services-root .mega-panel,
+.srx-svc-detail .mega-panel,
+.srx-contact-root .mega-panel,
+.srx-blog-root .mega-panel {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - 6px);
+  z-index: 50;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px 28px;
+  max-height: min(58vh, 520px);
+  overflow: auto;
+  padding: 22px 24px 20px;
+  border-radius: 24px;
+  background: #fff;
+  color: #09105f;
+  box-shadow: 0 24px 60px rgba(9, 16, 95, 0.28);
+}
+
+.srx-home-root .mega:hover .mega-panel,
+.srx-home-root .mega:focus-within .mega-panel,
+.srx-about-root .mega:hover .mega-panel,
+.srx-about-root .mega:focus-within .mega-panel,
+.srx-services-root .mega:hover .mega-panel,
+.srx-services-root .mega:focus-within .mega-panel,
+.srx-svc-detail .mega:hover .mega-panel,
+.srx-svc-detail .mega:focus-within .mega-panel,
+.srx-contact-root .mega:hover .mega-panel,
+.srx-contact-root .mega:focus-within .mega-panel,
+.srx-blog-root .mega:hover .mega-panel,
+.srx-blog-root .mega:focus-within .mega-panel {
+  display: grid;
+}
+
+.srx-home-root .mega-col,
+.srx-about-root .mega-col,
+.srx-services-root .mega-col,
+.srx-svc-detail .mega-col,
+.srx-contact-root .mega-col,
+.srx-blog-root .mega-col {
+  min-width: 0;
+}
+
+.srx-home-root .mega-pillar,
+.srx-about-root .mega-pillar,
+.srx-services-root .mega-pillar,
+.srx-svc-detail .mega-pillar,
+.srx-contact-root .mega-pillar,
+.srx-blog-root .mega-pillar {
+  display: block !important;
+  margin: 0 0 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #fbbc03;
+  color: #09105f !important;
+  font-weight: 750;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.srx-home-root .mega-group,
+.srx-about-root .mega-group,
+.srx-services-root .mega-group,
+.srx-svc-detail .mega-group,
+.srx-contact-root .mega-group,
+.srx-blog-root .mega-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 12px;
+}
+
+.srx-home-root .mega-cat,
+.srx-about-root .mega-cat,
+.srx-services-root .mega-cat,
+.srx-svc-detail .mega-cat,
+.srx-contact-root .mega-cat,
+.srx-blog-root .mega-cat {
+  display: block !important;
+  margin: 0 0 4px;
+  color: #756000 !important;
+  font-size: 11px !important;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.srx-home-root .mega-panel a,
+.srx-about-root .mega-panel a,
+.srx-services-root .mega-panel a,
+.srx-svc-detail .mega-panel a,
+.srx-contact-root .mega-panel a,
+.srx-blog-root .mega-panel a {
+  color: #09105f;
+  font-weight: 550;
+  font-size: 14px;
+  line-height: 1.35;
+  padding: 4px 0;
+  min-height: 0;
+  text-decoration: none;
+}
+
+.srx-home-root .mega-panel a:hover,
+.srx-about-root .mega-panel a:hover,
+.srx-services-root .mega-panel a:hover,
+.srx-svc-detail .mega-panel a:hover,
+.srx-contact-root .mega-panel a:hover,
+.srx-blog-root .mega-panel a:hover {
+  color: #8a6400 !important;
+}
+
+.srx-home-root .mega-acc,
+.srx-about-root .mega-acc,
+.srx-services-root .mega-acc,
+.srx-svc-detail .mega-acc,
+.srx-contact-root .mega-acc,
+.srx-blog-root .mega-acc {
+  border: 0;
+}
+
+.srx-home-root .mm .mega-acc > summary,
+.srx-about-root .mm .mega-acc > summary,
+.srx-services-root .mm .mega-acc > summary,
+.srx-svc-detail .mm .mega-acc > summary,
+.srx-contact-root .mm .mega-acc > summary,
+.srx-blog-root .mm .mega-acc > summary {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  width: auto;
+  height: auto !important;
+  margin: 0;
+  padding: 8px 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: inherit;
+  font: 600 15px var(--font-instrument), Instrument Sans, sans-serif;
+}
+
+.srx-home-root .mm .mega-acc > summary::after,
+.srx-about-root .mm .mega-acc > summary::after,
+.srx-services-root .mm .mega-acc > summary::after,
+.srx-svc-detail .mm .mega-acc > summary::after,
+.srx-contact-root .mm .mega-acc > summary::after,
+.srx-blog-root .mm .mega-acc > summary::after {
+  content: "+" !important;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.srx-home-root .mm .mega-acc[open] > summary::after,
+.srx-about-root .mm .mega-acc[open] > summary::after,
+.srx-services-root .mm .mega-acc[open] > summary::after,
+.srx-svc-detail .mm .mega-acc[open] > summary::after,
+.srx-contact-root .mm .mega-acc[open] > summary::after,
+.srx-blog-root .mm .mega-acc[open] > summary::after {
+  content: "\2212" !important;
+}
+
+.srx-home-root .mega-acc[open] > .mega-mobile-list,
+.srx-about-root .mega-acc[open] > .mega-mobile-list,
+.srx-services-root .mega-acc[open] > .mega-mobile-list,
+.srx-svc-detail .mega-acc[open] > .mega-mobile-list,
+.srx-contact-root .mega-acc[open] > .mega-mobile-list,
+.srx-blog-root .mega-acc[open] > .mega-mobile-list {
+  display: block;
+  max-height: 52vh;
+  overflow: auto;
+  padding: 4px 0 8px;
+}
+
+.srx-home-root .mega-mobile-list a,
+.srx-about-root .mega-mobile-list a,
+.srx-services-root .mega-mobile-list a,
+.srx-svc-detail .mega-mobile-list a,
+.srx-contact-root .mega-mobile-list a,
+.srx-blog-root .mega-mobile-list a {
+  display: block;
+  color: #09105f !important;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 0;
+}
+
+.srx-home-root .mm,
+.srx-about-root .mm,
+.srx-services-root .mm,
+.srx-svc-detail .mm,
+.srx-contact-root .mm,
+.srx-blog-root .mm {
+  position: relative;
+  z-index: 60;
+}
+
+.srx-home-root .mm > div,
+.srx-about-root .mm > div,
+.srx-services-root .mm > div,
+.srx-svc-detail .mm > div,
+.srx-contact-root .mm > div,
+.srx-blog-root .mm > div,
+.srx-home-root .mm-panel,
+.srx-about-root .mm-panel,
+.srx-services-root .mm-panel,
+.srx-svc-detail .mm-panel,
+.srx-contact-root .mm-panel,
+.srx-blog-root .mm-panel {
+  max-height: min(70vh, 560px);
+  overflow: auto;
+  width: min(320px, calc(100vw - 48px));
+}
+
+@media (max-width: 1100px) {
+  .srx-home-root .mega-panel,
+  .srx-about-root .mega-panel,
+  .srx-services-root .mega-panel,
+  .srx-svc-detail .mega-panel,
+  .srx-contact-root .mega-panel,
+  .srx-blog-root .mega-panel {
+    grid-template-columns: 1fr 1fr;
+  }
+}

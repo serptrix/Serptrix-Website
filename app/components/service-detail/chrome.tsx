@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/content/site-config";
+import { RedesignHeader } from "@/app/components/redesign-header";
 
 const Logo = ({ href = "/" }: { href?: string }) => (
   <Link href={href} className="g" style={{ display: "flex", alignItems: "center", gap: 10, font: "700 24px var(--font-schibsted), Schibsted Grotesk, sans-serif" }}>
@@ -20,34 +21,7 @@ const Arrow = () => (
 );
 
 export function DetailHeader() {
-  return (
-    <header className="hd">
-      <Logo />
-      <nav className="nv" aria-label="Main">
-        <Link href="/services" aria-current="page">
-          Services
-        </Link>
-        <Link href="/#work">Work</Link>
-        <Link href="/about">About</Link>
-        <Link href="/blog">Insights</Link>
-      </nav>
-      <Link href="/contact#calendly-booking" className="b by sm dsk">
-        Book a Strategy Call
-      </Link>
-      <details className="mm" style={{ border: 0 }}>
-        <summary>Menu</summary>
-        <div className="mm-panel">
-          <Link href="/services" aria-current="page">
-            Services
-          </Link>
-          <Link href="/#work">Work</Link>
-          <Link href="/about">About</Link>
-          <Link href="/blog">Insights</Link>
-          <Link href="/contact#calendly-booking">Book a Strategy Call</Link>
-        </div>
-      </details>
-    </header>
-  );
+  return <RedesignHeader current="services" />;
 }
 
 export function DetailFooter() {

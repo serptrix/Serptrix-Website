@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { FormEvent, useMemo, useState } from "react";
 import { siteConfig } from "@/content/site-config";
 import { Arrow, DetailFooter } from "@/app/components/service-detail/chrome";
+import { RedesignHeader } from "@/app/components/redesign-header";
 import "./contact.css";
 import "./contact-overrides.css";
 
@@ -13,41 +13,6 @@ const Check = () => (
     <path d="M5.5 10.5l3 3 6-7" fill="none" stroke="#09105F" strokeWidth="2" />
   </svg>
 );
-
-function ContactHeader() {
-  return (
-    <header className="hd">
-      <Link href="/" className="g" style={{ display: "flex", alignItems: "center", gap: 10, font: "700 24px var(--font-schibsted), Schibsted Grotesk, sans-serif" }}>
-        <svg width="32" height="32" viewBox="0 0 34 34" aria-hidden="true">
-          <rect width="15" height="15" rx="4" fill="#FBBC03" />
-          <rect x="19" width="15" height="15" rx="4" fill="#fff" />
-          <rect y="19" width="15" height="15" rx="4" fill="#fff" />
-          <rect x="19" y="19" width="15" height="15" rx="4" fill="#FBBC03" />
-        </svg>{" "}
-        Serptrix
-      </Link>
-      <nav className="nv" aria-label="Main">
-        <Link href="/services">Services</Link>
-        <Link href="/#work">Work</Link>
-        <Link href="/about">About</Link>
-        <Link href="/blog">Insights</Link>
-      </nav>
-      <a href="#book" className="b by sm dsk">
-        Book a Strategy Call
-      </a>
-      <details className="mm" style={{ border: 0 }}>
-        <summary>Menu</summary>
-        <div className="mm-panel">
-          <Link href="/services">Services</Link>
-          <Link href="/#work">Work</Link>
-          <Link href="/about">About</Link>
-          <Link href="/blog">Insights</Link>
-          <a href="#book">Book a Strategy Call</a>
-        </div>
-      </details>
-    </header>
-  );
-}
 
 const SERVICE_OPTIONS = [
   "Not sure yet",
@@ -148,7 +113,7 @@ export default function ContactPage({ preselectedService }: ContactPageProps) {
       <div style={{ padding: 12 }}>
         <div className="pn dk" style={{ borderRadius: 32, overflow: "hidden" }}>
           <div className="w">
-            <ContactHeader />
+            <RedesignHeader current="contact" ctaHref="#book" />
             <section className="pg">
               <div>
                 <p className="k y up" style={{ marginBottom: 18 }}>

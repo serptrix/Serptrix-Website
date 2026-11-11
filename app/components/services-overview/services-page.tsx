@@ -1,5 +1,6 @@
 "use client";
 
+import { injectServicesMegaMenu } from "@/app/components/services-mega-menu";
 import { servicesMarkup } from "./services-markup";
 import "./services.css";
 import "./services-overrides.css";
@@ -17,7 +18,7 @@ export default function ServicesPage() {
       <style dangerouslySetInnerHTML={{ __html: socFix }} />
       <div
         className="srx-services-root"
-        dangerouslySetInnerHTML={{ __html: servicesMarkup }}
+        dangerouslySetInnerHTML={{ __html: injectServicesMegaMenu(servicesMarkup) }}
         suppressHydrationWarning
       />
     </>

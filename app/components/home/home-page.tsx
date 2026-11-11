@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { injectServicesMegaMenu } from "@/app/components/services-mega-menu";
 import { homeMarkup } from "./home-markup";
 import { motion } from "./home-motion";
 import "./home.css";
@@ -31,7 +32,7 @@ export default function HomePage() {
       <div
         ref={rootRef}
         className="srx-home-root"
-        dangerouslySetInnerHTML={{ __html: homeMarkup }}
+        dangerouslySetInnerHTML={{ __html: injectServicesMegaMenu(homeMarkup) }}
         suppressHydrationWarning
       />
     </>
