@@ -38,6 +38,29 @@
   opacity: 0.82;
 }
 
+/* Global `nav { display:flex; align-items:center }` was putting each
+   column title beside its links. Stack the title above the list. */
+.srx-home-root .fl,
+.srx-about-root .fl,
+.srx-services-root .fl,
+.srx-svc-detail .fl,
+.srx-contact-root .fl,
+.srx-blog-root .fl {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 14px !important;
+  position: static !important;
+  inset: auto !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
 .srx-home-root .fl h3,
 .srx-about-root .fl h3,
 .srx-services-root .fl h3,
@@ -45,9 +68,29 @@
 .srx-contact-root .fl h3,
 .srx-blog-root .fl h3 {
   display: block;
+  width: 100%;
   padding-bottom: 10px;
-  margin: 0 0 2px;
+  margin: 0;
   border-bottom: 1px solid rgba(251, 188, 3, 0.45);
+}
+
+.srx-home-root .fl ul,
+.srx-about-root .fl ul,
+.srx-services-root .fl ul,
+.srx-svc-detail .fl ul,
+.srx-contact-root .fl ul,
+.srx-blog-root .fl ul {
+  margin: 0 !important;
+  width: 100%;
+}
+
+.srx-home-root .fc4 a,
+.srx-about-root .fc4 a,
+.srx-services-root .fc4 a,
+.srx-svc-detail .fc4 a,
+.srx-contact-root .fc4 a,
+.srx-blog-root .fc4 a {
+  color: #fff !important;
 }
 
 .srx-home-root .fl a,
