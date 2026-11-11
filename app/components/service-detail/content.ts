@@ -1,5 +1,6 @@
 import type { CatalogEntry } from "@/content/service-catalog";
 import { getServiceHref, serviceBySlug } from "@/content/service-catalog";
+import { servicePageCopy } from "@/content/page-copy/index";
 
 export type DetailCard = { title: string; items: string[] };
 export type DetailStep = { n: string; title: string; copy: string };
@@ -26,6 +27,10 @@ export type ServiceDetailModel = {
   faqs: DetailFaq[];
   related: DetailRelated[];
   showSerpVisual: boolean;
+  overview?: string;
+  fitHeading?: string;
+  scopeHeading?: string;
+  processHeading?: string;
 };
 
 const stages: DetailStep[] = [
@@ -216,8 +221,32 @@ export function buildServiceDetailModel(entry: CatalogEntry): ServiceDetailModel
     showSerpVisual: pillar.slug === "digital-marketing" && (category?.slug === "seo" || service?.slug === "seo-services"),
   };
 
+  const copy = servicePageCopy[entry.href];
+  const withCopy: ServiceDetailModel =
+    copy && service?.slug !== "seo-services"
+      ? {
+          ...base,
+          title: copy.h1 ?? base.title,
+          lede: copy.lede ?? base.lede,
+          overview: copy.overview,
+          fitHeading: copy.fitHeading,
+          fitTitle: copy.fitTitle ?? base.fitTitle,
+          fitGood: copy.fitGood ?? base.fitGood,
+          fitNot: copy.fitNot ?? base.fitNot,
+          scopeHeading: copy.scopeHeading,
+          deliverables: copy.deliverables ?? base.deliverables,
+          processHeading: copy.processHeading,
+          stages: copy.stages ?? base.stages,
+          evidenceTitle: copy.evidenceTitle ?? base.evidenceTitle,
+          metrics: copy.metrics ?? base.metrics,
+          noPromise: copy.noPromise ?? base.noPromise,
+          pricingNote: copy.pricingNote ?? base.pricingNote,
+          faqs: copy.faqs ?? base.faqs,
+        }
+      : base;
+
   if (service?.slug === "seo-services") {
-    return { ...base, ...seoOverride, crumbs: base.crumbs, crumbLabel: base.crumbLabel, inquiryLabel: "SEO Services", related: base.related.length ? base.related : seoOverride.related ?? base.related };
+    return { ...withCopy, ...seoOverride, crumbs: base.crumbs, crumbLabel: base.crumbLabel, inquiryLabel: "SEO Services", related: base.related.length ? base.related : seoOverride.related ?? base.related };
   }
-  return base;
+  return withCopy;
 }

@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Manrope, Schibsted_Grotesk } from "next/font/google";
 import { StructuredData } from "./components/structured-data";
 import "./ui.css";
+import "./footer-layout.css";
 import "./agency-pages.css";
 import "./services-redesign.css";
 

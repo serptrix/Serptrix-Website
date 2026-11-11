@@ -1,0 +1,99 @@
+/* Brand on its own row. Link columns share the row underneath. */
+.srx-home-root .ftg,
+.srx-about-root .ftg,
+.srx-services-root .ftg,
+.srx-svc-detail .ftg,
+.srx-contact-root .ftg,
+.srx-blog-root .ftg {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 28px 36px !important;
+  align-items: start !important;
+  padding-bottom: 8px !important;
+}
+
+.srx-home-root .ftg > .fb,
+.srx-about-root .ftg > .fb,
+.srx-services-root .ftg > .fb,
+.srx-svc-detail .ftg > .fb,
+.srx-contact-root .ftg > .fb,
+.srx-blog-root .ftg > .fb {
+  grid-column: 1 / -1 !important;
+  max-width: 680px;
+  padding-bottom: 28px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.srx-home-root .ftg > .fb p,
+.srx-about-root .ftg > .fb p,
+.srx-services-root .ftg > .fb p,
+.srx-svc-detail .ftg > .fb p,
+.srx-contact-root .ftg > .fb p,
+.srx-blog-root .ftg > .fb p {
+  max-width: 62ch !important;
+  margin-top: 12px !important;
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.82;
+}
+
+.srx-home-root .fl h3,
+.srx-about-root .fl h3,
+.srx-services-root .fl h3,
+.srx-svc-detail .fl h3,
+.srx-contact-root .fl h3,
+.srx-blog-root .fl h3 {
+  display: block;
+  padding-bottom: 10px;
+  margin: 0 0 2px;
+  border-bottom: 1px solid rgba(251, 188, 3, 0.45);
+}
+
+.srx-home-root .fl a,
+.srx-about-root .fl a,
+.srx-services-root .fl a,
+.srx-svc-detail .fl a,
+.srx-contact-root .fl a,
+.srx-blog-root .fl a {
+  min-height: 36px;
+  padding: 6px 0;
+}
+
+.srx-home-root .fs,
+.srx-about-root .fs,
+.srx-services-root .fs,
+.srx-svc-detail .fs,
+.srx-contact-root .fs,
+.srx-blog-root .fs {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fbbc03;
+  opacity: 1;
+}
+
+@media (max-width: 980px) {
+  .srx-home-root .ftg,
+  .srx-about-root .ftg,
+  .srx-services-root .ftg,
+  .srx-svc-detail .ftg,
+  .srx-contact-root .ftg,
+  .srx-blog-root .ftg {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 28px 24px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .srx-home-root .ftg,
+  .srx-about-root .ftg,
+  .srx-services-root .ftg,
+  .srx-svc-detail .ftg,
+  .srx-contact-root .ftg,
+  .srx-blog-root .ftg {
+    grid-template-columns: 1fr !important;
+  }
+}

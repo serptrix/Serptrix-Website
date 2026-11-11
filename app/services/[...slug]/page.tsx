@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import { StructuredData } from "@/app/components/structured-data";
+import { buildServiceDetailModel } from "@/app/components/service-detail/content";
 import ServiceDetailPage from "@/app/components/service-detail/service-detail-page";
 import { catalogEntries, getCatalogEntry, getEntryDescription, getEntryTitle } from "@/content/service-catalog";
 
@@ -40,6 +41,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
   if (redirects[joined]) permanentRedirect(redirects[joined]);
   const entry = getCatalogEntry(slug);
   if (!entry) notFound();
+  const model = buildServiceDetailModel(entry);
 
   const list = [
     { "@type": "ListItem", position: 1, name: "Home", item: "https://serptrix.com" },
@@ -89,6 +91,14 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
                 : {}),
             },
             { "@type": "BreadcrumbList", itemListElement: list },
+            {
+              "@type": "FAQPage",
+              mainEntity: model.faqs.map((faq) => ({
+                "@type": "Question",
+                name: faq.q,
+                acceptedAnswer: { "@type": "Answer", text: faq.a },
+              })),
+            },
           ],
         }}
       />

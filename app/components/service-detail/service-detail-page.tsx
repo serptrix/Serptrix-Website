@@ -143,8 +143,13 @@ export default function ServiceDetailPage({ entry }: { entry: CatalogEntry }) {
             <div className="r" style={{ marginBottom: 36, maxWidth: 720 }}>
               <span className="k">Is this right for you?</span>
               <h2 className="h2" style={{ marginTop: 14 }}>
-                Good fit, and not yet a fit
+                {m.fitHeading ?? "Good fit, and not yet a fit"}
               </h2>
+              {m.overview ? (
+                <p className="mu" style={{ marginTop: 14 }}>
+                  {m.overview}
+                </p>
+              ) : null}
             </div>
             <div className="gr">
               <div className="pa pt s7 r">
@@ -175,7 +180,7 @@ export default function ServiceDetailPage({ entry }: { entry: CatalogEntry }) {
             <div className="r" style={{ marginBottom: 36, maxWidth: 720 }}>
               <span className="k">What is included</span>
               <h2 className="h2" style={{ marginTop: 14 }}>
-                Scope and deliverables
+                {m.scopeHeading ?? "Scope and deliverables"}
               </h2>
             </div>
             <div className="gr">
@@ -202,7 +207,7 @@ export default function ServiceDetailPage({ entry }: { entry: CatalogEntry }) {
             <div className="s5 r" style={{ alignSelf: "start", position: "sticky", top: 24 }}>
               <span className="k">How the work happens</span>
               <h2 className="h2" style={{ marginTop: 14 }}>
-                Four stages, with you involved at each one
+                {m.processHeading ?? "Four stages, with you involved at each one"}
               </h2>
             </div>
             <div className="s7">
