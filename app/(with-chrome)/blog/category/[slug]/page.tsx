@@ -1,5 +1,5 @@
-import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { NotFoundView } from "@/app/components/not-found-view";
 import { articles } from "@/content/site-data";
 import { ArticleLibrary } from "@/app/components/article-library";
 import { Breadcrumbs } from "@/app/components/breadcrumbs";
@@ -22,13 +22,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description: `Serptrix articles and practical guidance about ${name.toLowerCase()}.`,
         alternates: { canonical: `/blog/category/${slug}` },
       }
-    : {};
+    : { robots: { index: false, follow: false } };
 }
 
 export default async function Category({ params }: Props) {
   const { slug } = await params;
   const name = activeCategories().find((category) => slugify(category) === slug);
-  if (!name) notFound();
+  if (!name) return <NotFoundView />;
   const items = articles.filter((article) => article.category === name);
   return (
     <>

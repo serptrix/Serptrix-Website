@@ -18,7 +18,7 @@ export default function AboutPage() {
       <style dangerouslySetInnerHTML={{ __html: socFix }} />
       <div
         id="main"
-        className="srx-about-root"
+        className="srx-about-root srx-nav"
         dangerouslySetInnerHTML={{ __html: injectServicesMegaMenu(aboutMarkup) }}
         suppressHydrationWarning
       />

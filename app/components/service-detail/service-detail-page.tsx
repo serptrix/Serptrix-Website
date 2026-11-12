@@ -89,7 +89,7 @@ export default function ServiceDetailPage({ entry }: { entry: CatalogEntry }) {
   const formAction = inquiryHref(entry.service);
 
   return (
-    <div className="srx-svc-detail">
+    <div className="srx-svc-detail srx-nav">
       <a className="sk" href="#main">
         Skip to content
       </a>

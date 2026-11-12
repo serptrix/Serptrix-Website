@@ -1,5 +1,6 @@
 import type { CatalogEntry } from "@/content/service-catalog";
 import { getServiceHref, serviceBySlug } from "@/content/service-catalog";
+import { isPublishedHref } from "@/content/public-services";
 import { servicePageCopy } from "@/content/page-copy/index";
 
 export type DetailCard = { title: string; items: string[] };
@@ -95,8 +96,11 @@ function chunk<T>(arr: T[], size: number): T[][] {
 }
 
 function relatedFromService(entry: CatalogEntry): DetailRelated[] {
+  const published = (href: string) => isPublishedHref(href);
   if (entry.kind !== "service") {
-    const services = entry.kind === "pillar" ? entry.pillar.categories.flatMap((c) => c.services).slice(0, 3) : entry.category!.services.slice(0, 3);
+    const services = (entry.kind === "pillar" ? entry.pillar.categories.flatMap((c) => c.services) : entry.category!.services)
+      .filter((s) => published(getServiceHref(s.slug)))
+      .slice(0, 3);
     return services.map((s) => ({
       href: getServiceHref(s.slug),
       title: s.name,
@@ -106,8 +110,8 @@ function relatedFromService(entry: CatalogEntry): DetailRelated[] {
   }
   const related = entry.service!.related
     .map((slug) => serviceBySlug.get(slug))
-    .filter(Boolean)
-    .slice(0, 3) as CatalogEntry[];
+    .filter((item): item is CatalogEntry => Boolean(item && published(item.href)))
+    .slice(0, 3);
   if (related.length) {
     return related.map((r) => ({
       href: r.href,
@@ -116,9 +120,8 @@ function relatedFromService(entry: CatalogEntry): DetailRelated[] {
       cta: `Explore ${r.service!.name}`,
     }));
   }
-  // Fall back to sibling services
   return entry
-    .category!.services.filter((s) => s.slug !== entry.service!.slug)
+    .category!.services.filter((s) => s.slug !== entry.service!.slug && published(getServiceHref(s.slug)))
     .slice(0, 3)
     .map((s) => ({
       href: getServiceHref(s.slug),

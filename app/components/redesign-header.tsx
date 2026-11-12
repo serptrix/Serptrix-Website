@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ServicesMegaMenu, ServicesMegaMobile } from "@/app/components/services-mega-menu";
 
 type NavKey = "services" | "work" | "about" | "insights" | "contact" | "home";
@@ -9,6 +12,16 @@ const links: { key: NavKey; href: string; label: string }[] = [
   { key: "insights", href: "/blog", label: "Insights" },
 ];
 
+function currentFromPath(path: string): NavKey | undefined {
+  if (path.startsWith("/services")) return "services";
+  if (path.startsWith("/about")) return "about";
+  if (path.startsWith("/blog") || path.startsWith("/insights")) return "insights";
+  if (path.startsWith("/contact")) return "contact";
+  if (path.startsWith("/case-studies") || path.startsWith("/work")) return "work";
+  if (path === "/") return "home";
+  return undefined;
+}
+
 export function RedesignHeader({
   current,
   ctaHref = "/contact#calendly-booking",
@@ -16,6 +29,9 @@ export function RedesignHeader({
   current?: NavKey;
   ctaHref?: string;
 }) {
+  const path = usePathname() || "/";
+  const active = current ?? currentFromPath(path);
+
   return (
     <header className="hd">
       <Link
@@ -37,9 +53,9 @@ export function RedesignHeader({
         Serptrix
       </Link>
       <nav className="nv" aria-label="Main">
-        <ServicesMegaMenu current={current === "services"} />
+        <ServicesMegaMenu current={active === "services"} />
         {links.map((link) => (
-          <Link key={link.key} href={link.href} aria-current={current === link.key ? "page" : undefined}>
+          <Link key={link.key} href={link.href} aria-current={active === link.key ? "page" : undefined}>
             {link.label}
           </Link>
         ))}
@@ -47,17 +63,18 @@ export function RedesignHeader({
       <Link href={ctaHref} className="b by sm dsk">
         Book a Strategy Call
       </Link>
-      <details className="mm" style={{ border: 0 }}>
+      <details className="mm">
         <summary>Menu</summary>
         <div className="mm-panel">
           <ServicesMegaMobile />
           {links.map((link) => (
-            <Link key={link.key} href={link.href} aria-current={current === link.key ? "page" : undefined}>
+            <Link key={link.key} href={link.href} aria-current={active === link.key ? "page" : undefined}>
               {link.label}
             </Link>
           ))}
-          <Link href={ctaHref}>Book a Strategy Call</Link>
-          {current === "contact" ? null : <Link href="/contact">Contact</Link>}
+          <Link className="mm-cta" href={ctaHref}>
+            Book a Strategy Call
+          </Link>
         </div>
       </details>
     </header>

@@ -396,7 +396,8 @@ img,svg,video,canvas{max-width:100%;height:auto}
 .srx-about-root .soc,
 .srx-services-root .soc,
 .srx-svc-detail .soc,
-.srx-contact-root .soc{
+.srx-contact-root .soc,
+.srx-blog-root .soc{
   display:flex!important;
   flex-wrap:nowrap!important;
   align-items:center;
@@ -408,7 +409,8 @@ img,svg,video,canvas{max-width:100%;height:auto}
 .srx-about-root .soc a,
 .srx-services-root .soc a,
 .srx-svc-detail .soc a,
-.srx-contact-root .soc a{
+.srx-contact-root .soc a,
+.srx-blog-root .soc a{
   display:inline-flex!important;
   align-items:center!important;
   justify-content:center!important;
@@ -424,7 +426,8 @@ img,svg,video,canvas{max-width:100%;height:auto}
 .srx-about-root .soc a svg,
 .srx-services-root .soc a svg,
 .srx-svc-detail .soc a svg,
-.srx-contact-root .soc a svg{
+.srx-contact-root .soc a svg,
+.srx-blog-root .soc a svg{
   display:block!important;
   width:22px!important;
   height:22px!important;
@@ -438,17 +441,20 @@ img,svg,video,canvas{max-width:100%;height:auto}
   .srx-about-root .soc,
   .srx-services-root .soc,
   .srx-svc-detail .soc,
-  .srx-contact-root .soc{flex-wrap:nowrap!important;gap:8px}
+  .srx-contact-root .soc,
+  .srx-blog-root .soc{flex-wrap:nowrap!important;gap:8px}
   .srx-home-root .soc a,
   .srx-about-root .soc a,
   .srx-services-root .soc a,
   .srx-svc-detail .soc a,
-  .srx-contact-root .soc a{flex:0 0 40px;width:40px!important;height:40px!important}
+  .srx-contact-root .soc a,
+  .srx-blog-root .soc a{flex:0 0 40px;width:40px!important;height:40px!important}
   .srx-home-root .soc a svg,
   .srx-about-root .soc a svg,
   .srx-services-root .soc a svg,
   .srx-svc-detail .soc a svg,
-  .srx-contact-root .soc a svg{width:20px!important;height:20px!important}
+  .srx-contact-root .soc a svg,
+  .srx-blog-root .soc a svg{width:20px!important;height:20px!important}
 
   /* Global ui.css styles ALL `nav` as an absolute white mobile drawer.
      Redesigned pages use <nav> for breadcrumbs + footer columns — reset those. */
@@ -456,7 +462,8 @@ img,svg,video,canvas{max-width:100%;height:auto}
   .srx-about-root nav,
   .srx-services-root nav,
   .srx-svc-detail nav,
-  .srx-contact-root nav{
+  .srx-contact-root nav,
+  .srx-blog-root nav{
     position:static!important;
     inset:auto!important;
     top:auto!important;
@@ -474,12 +481,14 @@ img,svg,video,canvas{max-width:100%;height:auto}
   .srx-about-root nav.nv,
   .srx-services-root nav.nv,
   .srx-svc-detail nav.nv,
-  .srx-contact-root nav.nv{display:none!important}
+  .srx-contact-root nav.nv,
+  .srx-blog-root nav.nv{display:none!important}
   .srx-home-root nav.cr,
   .srx-about-root nav.cr,
   .srx-services-root nav.cr,
   .srx-svc-detail nav.cr,
-  .srx-contact-root nav.cr{
+  .srx-contact-root nav.cr,
+  .srx-blog-root nav.cr{
     display:flex!important;
     flex-direction:row!important;
     flex-wrap:wrap!important;
@@ -490,7 +499,8 @@ img,svg,video,canvas{max-width:100%;height:auto}
   .srx-about-root nav.fl,
   .srx-services-root nav.fl,
   .srx-svc-detail nav.fl,
-  .srx-contact-root nav.fl{display:block!important}
+  .srx-contact-root nav.fl,
+  .srx-blog-root nav.fl{display:block!important}
 
   /* Closed mobile menus must stay hidden; design CSS forced display:flex on .mm div */
   .srx-home-root .mm>div,
@@ -498,13 +508,17 @@ img,svg,video,canvas{max-width:100%;height:auto}
   .srx-services-root .mm>div,
   .srx-svc-detail .mm>div,
   .srx-contact-root .mm>div,
-  .srx-contact-root .mm-panel{display:none!important}
+  .srx-contact-root .mm-panel,
+  .srx-blog-root .mm>div,
+  .srx-blog-root .mm-panel{display:none!important}
   .srx-home-root .mm[open]>div,
   .srx-about-root .mm[open]>div,
   .srx-services-root .mm[open]>div,
   .srx-svc-detail .mm[open]>div,
   .srx-contact-root .mm[open]>div,
-  .srx-contact-root .mm[open] .mm-panel{display:flex!important}
+  .srx-contact-root .mm[open] .mm-panel,
+  .srx-blog-root .mm[open]>div,
+  .srx-blog-root .mm[open] .mm-panel{display:flex!important}
 }
 .shell{width:min(var(--shell-max),calc(100% - (var(--pad-inline) * 2)));margin-inline:auto}
 .srx-shell{width:100%;max-width:min(1320px,100%);margin-inline:auto;padding-inline:var(--pad-inline);box-sizing:border-box}

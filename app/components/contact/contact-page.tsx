@@ -106,7 +106,7 @@ export default function ContactPage({ preselectedService }: ContactPageProps) {
   }
 
   return (
-    <div className="srx-contact-root">
+    <div className="srx-contact-root srx-nav">
       <a className="sk" href="#main">
         Skip to content
       </a>

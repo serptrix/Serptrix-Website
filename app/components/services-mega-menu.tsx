@@ -1,23 +1,12 @@
 import Link from "next/link";
-import { servicePillars } from "@/content/service-pillars";
+import { publicServiceMenu, type PublicServiceColumn } from "@/content/public-services";
 
-type MenuService = { name: string; href: string };
-type MenuGroup = { name: string; href: string; services: MenuService[] };
-type MenuColumn = { name: string; href: string; groups: MenuGroup[] };
+const menuIntro = "Choose a category, then a specialist service — or open the full overview.";
+const menuPrompt = "Not sure where to start? Tell us the outcome you need.";
+const menuCta = { href: "/contact#calendly-booking", label: "Book a Strategy Call" };
 
-export function serviceMenuColumns(): MenuColumn[] {
-  return servicePillars.map((pillar) => ({
-    name: pillar.name,
-    href: `/services/${pillar.slug}`,
-    groups: pillar.categories.map((category) => ({
-      name: category.name,
-      href: `/services/${pillar.slug}/${category.slug}`,
-      services: category.services.map((service) => ({
-        name: service.name,
-        href: `/services/${pillar.slug}/${category.slug}/${service.slug}`,
-      })),
-    })),
-  }));
+export function serviceMenuColumns(): PublicServiceColumn[] {
+  return publicServiceMenu;
 }
 
 function escapeHtml(value: string) {
@@ -28,27 +17,32 @@ function escapeHtml(value: string) {
     .replaceAll('"', "&quot;");
 }
 
-function columnHtml(column: MenuColumn) {
-  const groups = column.groups
-    .map((group) => {
-      const services = group.services
-        .map((service) => `<a href="${service.href}">${escapeHtml(service.name)}</a>`)
-        .join("");
-      return `<div class="mega-group"><a class="mega-cat" href="${group.href}">${escapeHtml(group.name)}</a>${services}</div>`;
-    })
+function columnHtml(column: PublicServiceColumn) {
+  const links = column.links
+    .map((link) => `<a href="${link.href}">${escapeHtml(link.name)}</a>`)
     .join("");
-  return `<div class="mega-col"><a class="mega-pillar" href="${column.href}">${escapeHtml(column.name)}</a>${groups}</div>`;
+  return `<div class="mega-col"><a class="mega-pillar" href="${column.href}"><span>${column.index}</span>${escapeHtml(column.name)}</a><p>${escapeHtml(column.description)}</p><div class="mega-links">${links}</div></div>`;
+}
+
+function panelHtml() {
+  const columns = serviceMenuColumns().map(columnHtml).join("");
+  return `<div class="mega-head"><div><p class="mega-kicker">Services</p><p class="mega-lede">${escapeHtml(menuIntro)}</p></div><a class="mega-all" href="/services">View all services <span aria-hidden="true">→</span></a></div><div class="mega-grid">${columns}</div><div class="mega-foot"><p>${escapeHtml(menuPrompt)}</p><a class="mega-cta" href="${menuCta.href}">${menuCta.label} <span aria-hidden="true">→</span></a></div>`;
 }
 
 export function servicesMegaDesktopHtml(current = false) {
   const currentAttr = current ? ' aria-current="page"' : "";
-  const columns = serviceMenuColumns().map(columnHtml).join("");
-  return `<div class="mega"><a href="/services"${currentAttr}>Services</a><div class="mega-panel" role="navigation" aria-label="All services">${columns}</div></div>`;
+  return `<div class="mega"><a href="/services"${currentAttr}>Services</a><div class="mega-panel" role="navigation" aria-label="All services">${panelHtml()}</div></div>`;
+}
+
+function mobileColumnHtml(column: PublicServiceColumn) {
+  const links = column.links
+    .map((link) => `<a href="${link.href}">${escapeHtml(link.name)}</a>`)
+    .join("");
+  return `<details class="mega-acc"><summary><span>${column.index}</span>${escapeHtml(column.name)}</summary><div class="mega-mobile-list"><p>${escapeHtml(column.description)}</p>${links}</div></details>`;
 }
 
 export function servicesMegaMobileHtml() {
-  const columns = serviceMenuColumns().map(columnHtml).join("");
-  return `<details class="mega-acc"><summary>Services</summary><div class="mega-mobile-list">${columns}</div></details>`;
+  return `<div class="mega-mobile">${serviceMenuColumns().map(mobileColumnHtml).join("")}</div>`;
 }
 
 export function injectServicesMegaMenu(html: string) {
@@ -65,6 +59,50 @@ export function injectServicesMegaMenu(html: string) {
   return withMobile.replace(token, servicesMegaDesktopHtml(current));
 }
 
+function MenuColumns() {
+  return serviceMenuColumns().map((column) => (
+    <div className="mega-col" key={column.href}>
+      <Link className="mega-pillar" href={column.href}>
+        <span>{column.index}</span>
+        {column.name}
+      </Link>
+      <p>{column.description}</p>
+      <div className="mega-links">
+        {column.links.map((link) => (
+          <Link key={link.href} href={link.href}>
+            {link.name}
+          </Link>
+        ))}
+      </div>
+    </div>
+  ));
+}
+
+function MenuFrame() {
+  return (
+    <>
+      <div className="mega-head">
+        <div>
+          <p className="mega-kicker">Services</p>
+          <p className="mega-lede">{menuIntro}</p>
+        </div>
+        <Link className="mega-all" href="/services">
+          View all services <span aria-hidden="true">→</span>
+        </Link>
+      </div>
+      <div className="mega-grid">
+        <MenuColumns />
+      </div>
+      <div className="mega-foot">
+        <p>{menuPrompt}</p>
+        <Link className="mega-cta" href={menuCta.href}>
+          {menuCta.label} <span aria-hidden="true">→</span>
+        </Link>
+      </div>
+    </>
+  );
+}
+
 export function ServicesMegaMenu({ current = false }: { current?: boolean }) {
   return (
     <div className="mega">
@@ -72,25 +110,7 @@ export function ServicesMegaMenu({ current = false }: { current?: boolean }) {
         Services
       </Link>
       <div className="mega-panel" role="navigation" aria-label="All services">
-        {serviceMenuColumns().map((column) => (
-          <div className="mega-col" key={column.href}>
-            <Link className="mega-pillar" href={column.href}>
-              {column.name}
-            </Link>
-            {column.groups.map((group) => (
-              <div className="mega-group" key={group.href}>
-                <Link className="mega-cat" href={group.href}>
-                  {group.name}
-                </Link>
-                {group.services.map((service) => (
-                  <Link key={service.href} href={service.href}>
-                    {service.name}
-                  </Link>
-                ))}
-              </div>
-            ))}
-          </div>
-        ))}
+        <MenuFrame />
       </div>
     </div>
   );
@@ -98,29 +118,23 @@ export function ServicesMegaMenu({ current = false }: { current?: boolean }) {
 
 export function ServicesMegaMobile() {
   return (
-    <details className="mega-acc">
-      <summary>Services</summary>
-      <div className="mega-mobile-list">
-        {serviceMenuColumns().map((column) => (
-          <div className="mega-col" key={column.href}>
-            <Link className="mega-pillar" href={column.href}>
-              {column.name}
-            </Link>
-            {column.groups.map((group) => (
-              <div className="mega-group" key={group.href}>
-                <Link className="mega-cat" href={group.href}>
-                  {group.name}
-                </Link>
-                {group.services.map((service) => (
-                  <Link key={service.href} href={service.href}>
-                    {service.name}
-                  </Link>
-                ))}
-              </div>
+    <div className="mega-mobile">
+      {serviceMenuColumns().map((column) => (
+        <details className="mega-acc" key={column.href}>
+          <summary>
+            <span>{column.index}</span>
+            {column.name}
+          </summary>
+          <div className="mega-mobile-list">
+            <p>{column.description}</p>
+            {column.links.map((link) => (
+              <Link key={link.href} href={link.href}>
+                {link.name}
+              </Link>
             ))}
           </div>
-        ))}
-      </div>
-    </details>
+        </details>
+      ))}
+    </div>
   );
 }

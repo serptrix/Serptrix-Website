@@ -17,7 +17,7 @@ export default function ServicesPage() {
     <>
       <style dangerouslySetInnerHTML={{ __html: socFix }} />
       <div
-        className="srx-services-root"
+        className="srx-services-root srx-nav"
         dangerouslySetInnerHTML={{ __html: injectServicesMegaMenu(servicesMarkup) }}
         suppressHydrationWarning
       />

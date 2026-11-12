@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { servicePillars } from "@/content/service-catalog";
+import { isPublishedHref } from "@/content/public-services";
 import { Breadcrumbs } from "./breadcrumbs";
 
 export function Header() {
@@ -79,7 +80,9 @@ export function Header() {
                 <div className="site3-service-group" key={pillar.slug}>
                   <Link className="site3-service-group-title" href={`/services/${pillar.slug}`}>{pillar.name} <span aria-hidden="true">↗</span></Link>
                   <p>{pillar.description}</p>
-                  {pillar.categories.map((category) => <Link key={category.slug} href={`/services/${pillar.slug}/${category.slug}`}>{category.name}</Link>)}
+                  {pillar.categories
+                    .filter((category) => isPublishedHref(`/services/${pillar.slug}/${category.slug}`))
+                    .map((category) => <Link key={category.slug} href={`/services/${pillar.slug}/${category.slug}`}>{category.name}</Link>)}
                 </div>
               ))}
             </div>

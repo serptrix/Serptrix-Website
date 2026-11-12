@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { notFound, permanentRedirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
+import { NotFoundView } from "@/app/components/not-found-view";
+import { SiteChrome } from "@/app/components/site-chrome";
 import { StructuredData } from "@/app/components/structured-data";
 import { buildServiceDetailModel } from "@/app/components/service-detail/content";
 import ServiceDetailPage from "@/app/components/service-detail/service-detail-page";
 import { catalogEntries, getCatalogEntry, getEntryDescription, getEntryTitle } from "@/content/service-catalog";
+import { isPublishedHref } from "@/content/public-services";
 
 const redirects: Record<string, string> = {
   "ai-technology": "/services/ai",
@@ -23,12 +26,13 @@ export const generateStaticParams = () => catalogEntries.map((e) => ({ slug: e.s
 export async function generateMetadata({ params }: { params: Promise<{ slug: string[] }> }): Promise<Metadata> {
   const { slug } = await params;
   const entry = getCatalogEntry(slug);
-  if (!entry) return {};
+  if (!entry) return { robots: { index: false, follow: false } };
   const title = getEntryTitle(entry);
   const description = getEntryDescription(entry);
   return {
     title,
     description,
+    robots: isPublishedHref(entry.href) ? undefined : { index: false, follow: false },
     alternates: { canonical: entry.href },
     openGraph: { title, description, url: entry.href, type: "website" },
     twitter: { card: "summary_large_image", title, description },
@@ -40,7 +44,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
   const joined = slug.join("/");
   if (redirects[joined]) permanentRedirect(redirects[joined]);
   const entry = getCatalogEntry(slug);
-  if (!entry) notFound();
+  if (!entry) {
+    return (
+      <SiteChrome>
+        <NotFoundView />
+      </SiteChrome>
+    );
+  }
   const model = buildServiceDetailModel(entry);
 
   const list = [

@@ -31,7 +31,7 @@ export default function HomePage() {
       <style dangerouslySetInnerHTML={{ __html: socFix }} />
       <div
         ref={rootRef}
-        className="srx-home-root"
+        className="srx-home-root srx-nav"
         dangerouslySetInnerHTML={{ __html: injectServicesMegaMenu(homeMarkup) }}
         suppressHydrationWarning
       />

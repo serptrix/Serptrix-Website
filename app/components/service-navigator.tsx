@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { getServiceHref, servicePillars } from "@/content/service-catalog";
+import { isPublishedHref } from "@/content/public-services";
 import { trackContactEvent } from "@/lib/analytics";
 
 const pillarDetails = [
@@ -14,14 +15,12 @@ const pillarDetails = [
 type Pillar = (typeof servicePillars)[number];
 
 function featuredServices(pillar: Pillar, count: number) {
-  const firstFromEachCategory = pillar.categories.flatMap((category) =>
-    category.services.slice(0, 1).map((service) => ({ category: category.name, service })),
+  const published = pillar.categories.flatMap((category) =>
+    category.services
+      .filter((service) => isPublishedHref(getServiceHref(service.slug)))
+      .map((service) => ({ category: category.name, service })),
   );
-  const secondFromEachCategory = pillar.categories.flatMap((category) =>
-    category.services.slice(1, 2).map((service) => ({ category: category.name, service })),
-  );
-
-  return [...firstFromEachCategory, ...secondFromEachCategory].slice(0, count);
+  return published.slice(0, count);
 }
 
 function trackPillar(pillar: Pillar, destination: "pillar" | "service") {

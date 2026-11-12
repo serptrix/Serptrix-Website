@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { articles, caseStudies } from "@/content/site-data";
 import { catalogEntries } from "@/content/service-catalog";
+import { isPublishedHref } from "@/content/public-services";
 
 const base = "https://serptrix.com";
 
@@ -16,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: url === "" ? 1 : url === "/services" ? 0.9 : 0.7,
     }),
     );
-  const servicePages = catalogEntries.map((entry) => ({
+  const servicePages = catalogEntries.filter((entry) => isPublishedHref(entry.href)).map((entry) => ({
     url: `${base}${entry.href}`,
     lastModified: new Date("2026-10-22"),
     changeFrequency: "monthly" as const,

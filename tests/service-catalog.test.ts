@@ -1,12 +1,19 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { catalogEntries, getEntryDescription, getEntryTitle, serviceEntries, servicePillars } from "../content/service-catalog";
+import { publishedHrefs } from "../content/public-services";
 
 test("service catalog contains the complete four-pillar architecture", () => {
   assert.deepEqual(servicePillars.map((pillar) => pillar.name), ["Design", "Development", "AI", "Digital Marketing"]);
-  assert.equal(servicePillars.flatMap((pillar) => pillar.categories).length, 13);
-  assert.equal(serviceEntries.length, 69);
-  assert.equal(catalogEntries.length, 86);
+  assert.equal(servicePillars.flatMap((pillar) => pillar.categories).length, 14);
+  assert.equal(serviceEntries.length, 79);
+  assert.equal(catalogEntries.length, 97);
+});
+
+test("the public menu only links to real catalog pages", () => {
+  const hrefs = new Set(catalogEntries.map((entry) => entry.href));
+  const missing = [...publishedHrefs].filter((href) => !hrefs.has(href));
+  assert.deepEqual(missing, []);
 });
 
 test("routes, titles, and descriptions are unique and complete", () => {
