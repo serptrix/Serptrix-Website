@@ -68,7 +68,10 @@
 .srx-svc-detail .mega-panel,
 .srx-contact-root .mega-panel,
 .srx-blog-root .mega-panel {
-  display: none;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
   position: absolute;
   left: 0;
   right: 0;
@@ -83,6 +86,7 @@
   background: #070b18;
   color: #f4f6fb;
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.38);
+  transition: visibility 0s linear 0.75s, opacity 0s linear 0.75s;
 }
 
 .srx-nav .mega:hover .mega-panel,
@@ -97,7 +101,49 @@
 .srx-contact-root .mega:focus-within .mega-panel,
 .srx-blog-root .mega:hover .mega-panel,
 .srx-blog-root .mega:focus-within .mega-panel {
-  display: flex;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+/* Invisible path from the nav labels into the panel, so a slow cursor does not drop the menu. */
+.srx-nav .mega::after,
+.srx-about-root .mega::after,
+.srx-services-root .mega::after,
+.srx-svc-detail .mega::after,
+.srx-contact-root .mega::after,
+.srx-blog-root .mega::after {
+  content: "";
+  position: absolute;
+  z-index: 91;
+  left: 0;
+  right: 0;
+  top: 50px;
+  height: 42px;
+}
+
+.srx-nav .mega > a,
+.srx-about-root .mega > a,
+.srx-services-root .mega > a,
+.srx-svc-detail .mega > a,
+.srx-contact-root .mega > a,
+.srx-blog-root .mega > a {
+  position: relative;
+}
+
+.srx-nav .mega > a::before,
+.srx-about-root .mega > a::before,
+.srx-services-root .mega > a::before,
+.srx-svc-detail .mega > a::before,
+.srx-contact-root .mega > a::before,
+.srx-blog-root .mega > a::before {
+  content: "";
+  position: absolute;
+  left: -16px;
+  right: -24px;
+  top: 0;
+  bottom: -22px;
 }
 
 .srx-nav .mega-col,
